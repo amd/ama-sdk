@@ -35,6 +35,7 @@
  *
  */
 #define DEV_IDX 0
+#define PIXEL_FORMAT XMA_YUV420P_FMT_TYPE
 
 enum argPosDownload {IN_FILE=1, FORMAT, OUT_FILE, WIDTH, HEIGHT, FPS_NUM, FPS_DEN};
 

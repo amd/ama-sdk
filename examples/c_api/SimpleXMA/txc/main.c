@@ -217,9 +217,9 @@ int main(int argc, char *argv[]){
     }
     ret  = initInput(argv, &ioConf);
     ret |= initCard(DEV_IDX, &devConf);
-    ret |= initDec(devConf.handle, atoi(argv[WIDTH]),atoi(argv[HEIGHT]), FPS_NUM, FPS_DEN, atoi(argv[FORMAT]), &decConf, gDecDev, sizeof(gDecXmaParamConf)/sizeof(XmaParameter), gDecXmaParamConf);
-    ret |= initScaler(devConf.handle, decConf.frame_props.format, decConf.frame_props.sw_format, decConf.frame_props.width, decConf.frame_props.height, decConf.frame_props.bits_per_pixel, decConf.xma_props.framerate, &decConf.xrm_props, &scalerConf, gScalerDev, sizeof(gScalerXmaParamConf)/sizeof(XmaParameter), gScalerXmaParamConf, sizeof(gScalerOutputConf)/sizeof(XmaScalerInOutProperties), gScalerOutputConf);
-    ret |= initEnc(devConf.handle, scalerConf.xma_props.input.format, scalerConf.xma_props.input.sw_format, sizeof(gBitsPerPixel)/sizeof(int32_t), gBitsPerPixel, &encConf, gEncDev, gEncXrmConf, gEncSlice, gEncXav1, gEncUll, gEncCodec, sizeof(gEncXmaParamConf)/sizeof(XmaParameter), gEncXmaParamConf, gEncRates, gEncPreset);
+    ret |= initDec(devConf.handle, PIXEL_FORMAT, atoi(argv[WIDTH]),atoi(argv[HEIGHT]), FPS_NUM, FPS_DEN, atoi(argv[FORMAT]), &decConf, gDecDev, sizeof(gDecXmaParamConf)/sizeof(XmaParameter), gDecXmaParamConf);
+    ret |= initScaler(devConf.handle, decConf.frame_props.sw_format, decConf.frame_props.width, decConf.frame_props.height, decConf.frame_props.bits_per_pixel, decConf.xma_props.framerate, &decConf.xrm_props, &scalerConf, gScalerDev, sizeof(gScalerXmaParamConf)/sizeof(XmaParameter), gScalerXmaParamConf, sizeof(gScalerOutputConf)/sizeof(XmaScalerInOutProperties), gScalerOutputConf);
+    ret |= initEnc(devConf.handle, scalerConf.xma_props.input.sw_format, sizeof(gBitsPerPixel)/sizeof(int32_t), gBitsPerPixel, &encConf, gEncDev, gEncXrmConf, gEncSlice, gEncXav1, gEncUll, gEncCodec, sizeof(gEncXmaParamConf)/sizeof(XmaParameter), gEncXmaParamConf, gEncRates, gEncPreset);
     ret |= procTXC(&ioConf, &decConf, &scalerConf, &encConf);
     fprintf(stderr,"Releasing resources\n");
     procClose(&ioConf, &devConf, &decConf, &scalerConf, &encConf);

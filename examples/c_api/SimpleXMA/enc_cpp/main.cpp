@@ -232,8 +232,8 @@ int main(int argc, char *argv[]){
     std::cout << "C++ Encoder \n";
     ret  = initInput(argv, &ioConf);
     ret |= initCard(DEV_IDX, &devConf);
-    ret |= initUpload(devConf.handle, gEncXrmConf[0].width, gEncXrmConf[0].height, gBitsPerPixel[0], gEncXrmConf[0].fps_num, gEncXrmConf[0].fps_den, &uploadConf);
-    ret |= initEnc(devConf.handle, uploadConf.xma_props.output.format, uploadConf.xma_props.output.sw_format, sizeof(gBitsPerPixel)/sizeof(uint32_t), gBitsPerPixel, &encConf, gEncDev, gEncXrmConf, gEncSlice, gEncXav1, gEncUll, gEncCodec, sizeof(gEncXmaParamConf)/sizeof(XmaParameter), gEncXmaParamConf, gEncRates, gEncPreset);
+    ret |= initUpload(devConf.handle, PIXEL_FORMAT, PIXEL_FORMAT, gEncXrmConf[0].width, gEncXrmConf[0].height, gBitsPerPixel[0], gEncXrmConf[0].fps_num, gEncXrmConf[0].fps_den, &uploadConf);
+    ret |= initEnc(devConf.handle, uploadConf.xma_props.output.sw_format, sizeof(gBitsPerPixel)/sizeof(uint32_t), gBitsPerPixel, &encConf, gEncDev, gEncXrmConf, gEncSlice, gEncXav1, gEncUll, gEncCodec, sizeof(gEncXmaParamConf)/sizeof(XmaParameter), gEncXmaParamConf, gEncRates, gEncPreset);
     ret |= Encode(&ioConf, &encConf, &uploadConf);
     fprintf(stderr,"Releasing resources\n");
     procClose(&ioConf, &devConf, &encConf, &uploadConf);

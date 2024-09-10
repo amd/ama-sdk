@@ -112,11 +112,11 @@ typedef struct EncConf {
 } EncConf;
 
 uint8_t initCard(uint32_t device, DevConf *devConf);
-uint8_t initDec(XmaHandle handle, int width, int height, int fps_num, int fps_den, XmaDecoderType hwdecoder_type, DecConf *decConf, int decDev, uint32_t decXmaParamConfCnt, XmaParameter* decXmaParamConf);
-uint8_t initDownload(XmaHandle handle, int width, int height, int32_t bits_per_pixel, int fps_num, int fps_den, DownloadConf *downloadConf);
-uint8_t initUpload(XmaHandle handle, int width, int height, int32_t bits_per_pixel, int fps_num, int fps_den, UploadConf *uploadConf);
-uint8_t initScaler(XmaHandle handle, XmaFormatType format, XmaFormatType sw_format, int32_t width, int32_t height, int32_t bits_per_pixel, XmaFraction framerate, XrmInterfaceProperties *in_xrm_props, ScalerConf *scalerConf, int scalerDev, uint32_t scalerXmaParamConfCnt, XmaParameter* scalerXmaParamConf, int32_t scalerOutputConfCnt, XmaScalerInOutProperties *scalerOutputConf);
-uint8_t initEnc(XmaHandle handle, XmaFormatType format, XmaFormatType sw_format, uint32_t encOutputCnt, int32_t *bits_per_pixel, EncConf *encConf, uint8_t *encDev, XrmInterfaceProperties *encXrmConf, int8_t *encSlice, uint8_t *encXav1, uint8_t *encUll, XmaEncoderType *encCodec, uint32_t encXmaParamConfCnt, XmaParameter* encXmaParamConf, int32_t *encRates, uint8_t *encPreset);
+uint8_t initDec(XmaHandle handle, XmaFormatType sw_format, int width, int height, int fps_num, int fps_den, XmaDecoderType hwdecoder_type, DecConf *decConf, int decDev, uint32_t decXmaParamConfCnt, XmaParameter* decXmaParamConf);
+uint8_t initDownload(XmaHandle handle, XmaFormatType format, XmaFormatType sw_format, int width, int height, int32_t bits_per_pixel, int fps_num, int fps_den, DownloadConf *downloadConf);
+uint8_t initUpload(XmaHandle handle, XmaFormatType format, XmaFormatType sw_format, int width, int height, int32_t bits_per_pixel, int fps_num, int fps_den, UploadConf *uploadConf);
+uint8_t initScaler(XmaHandle handle, XmaFormatType sw_format, int32_t width, int32_t height, int32_t bits_per_pixel, XmaFraction framerate, XrmInterfaceProperties *in_xrm_props, ScalerConf *scalerConf, int scalerDev, uint32_t scalerXmaParamConfCnt, XmaParameter* scalerXmaParamConf, int32_t scalerOutputConfCnt, XmaScalerInOutProperties *scalerOutputConf);
+uint8_t initEnc(XmaHandle handle, XmaFormatType sw_format, uint32_t encOutputCnt, int32_t *bits_per_pixel, EncConf *encConf, uint8_t *encDev, XrmInterfaceProperties *encXrmConf, int8_t *encSlice, uint8_t *encXav1, uint8_t *encUll, XmaEncoderType *encCodec, uint32_t encXmaParamConfCnt, XmaParameter* encXmaParamConf, int32_t *encRates, uint8_t *encPreset);
 uint8_t extractVCL(uint8_t *xma_data_buffer, uint64_t *vcl_start, uint64_t *vcl_end, uint64_t dataread, uint64_t *dataproc, uint8_t codecType);
 uint8_t procDec(DecConf *decConf, uint8_t *xma_data_buffer, uint64_t vcl_start, uint64_t vcl_end, bool eos);
 uint8_t procDownload(DownloadConf *downloadConf, XmaFrame *out_frame);

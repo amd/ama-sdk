@@ -211,8 +211,8 @@ int main(int argc, char *argv[]){
     }
     ret  = initInput(argv, &ioConf);
     ret |= initCard(DEV_IDX, &devConf);
-    ret |= initDec(devConf.handle, atoi(argv[WIDTH]),atoi(argv[HEIGHT]), atoi(argv[FPS_NUM]), atoi(argv[FPS_DEN]), atoi(argv[FORMAT]), &decConf, gDecDev, sizeof(gDecXmaParamConf)/sizeof(XmaParameter), gDecXmaParamConf);
-    ret |= initDownload(devConf.handle, atoi(argv[WIDTH]),atoi(argv[HEIGHT]), 8, atoi(argv[FPS_NUM]), atoi(argv[FPS_DEN]), &downloadConf);
+    ret |= initDec(devConf.handle, PIXEL_FORMAT, atoi(argv[WIDTH]),atoi(argv[HEIGHT]), atoi(argv[FPS_NUM]), atoi(argv[FPS_DEN]), atoi(argv[FORMAT]), &decConf, gDecDev, sizeof(gDecXmaParamConf)/sizeof(XmaParameter), gDecXmaParamConf);
+    ret |= initDownload(devConf.handle, PIXEL_FORMAT, PIXEL_FORMAT, atoi(argv[WIDTH]),atoi(argv[HEIGHT]), 8, atoi(argv[FPS_NUM]), atoi(argv[FPS_DEN]), &downloadConf);
     ret |= Decode(&ioConf, &decConf, &downloadConf);
     fprintf(stderr,"Releasing resources\n");
     procClose(&ioConf, &devConf, &decConf, &downloadConf);

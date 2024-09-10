@@ -78,6 +78,7 @@ uint8_t initCard(uint32_t device, DevConf *devConf) {
  * properties
  *
  * @param handle: XMA handle
+ * @param sw_format: Device side format
  * @param width, height, fps_num and fps_den: Expected parameters of the incoming stream
  * @param hwdecoder_type: Decoder type
  * @param decConf: Pointer to struct that holds decode related items
@@ -86,7 +87,7 @@ uint8_t initCard(uint32_t device, DevConf *devConf) {
  * @param decXmaParamConf: Decode TLVs
  * @return Fail/Pass
  */
-uint8_t initDec(XmaHandle handle, int width, int height, int fps_num, int fps_den, XmaDecoderType hwdecoder_type, DecConf *decConf, int decDev, uint32_t decXmaParamConfCnt, XmaParameter* decXmaParamConf) {
+uint8_t initDec(XmaHandle handle, XmaFormatType sw_format, int width, int height, int fps_num, int fps_den, XmaDecoderType hwdecoder_type, DecConf *decConf, int decDev, uint32_t decXmaParamConfCnt, XmaParameter* decXmaParamConf) {
 
     int32_t            planes, plane;
 
@@ -101,7 +102,7 @@ uint8_t initDec(XmaHandle handle, int width, int height, int fps_num, int fps_de
     }
 
     decConf->frame_props.format    = XMA_VPE_FMT_TYPE;
-    decConf->frame_props.sw_format = XMA_YUV420P_FMT_TYPE;
+    decConf->frame_props.sw_format = sw_format;
     decConf->frame_props.width     = decConf->xrm_props.width;
     decConf->frame_props.height    = decConf->xrm_props.height;
     decConf->frame_props.bits_per_pixel = 8;
@@ -134,15 +135,17 @@ uint8_t initDec(XmaHandle handle, int width, int height, int fps_num, int fps_de
  * properties
  *
  * @param handle: XMA handle
+ * @param format: Host side format
+ * @param sw_format: Device side format
  * @param width, height, bits_per_pixel, fps_num and fps_den: Expected parameters of the stream
  * @param downloadConf: Pointer to struct that holds download filter related items
  * @return Fail/Pass
  */
-uint8_t initDownload(XmaHandle handle, int width, int height, int32_t bits_per_pixel, int fps_num, int fps_den, DownloadConf *downloadConf) {
+uint8_t initDownload(XmaHandle handle, XmaFormatType format, XmaFormatType sw_format, int width, int height, int32_t bits_per_pixel, int fps_num, int fps_den, DownloadConf *downloadConf) {
 
     int32_t            planes, plane;
-    downloadConf->frame_props.format    = XMA_YUV420P_FMT_TYPE;
-    downloadConf->frame_props.sw_format = XMA_YUV420P_FMT_TYPE;
+    downloadConf->frame_props.format    = format;
+    downloadConf->frame_props.sw_format = sw_format;
     downloadConf->frame_props.width     = width;
     downloadConf->frame_props.height    = height;
     downloadConf->frame_props.bits_per_pixel = bits_per_pixel;
@@ -156,13 +159,13 @@ uint8_t initDownload(XmaHandle handle, int width, int height, int32_t bits_per_p
     downloadConf->xma_props.params                       = NULL;
     downloadConf->xma_props.handle                       = handle;
     downloadConf->xma_props.input.format                 = XMA_VPE_FMT_TYPE;
-    downloadConf->xma_props.input.sw_format              = XMA_YUV420P_FMT_TYPE;
+    downloadConf->xma_props.input.sw_format              = sw_format;
     downloadConf->xma_props.input.width                  = downloadConf->frame_props.width;
     downloadConf->xma_props.input.height                 = downloadConf->frame_props.height;
     downloadConf->xma_props.input.framerate.numerator    = fps_num;
     downloadConf->xma_props.input.framerate.denominator  = fps_den;
-    downloadConf->xma_props.output.format                = XMA_YUV420P_FMT_TYPE;
-    downloadConf->xma_props.output.sw_format             = XMA_YUV420P_FMT_TYPE;
+    downloadConf->xma_props.output.format                = format;
+    downloadConf->xma_props.output.sw_format             = sw_format;
     downloadConf->xma_props.output.width                 = downloadConf->frame_props.width;
     downloadConf->xma_props.output.height                = downloadConf->frame_props.height;
     downloadConf->xma_props.output.framerate.numerator   = downloadConf->xma_props.input.framerate.numerator;
@@ -181,15 +184,17 @@ uint8_t initDownload(XmaHandle handle, int width, int height, int32_t bits_per_p
  * properties
  *
  * @param handle: XMA handle
+ * @param format: Host side format
+ * @param sw_format: Device side format
  * @param width, height, bits_per_pixel, fps_num and fps_den: Expected parameters of the stream
  * @param downloadConf: Pointer to struct that holds upload filter related items
  * @return Fail/Pass
  */
-uint8_t initUpload(XmaHandle handle, int width, int height, int32_t bits_per_pixel, int fps_num, int fps_den, UploadConf *uploadConf) {
+uint8_t initUpload(XmaHandle handle, XmaFormatType format, XmaFormatType sw_format, int width, int height, int32_t bits_per_pixel, int fps_num, int fps_den, UploadConf *uploadConf) {
 
     int32_t            planes, plane;
-    uploadConf->frame_props.format    = XMA_YUV420P_FMT_TYPE;
-    uploadConf->frame_props.sw_format = XMA_YUV420P_FMT_TYPE;
+    uploadConf->frame_props.format    = format;
+    uploadConf->frame_props.sw_format = sw_format;
     uploadConf->frame_props.width     = width;
     uploadConf->frame_props.height    = height;
     uploadConf->frame_props.bits_per_pixel = bits_per_pixel;
@@ -202,14 +207,14 @@ uint8_t initUpload(XmaHandle handle, int width, int height, int32_t bits_per_pix
     uploadConf->xma_props.param_cnt                    = 0;
     uploadConf->xma_props.params                       = NULL;
     uploadConf->xma_props.handle                       = handle;
-    uploadConf->xma_props.input.format                 = XMA_YUV420P_FMT_TYPE;
-    uploadConf->xma_props.input.sw_format              = XMA_YUV420P_FMT_TYPE;
+    uploadConf->xma_props.input.format                 = format;
+    uploadConf->xma_props.input.sw_format              = sw_format;
     uploadConf->xma_props.input.width                  = uploadConf->frame_props.width;
     uploadConf->xma_props.input.height                 = uploadConf->frame_props.height;
     uploadConf->xma_props.input.framerate.numerator    = fps_num;
     uploadConf->xma_props.input.framerate.denominator  = fps_den;
     uploadConf->xma_props.output.format                = XMA_VPE_FMT_TYPE;
-    uploadConf->xma_props.output.sw_format             = XMA_YUV420P_FMT_TYPE;
+    uploadConf->xma_props.output.sw_format             = sw_format;
     uploadConf->xma_props.output.width                 = uploadConf->frame_props.width;
     uploadConf->xma_props.output.height                = uploadConf->frame_props.height;
     uploadConf->xma_props.output.framerate.numerator   = uploadConf->xma_props.input.framerate.numerator;
@@ -228,7 +233,6 @@ uint8_t initUpload(XmaHandle handle, int width, int height, int32_t bits_per_pix
  * properties
  *
  * @param handle: XMA handle
- * @param format: Host side format
  * @param sw_format: Device side format
  * @param width, height, bits_per_pixel and framerate: Expected parameters of the incoming stream
  * @param in_xrm_props: Pointer to input XRM properties
@@ -240,13 +244,13 @@ uint8_t initUpload(XmaHandle handle, int width, int height, int32_t bits_per_pix
  * @param scalerOutputConf: Pointer to scaled output configurations
  * @return Fail/Pass
  */
-uint8_t initScaler(XmaHandle handle, XmaFormatType format, XmaFormatType sw_format, int32_t width, int32_t height, int32_t bits_per_pixel, XmaFraction framerate, XrmInterfaceProperties *in_xrm_props, ScalerConf *scalerConf, int scalerDev, uint32_t scalerXmaParamConfCnt, XmaParameter* scalerXmaParamConf, int32_t scalerOutputConfCnt, XmaScalerInOutProperties *scalerOutputConf) {
+uint8_t initScaler(XmaHandle handle, XmaFormatType sw_format, int32_t width, int32_t height, int32_t bits_per_pixel, XmaFraction framerate, XrmInterfaceProperties *in_xrm_props, ScalerConf *scalerConf, int scalerDev, uint32_t scalerXmaParamConfCnt, XmaParameter* scalerXmaParamConf, int32_t scalerOutputConfCnt, XmaScalerInOutProperties *scalerOutputConf) {
 
     scalerConf->xma_props.num_outputs = scalerOutputConfCnt;
     for(int32_t i = 0; i < scalerConf->xma_props.num_outputs; i++) {
         scalerConf->frame_props[i].width = scalerOutputConf[i].width;
         scalerConf->frame_props[i].height = scalerOutputConf[i].height;
-        scalerConf->frame_props[i].format = format;
+        scalerConf->frame_props[i].format = XMA_VPE_FMT_TYPE;
         scalerConf->frame_props[i].sw_format = sw_format;
         for(int plane_id = 0; plane_id < xma_frame_planes_get(handle, &scalerConf->frame_props[i]); plane_id++) {
             scalerConf->frame_props[i].linesize[plane_id] =
@@ -261,7 +265,7 @@ uint8_t initScaler(XmaHandle handle, XmaFormatType format, XmaFormatType sw_form
     scalerConf->dev_index = scalerDev;
     scalerConf->xma_props.hwscaler_type = XMA_ABR_SCALER_TYPE;
     scalerConf->xma_props.handle = handle;
-    scalerConf->xma_props.input.format = format;
+    scalerConf->xma_props.input.format = XMA_VPE_FMT_TYPE;
     scalerConf->xma_props.input.sw_format = sw_format;
     scalerConf->xma_props.input.width = width;
     scalerConf->xma_props.input.height = height;
@@ -284,7 +288,6 @@ uint8_t initScaler(XmaHandle handle, XmaFormatType format, XmaFormatType sw_form
  * properties
  *
  * @param handle: XMA handle
- * @param format: Host side format
  * @param sw_format: Device side format
  * @param encOutputCnt: Number of encode outputs
  * @param bits_per_pixel and framerate: Array of bpp
@@ -301,7 +304,7 @@ uint8_t initScaler(XmaHandle handle, XmaFormatType format, XmaFormatType sw_form
  * @param encPreset: Array of encoding preset
  * @return Fail/Pass
  */
-uint8_t initEnc(XmaHandle handle, XmaFormatType format, XmaFormatType sw_format, uint32_t encOutputCnt, int32_t *bits_per_pixel, EncConf *encConf, uint8_t *encDev, XrmInterfaceProperties *encXrmConf, int8_t *encSlice, uint8_t *encXav1, uint8_t *encUll, XmaEncoderType *encCodec, uint32_t encXmaParamConfCnt, XmaParameter* encXmaParamConf, int32_t *encRates, uint8_t *encPreset) {
+uint8_t initEnc(XmaHandle handle, XmaFormatType sw_format, uint32_t encOutputCnt, int32_t *bits_per_pixel, EncConf *encConf, uint8_t *encDev, XrmInterfaceProperties *encXrmConf, int8_t *encSlice, uint8_t *encXav1, uint8_t *encUll, XmaEncoderType *encCodec, uint32_t encXmaParamConfCnt, XmaParameter* encXmaParamConf, int32_t *encRates, uint8_t *encPreset) {
 
     int i, ret;
     encConf->dev_index = encDev;
@@ -317,7 +320,7 @@ uint8_t initEnc(XmaHandle handle, XmaFormatType format, XmaFormatType sw_format,
         encConf->xma_props[i].hwencoder_type = encCodec[i];
         encConf->xma_props[i].param_cnt = encXmaParamConfCnt;
         encConf->xma_props[i].params = encXmaParamConf;
-        encConf->xma_props[i].format = format;
+        encConf->xma_props[i].format = XMA_VPE_FMT_TYPE;
         encConf->xma_props[i].sw_format = sw_format;
         encConf->xma_props[i].bits_per_pixel = bits_per_pixel[i];
         encConf->xma_props[i].width = encConf->xrm_props[i].width;
@@ -495,8 +498,11 @@ uint8_t procDownload(DownloadConf *downloadConf, XmaFrame *out_frame) {
  * @return Upload filter send/receive status
  */
 uint8_t procUpload(UploadConf *uploadConf, XmaFrame *in_frame) {
-
-    int rc = xma_filter_session_send_frame(uploadConf->session, in_frame);
+    int rc;
+    uint32_t counter = 0;
+    do {
+        rc = xma_filter_session_send_frame(uploadConf->session, in_frame);
+    } while ((rc == XMA_TRY_AGAIN) && (counter++ < UPLOAD_NO_TRY));
     if(rc != XMA_SUCCESS) {
         fprintf(stderr,"%s: xma_filter_session_send_frame returned status code %d\n", __FUNCTION__, rc);
     } else if(rc == XMA_SUCCESS) {
@@ -508,7 +514,7 @@ uint8_t procUpload(UploadConf *uploadConf, XmaFrame *in_frame) {
             fprintf(stderr,"%s: xma_frame_alloc failed\n", __FUNCTION__);
             return XMA_ERROR;
         }
-        uint32_t counter = 0;
+        counter = 0;
         do {
             rc   = xma_filter_session_recv_frame(uploadConf->session, uploadConf->out_frame);
             if (rc == XMA_TRY_AGAIN) {

@@ -36,8 +36,10 @@
  */
 #define DEV_IDX 0
 #define BITS_PER_PIXEL 8
+#define PIXEL_FORMAT XMA_YUV420P_FMT_TYPE
 #define FPS_NUM 24000
 #define FPS_DEN 1001
+
 enum argPosDec {IN_FILE=1, FORMAT, OUT_FILE, WIDTH, HEIGHT};
 
 uint8_t initInput(char *argv[], IOConf *ioConf);

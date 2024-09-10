@@ -37,6 +37,7 @@
  */
 #define DEV_IDX 0
 #define BITS_PER_PIXEL 8
+#define PIXEL_FORMAT XMA_YUV420P_FMT_TYPE
 
 enum argPosDownload {IN_FILE=1, OUT_FILE};
 
