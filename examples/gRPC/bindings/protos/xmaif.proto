@@ -1,0 +1,206 @@
+/*
+ * Copyright (C) 2024, Xilinx Inc - All rights reserved
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"). You may
+ * not use this file except in compliance with the License. A copy of the
+ * License is located at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations
+ * under the License.
+ */
+
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "io.grpc.examples.xmaif";
+option java_outer_classname = "XmaifProto";
+option objc_class_prefix = "XMAIF";
+
+package xmaif;
+
+// Bare minimum proto definitions to pass relevant parameters to XMA and XRM.
+
+message DevId {
+   uint32 device_id = 1;
+}
+
+message DevOut {
+    uint64 ptr_dev_conf = 1;
+}
+
+message NoArgs {}
+
+message MA35DStatus {
+    uint32 status = 1;
+}
+
+message XmaParameter {
+  string       name = 1;
+  uint64       value = 2;
+  string       expert_value = 3;
+}
+
+message XrmInterfaceProperties {
+  int32 width = 1;
+  int32 height = 2;
+  int32 fps_num = 3;
+  int32 fps_den = 4;
+  bool is_la_enabled = 5;
+  uint32 enc_cores = 6;
+  string preset = 7;
+}
+
+message DecArg {
+    uint64 ptr_dev_conf = 1;
+    int32 width = 2;
+    int32 height = 3;
+    int32 fps_num = 4;
+    int32 fps_den = 5;
+    int32 hwdecoder_type = 6;
+    int32 decode_id = 7;
+    repeated XmaParameter dec_xma_param_conf = 8;
+}
+
+message VclIn {
+    bytes xma_data_buffer = 1;
+    uint64 dataread = 2;
+}
+
+/* The same as DecIn would have been*/
+message VclOut {
+    bytes xma_data_buffer = 1;
+    uint64 vcl_start = 2;
+    uint64 vcl_end = 3;
+    uint64 dataproc = 4;
+    bool flush = 5;
+    bool cont = 6;
+
+}
+
+message DecOut {
+    uint64 ptr_out_frame = 1;
+    bool cont = 2;
+    bool flush = 3;
+}
+
+message DownloadArg {
+    uint64 ptr_dev_conf = 1;
+    int32 width = 2;
+    int32 height = 3;
+    int32 bits_per_pixel = 4;
+    int32 fps_num = 5;
+    int32 fps_den = 6;
+}
+
+message DownloadLineSize {
+    uint64 p0 = 1;
+    uint64 p1 = 2;
+    uint64 p2 = 3;
+}
+
+message DownloadIn {
+    uint64 ptr_out_frame = 1;
+    bool cont = 2;
+    bool flush = 3;
+}
+
+message DownloadOut {
+    bytes ptr_out_frame_host_p0 = 1;
+    bytes ptr_out_frame_host_p1 = 2;
+    bytes ptr_out_frame_host_p2 = 3;
+    bool cont = 4;
+    bool flush = 5;
+}
+
+message UploadArg {
+    uint64 ptr_dev_conf = 1;
+    int32 width = 2;
+    int32 height = 3;
+    int32 bits_per_pixel = 4;
+    int32 fps_num = 5;
+    int32 fps_den = 6;
+}
+
+message UploadLineSize {
+    uint64 p0 = 1;
+    uint64 p1 = 2;
+    uint64 p2 = 3;
+}
+
+message UploadIn {
+    bytes ptr_out_frame_host_p0 = 1;
+    bytes ptr_out_frame_host_p1 = 2;
+    bytes ptr_out_frame_host_p2 = 3;
+    bool flush = 4;
+}
+
+message UploadOut {
+    uint64 ptr_out_frame = 1;
+    bool cont = 2;
+    bool flush = 3;
+}
+
+message EncArg {
+    uint64 ptr_dev_conf = 1;
+    uint32 enc_output_cnt = 2;
+    repeated int32 bits_per_pixel = 3;
+    repeated uint32 enc_dev = 4;
+    repeated XrmInterfaceProperties enc_xrm_conf = 5;
+    repeated int32 enc_slice = 6;
+    repeated uint32 enc_xav1 = 7;
+    repeated uint32 enc_ull = 8;
+    repeated uint32 enc_codec = 9;
+    repeated XmaParameter enc_xma_param_conf = 10;
+    repeated uint32 enc_rate = 11;
+    repeated uint32 enc_preset = 12;
+}
+
+message EncIn {
+    repeated uint64 ptr_out_frames = 1;
+    bool flush = 2;
+}
+
+message EncOut {
+    repeated bytes xma_data_buffers = 1;
+    bool cont = 2;
+    bool flush = 3;
+}
+
+
+// Simple service definition., i.e. initialization, processing and closing routines.
+
+service Device {
+    rpc Init(DevId) returns (DevOut) {}
+    rpc Close(NoArgs) returns (MA35DStatus) {}
+}
+
+service Decoder {
+    rpc Init(DecArg) returns (NoArgs) {}
+    rpc ExtractVCL(VclIn) returns (VclOut) {}
+    rpc Proc(VclOut) returns (DecOut) {}
+    rpc Close(NoArgs) returns (MA35DStatus) {}
+}
+
+service Download {
+    rpc Init(DownloadArg) returns (DownloadLineSize) {}
+    rpc Proc(DownloadIn) returns (DownloadOut) {}
+    rpc Close(NoArgs) returns (MA35DStatus) {}
+}
+
+service Upload {
+    rpc Init(UploadArg) returns (UploadLineSize) {}
+    rpc Proc(UploadIn) returns (UploadOut) {}
+    rpc Close(NoArgs) returns (MA35DStatus) {}
+}
+
+service Encoder {
+    rpc Init(EncArg) returns (NoArgs) {}
+    rpc Proc(EncIn) returns (EncOut) {}
+    rpc Close(NoArgs) returns (MA35DStatus) {}
+}
+

@@ -1,0 +1,55 @@
+# Copyright 2024, Advanced Micro Device, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License"); 
+# you may not use this file except in compliance with the License. 
+# You may obtain a copy of the License at
+#
+#   http://www.apache.org/licenses/LICENSE-2.0
+# 
+# Unless required by applicable law or agreed to in writing, software 
+# distributed under the License is distributed on an "AS IS" BASIS, 
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+# See the License for the specific language governing permissions and 
+# limitations under the License.
+#
+
+FROM ubuntu:22.04
+ENV DEBIAN_FRONTEND="noninteractive"
+SHELL ["/bin/bash", "-c"]
+
+ARG SDK_VER
+RUN apt -y update && apt -y upgrade && apt -y install wget gpg lsb-release apt-utils \
+    && wget -qO - https://www.xilinx.com/support/download/2018-2-1/xilinx-master-signing-key.asc > /usr/share/keyrings/xilinx-master-signing-key.asc \
+    && echo "deb [arch=amd64 signed-by=/usr/share/keyrings/xilinx-master-signing-key.asc] https://packages.xilinx.com/artifactory/debian-packages $(lsb_release -sc) main" > /etc/apt/sources.list.d/xilinx.list \
+    && wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - > /etc/apt/trusted.gpg.d/kitware.gpg \
+    && echo "deb https://apt.kitware.com/ubuntu/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/cmake.list \
+    && apt -y update \
+    && apt install -y build-essential autoconf libtool pkg-config curl iproute2 gdb gdbserver cmake golang libssl-dev uuid-dev linux-headers-$(uname -r) \
+      dkms pciutils libhugetlbfs0 libboost-all-dev pciutils udev git vim python3 python3-pip
+
+RUN git clone https://github.com/gdraheim/docker-systemctl-replacement.git /usr/local/share/docker-systemctl-replacement \
+    && echo "alias systemctl='python3 /usr/local/share/docker-systemctl-replacement/files/docker/systemctl3.py'" >> /root/.bashrc \
+    && rm -f /usr/bin/systemctl \
+    && ln -s /usr/local/share/docker-systemctl-replacement/files/docker/systemctl3.py /usr/bin/systemctl
+RUN apt install -y amd-ama-driver=${SDK_VER}-* amd-ama-core=${SDK_VER}-* amd-ama-xma=${SDK_VER}-* amd-ama-ffmpeg=${SDK_VER}-* amd-ama-gstreamer=${SDK_VER}-* \
+    && apt-mark hold amd-ama-driver amd-ama-core amd-ama-xma amd-ama-ffmpeg amd-ama-gstreamer
+
+ARG GRPC_TAG
+RUN cd /opt \
+    && git clone --recurse-submodules -b $GRPC_TAG --depth 1 --shallow-submodules https://github.com/grpc/grpc \
+    && cd grpc && git branch -a \
+    && cd /opt/grpc && mkdir -p cmake/build \
+    && cd cmake/build \
+    && cmake -DgRPC_INSTALL=ON -DgRPC_BUILD_TESTS=OFF -DCMAKE_INSTALL_PREFIX=/opt/grpc ../.. \
+    && make -j \
+    && make install
+
+RUN python3 -m pip install --upgrade pip \
+    && pip install grpcio==${GRPC_TAG} grpcio-tools==${GRPC_TAG}
+
+ARG USER
+ARG UID
+ARG GID
+RUN groupadd -g ${GID} dev
+RUN useradd -u ${UID} -g ${GID} -ms /bin/bash ${USER}
+WORKDIR /home/$USER
