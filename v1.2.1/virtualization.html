@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="English" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+<!-- OneTrust Cookies Consent Notice start for amd.github.io -->
+<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="cb638ba1-8bc4-44a0-9338-632d4dc19be6" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script>
+<!-- OneTrust Cookies Consent Notice end for amd.github.io -->
+<!-- Google Tag Manager -->
+<script type="text/plain" class="optanon-category-C0002">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-5RHQV7');</script>
+<!-- End Google Tag Manager -->
+  <title>Virtualization &mdash; AMD AMA 1.2.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css" type="text/css" />
+      <link rel="stylesheet" href="_static/_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=e6179555"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/design-tabs.js?v=36754332"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Tutorials and Examples" href="examples.html" />
+    <link rel="prev" title="Getting Started with AMD AMA Video SDK Cards" href="getting_started_on_prem.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+<!-- Google Tag Manager -->
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5RHQV7" height="0" width="0" style="display:none;visibility:hidden" class="optanon-category-C0002"></iframe></noscript>
+<!-- End Google Tag Manager --> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+            <a href="index.html" class="icon icon-home"> AMD AMA
+          </a>
+              <div class="version">
+                1.2.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Get Started</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="release_notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started_on_prem.html">Hardware Setup</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Virtualization</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#sr-iov">SR-IOV</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#linux-host">Linux Host</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#linux-vm-guest">Linux VM Guest</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#pcie-passthrough">PCIe Passthrough</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Tutorials and Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="git_hub.html">AMA Repository</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="specs_and_features.html">Specs and Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="package_feed.html">Package Feed Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="using_ffmpeg.html">Using FFmpeg</a></li>
+<li class="toctree-l1"><a class="reference internal" href="using_gstreamer.html">Using Gstreamer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="unified_logging.html">Unified Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tuning_video_quality.html">Tuning Video Quality</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tuning_pipeline_latency.html">Tuning Latency of Transcode Pipeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="managing_compute_resources.html">Managing Compute Resources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="c_apis.html">C API Programming Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="card_management.html">Card Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="migration.html">Migration Path</a></li>
+<li class="toctree-l1"><a class="reference internal" href="encoder_comp_matrix.html">Encoding Compatibility Matrix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preview.html">New Feature Preview</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Support</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://www.xilinx.com/support.html">File an issue</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://support.xilinx.com/s/topic/0TO2E000000YKY8WAO/video?language=en_US">Video Forum</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other AMA SDK Versions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://amd.github.io/ama-sdk/v1.2/index.html">   v1.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://amd.github.io/ama-sdk/v1.1.2/index.html">   v1.1.2</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Video Products</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/video-sdk/v3.0/index.html">U30</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">AMD AMA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Virtualization</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="virtualization">
+<h1>Virtualization<a class="headerlink" href="#virtualization" title="Link to this heading">¶</a></h1>
+<nav class="contents local" id="table-of-contents">
+<p class="topic-title">Table of Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#sr-iov" id="id5">SR-IOV</a></p>
+<ul>
+<li><p><a class="reference internal" href="#linux-host" id="id6">Linux Host</a></p></li>
+<li><p><a class="reference internal" href="#linux-vm-guest" id="id7">Linux VM Guest</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#pcie-passthrough" id="id8">PCIe Passthrough</a></p></li>
+</ul>
+</nav>
+<section id="sr-iov">
+<span id="id1"></span><h2><a class="toc-backref" href="#id5" role="doc-backlink">SR-IOV</a><a class="headerlink" href="#sr-iov" title="Link to this heading">¶</a></h2>
+<p>AMA virtualization support allows for isolated interaction of clients' operating systems with AMA compatible cards, in Linux. Specifically, isolation is achieved by relying on I/O Memory Management Unit (IOMMU) and Single Root I/O virtualization (SR-IOV) technologies. As such, AMA virtualization support provides an efficient interaction path between client applications and AMA compatible cards. This section describes Linux virtualization setup.</p>
+<section id="linux-host">
+<span id="id2"></span><h3><a class="toc-backref" href="#id6" role="doc-backlink">Linux Host</a><a class="headerlink" href="#linux-host" title="Link to this heading">¶</a></h3>
+<ol class="arabic">
+<li><p>Ensure that host system is setup as per <a class="reference internal" href="getting_started_on_prem.html"><span class="doc">On Premises</span></a>.</p></li>
+<li><p>Install CPU checker and KVM packages on the host. For an Ubuntu host, do the following:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sudo apt install -y cpu-checker qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils virt-manager
+</pre></div>
+</div>
+</li>
+<li><p>Ensure that virtualization is enabled on the host:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>lscpu | grep Virtualization
+Virtualization:                  AMD-V
+$ kvm-ok
+INFO: /dev/kvm exists
+KVM acceleration can be used
+</pre></div>
+</div>
+</li>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">/etc/modules-load.d/ama_transcoder.conf</span></code> doesn't exists, execute the following:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>echo ama_transcoder | sudo tee /etc/modules-load.d/ama_transcoder.conf
+</pre></div>
+</div>
+</li>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">/etc/modprobe.d/ama_transcoder.conf</span></code> doesn't exists, execute the following:</p>
+<div class="highlight-none notranslate" id="ama-transcoder"><div class="highlight"><pre><span></span>echo &#39;install ama_transcoder /sbin/modprobe --ignore-install ama_transcoder &amp;&amp; /opt/amd/ama/ma35/bin/mamgmt numvfs --num 1 --device &lt;BDF&gt; &amp;&amp; &lt;REPEAT&gt;&#39; | sudo tee /etc/modprobe.d/ama_transcoder.conf
+echo &#39;remove ama_transcoder /sbin/modprobe -r --ignore-install ama_transcoder; /opt/amd/ama/ma35/bin/mamgmt numvfs --num 0 --device &lt;BDF&gt;; &lt;REPEAT&gt;&#39; | sudo tee -a /etc/modprobe.d/ama_transcoder.conf
+</pre></div>
+</div>
+<p>, where <code class="docutils literal notranslate"><span class="pre">BDF</span></code> is PCIe Bus:Device.Function designation of the device(s) and <code class="docutils literal notranslate"><span class="pre">REPEAT</span></code> indicates that the <code class="docutils literal notranslate"><span class="pre">/opt/amd/ama/ma35/bin/mamgmt</span></code> commands are to be repeated for all devices that are meant to be passed to a VM.</p>
+<p>As an example, in a system with 2 cards:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>lspci -d 10ee:
+01:00.0 Multimedia controller: Xilinx Corporation Device 5070
+02:00.0 Multimedia controller: Xilinx Corporation Device 5070
+03:00.0 Multimedia controller: Xilinx Corporation Device 5070
+04:00.0 Multimedia controller: Xilinx Corporation Device 5070
+</pre></div>
+</div>
+<p>, in order to make one device, of each card, available to 2 distinct VMs, <code class="docutils literal notranslate"><span class="pre">/etc/modprobe.d/ama_transcoder.conf</span></code> will have the following content:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>install ama_transcoder /sbin/modprobe --ignore-install ama_transcoder &amp;&amp; /opt/amd/ama/ma35/bin/mamgmt numvfs --num 1 --device 02:00.0 &amp;&amp; /opt/amd/ama/ma35/bin/mamgmt numvfs --num 1 --device 04:00.0
+remove  ama_transcoder /sbin/modprobe --ignore-install ama_transcoder;   /opt/amd/ama/ma35/bin/mamgmt numvfs --num 0 --device 02:00.0;   /opt/amd/ama/ma35/bin/mamgmt numvfs --num 0 --device 04:00.0
+</pre></div>
+</div>
+</li>
+<li><p>Reboot the host. After reboot execute and confirm the following:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>lsmod | grep ama_transcoder
+  ama_transcoder        831488  0
+</pre></div>
+</div>
+<p>If the above returns empty, then insert the module manually, by <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">modprobe</span> <span class="pre">ama_transcoder</span></code>. Otherwise, confirm that driver is properly configured:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cat /sys/bus/pci/devices/0000:01:00.0/sriov_numvfs
+1
+
+$ lspci -d 10ee:
+01:00.0 Multimedia controller: Xilinx Corporation Device 5070
+01:00.1 Multimedia controller: Xilinx Corporation Device 5071
+...
+</pre></div>
+</div>
+<p>The first command confirms that VM guest's Virtual Function (VF) that is associated with host's Physical Function (PF) is enabled and the second one confirms its creation. Note that this snippet assumes target device is 01.00.0.</p>
+</li>
+<li><p>Setup KVM on the host and confirm that it is running:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sudo systemctl enable libvirtd
+sudo systemctl start libvirtd
+systemctl status libvirtd
+libvirtd.service - Virtualization daemon
+   Loaded: loaded (/lib/systemd/system/libvirtd.service; enabled; vendor preset: enabled)
+   Active: active (running) since Wed 2023-06-07 09:19:44 PDT; 7h ago
+   ...
+</pre></div>
+</div>
+</li>
+<li><p>Obtain Ubuntu 20.04 server image, from <a class="reference external" href="https://releases.ubuntu.com/focal">Ubuntu Focal Fossa</a>.</p></li>
+<li><p>Instantiate the VM guest, by allocating it at least 8 CPU cores and 12GB of RAM.</p>
+<p>Check <code class="docutils literal notranslate"><span class="pre">virt-install</span></code> version:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>virt-install --version
+</pre></div>
+</div>
+<p>If it is 4.0.0 or above, execute the following:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sudo virt-install --name &lt;VM name&gt; \
+--ram 12288 --vcpu 8 --virt-type kvm --machine q35 \
+--disk path=&lt;Path to qcow2 disk file&gt;,size=128 \
+--os-type linux --os-variant ubuntu20.04 --network network:default --graphics none --console pty,target_type=serial --extra-args &quot;console=ttyS0&quot; \
+--location &lt;Path to Ubuntu 20.04 ISO file&gt;,kernel=casper/vmlinuz,initrd=casper/initrd \
+--force --debug --features  apic=on,ioapic.driver=qemu --iommu model=intel,driver.intremap=on,driver.eim=on,driver.caching_mode=on --memorybacking hugepages.page.size=2,hugepages.page.unit=M,nosharepages=1,locked=1 \
+--hostdev &lt;xx&gt;:00.1,driver.name=vfio
+</pre></div>
+</div>
+<p>, where <code class="docutils literal notranslate"><span class="pre">VM</span> <span class="pre">name</span></code> is the name of the VM image and <code class="docutils literal notranslate"><span class="pre">Path</span> <span class="pre">to</span> <span class="pre">qcow2</span> <span class="pre">disk</span> <span class="pre">file</span></code> is the path to VM's disk storage, which will be created. Note that this file will be owned by <code class="docutils literal notranslate"><span class="pre">libvirt-qemu</span></code> user and <code class="docutils literal notranslate"><span class="pre">kvm</span></code> group. Also, <code class="docutils literal notranslate"><span class="pre">Path</span> <span class="pre">to</span> <span class="pre">Ubuntu</span> <span class="pre">20.04</span> <span class="pre">ISO</span> <span class="pre">file</span></code> is the path to the downloaded ISO image and <cite>xx</cite> is part of BDF designation as described <a class="reference internal" href="#ama-transcoder"><span class="std std-ref">above</span></a>. Repeat this step for as many VMs that have been defined in <code class="docutils literal notranslate"><span class="pre">/etc/modprobe.d/ama_transcoder.conf</span></code>.</p>
+<p>Otherwise, first create the VM without <cite>ioapic.driver</cite> and  <cite>--iommu</cite> parameters:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sudo virt-install --name &lt;VM name&gt; \
+--ram 12288 --vcpu 8 --virt-type kvm --machine q35 \
+--disk path=&lt;Path to qcow2 disk file&gt;,size=128 \
+--os-type linux --os-variant ubuntu20.04 --network network:default --graphics none --console pty,target_type=serial --extra-args &quot;console=ttyS0&quot; \
+--location &lt;Path to Ubuntu 20.04 ISO file&gt;,kernel=casper/vmlinuz,initrd=casper/initrd \
+--force --debug --hostdev &lt;xx&gt;:00.1,driver.name=vfio
+</pre></div>
+</div>
+<p>and after VM creation add <cite>ioapic.driver</cite> and  <cite>--iommu</cite> parameters, via <cite>virsh edit</cite>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>virsh edit &lt;VM name&gt;
+&lt;domain type=&#39;kvm&#39;&gt;
+   ...
+   &lt;memoryBacking&gt;
+    &lt;hugepages&gt;
+      &lt;page size=&#39;2048&#39; unit=&#39;KiB&#39;/&gt;
+    &lt;/hugepages&gt;
+    &lt;nosharepages/&gt;
+    &lt;locked/&gt;
+  &lt;/memoryBacking&gt;
+   ...
+   &lt;features&gt;
+     &lt;acpi/&gt;
+     &lt;apic/&gt;
+     &lt;vmport state=&#39;off&#39;/&gt;
+     &lt;ioapic driver=&#39;qemu&#39;/&gt;
+   &lt;/features&gt;
+ ...
+   &lt;/rng&gt;
+   &lt;iommu model=&#39;intel&#39;&gt;
+     &lt;driver intremap=&#39;on&#39; caching_mode=&#39;on&#39;/&gt;
+   &lt;/iommu&gt;
+ &lt;/devices&gt;
+&lt;/domain&gt;
+</pre></div>
+</div>
+<p>During or after creation of a VM, it is helpful to install ssh server on the guest VM, in order to be able to connect to the instance:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sudo apt-get install openssh-server
+</pre></div>
+</div>
+<p>(To find the IP address of the running VM, run <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">virsh</span> <span class="pre">net-dhcp-leases</span> <span class="pre">default</span></code> or attach to the instance <code class="docutils literal notranslate"><span class="pre">virsh</span> <span class="pre">--connect</span> <span class="pre">qemu:///system</span> <span class="pre">console</span> <span class="pre">&lt;VM</span> <span class="pre">name&gt;</span></code> and issue the <code class="docutils literal notranslate"><span class="pre">ip</span> <span class="pre">a</span></code> command)</p>
+</li>
+</ol>
+</section>
+<section id="linux-vm-guest">
+<span id="id3"></span><h3><a class="toc-backref" href="#id7" role="doc-backlink">Linux VM Guest</a><a class="headerlink" href="#linux-vm-guest" title="Link to this heading">¶</a></h3>
+<p>On the running VM instance execute the following:</p>
+<blockquote>
+<div><ol class="arabic">
+<li><p>Set the huge table pages to 6GB, plus an extra 96 pages, i.e. 3072+96:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sudo sh -c &quot;echo &#39;vm.nr_hugepages=3168&#39; &gt;&gt; /etc/sysctl.conf&quot;
+</pre></div>
+</div>
+</li>
+<li><p>Note that if you are running 20.04 Server edition, you may need to install generic kernel 5.15, dkms and gcc-11:</p></li>
+</ol>
+</div></blockquote>
+<blockquote id="kernel-update">
+<div><blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
+sudo apt install -y gcc-11 linux-image-5.15.0-60-generic dkms build-essential linux-headers-5.15.0-60-generic
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="arabic simple" start="3">
+<li><p>Reboot the VM</p></li>
+<li><p><a class="reference internal" href="getting_started_on_prem.html#install-sdk"><span class="std std-ref">Install the AMD AMA Video SDK</span></a> and run through <a class="reference internal" href="examples.html"><span class="doc">Tutorials and Examples</span></a></p></li>
+</ol>
+</div></blockquote>
+</section>
+</section>
+<section id="pcie-passthrough">
+<h2><a class="toc-backref" href="#id8" role="doc-backlink">PCIe Passthrough</a><a class="headerlink" href="#pcie-passthrough" title="Link to this heading">¶</a></h2>
+<p>Unlike the procedure delineated in <a class="reference internal" href="#sr-iov"><span class="std std-ref">SR-IOV</span></a>, where administrative tasks can only be performed through the host, PCIe passthrough allows for complete control of assigned devices, within the guest VM. That is to say, for all intent and purposes, the guest VM behaves as the host bare-metal. However, note that nested VMs are not supported. As an example, the following steps create a <a class="reference external" href="https://releases.ubuntu.com/focal">Ubuntu Focal Fossa</a> VM guest, with a single assigned device:</p>
+<ol class="arabic">
+<li><p>Proceed by following Steps 1-7 of <a class="reference internal" href="getting_started_on_prem.html#chassis-setup"><span class="std std-ref">Chassis Setup</span></a> (Enabling SR-IOV is optional.)</p></li>
+<li><p>Ensure virtualization is enabled and relevant packages are installed, by following Steps 2 &amp; 3 of <a class="reference internal" href="#linux-host"><span class="std std-ref">Linux Host</span></a></p></li>
+<li><p>Execute the following command: (KVM 4.0.0 or higher is assumed.)</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sudo virt-install --name vsdk_vm_passthrough --ram 12288 --vcpu 8 --virt-type kvm \
+--machine q35 --disk path=&lt;Path to qcow2 disk file&gt;,size=128 \
+--os-type linux --os-variant ubuntu20.04  --network network:default --graphics none \
+--console pty,target_type=serial \
+--features  apic=on,ioapic.driver=qemu --iommu model=intel,driver.intremap=on,driver.eim=on,driver.caching_mode=on \
+--memorybacking hugepages.page.size=2,hugepages.page.unit=M,nosharepages=1,locked=1 \
+--hostdev &lt;xx&gt;:00.0 --location &lt;Path to Ubuntu 20.04 ISO file&gt; \
+--extra-args &quot;console=ttyS0&quot; --force --debug
+</pre></div>
+</div>
+</li>
+</ol>
+<p>, where <code class="docutils literal notranslate"><span class="pre">Path</span> <span class="pre">to</span> <span class="pre">Ubuntu</span> <span class="pre">20.04</span> <span class="pre">ISO</span> <span class="pre">file</span></code> is the path to the downloaded ISO image. Customize the installation packages as needed. It is useful to include development packages and ssh server.</p>
+<ol class="arabic simple">
+<li><p>Set huge pages as per Step 1 of <a class="reference internal" href="#linux-vm-guest"><span class="std std-ref">Linux VM Guest</span></a>.</p></li>
+<li><p>Proceed by following Steps 3 &amp; 4 of <a class="reference internal" href="#linux-vm-guest"><span class="std std-ref">Linux VM Guest</span></a>.</p></li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Ignore messages pertaining to <code class="docutils literal notranslate"><span class="pre">sriov_drivers_autoprobe</span></code> file not found .</p>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          
+				  
+				  <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="getting_started_on_prem.html" class="btn btn-neutral float-left" title="Getting Started with AMD AMA Video SDK Cards" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="examples.html" class="btn btn-neutral float-right" title="Tutorials and Examples" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022-2024, Advanced Micro Devices, Inc.
+      <span class="lastupdated">Last updated on October 22, 2024.
+      </span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div>
+										
+</br>
+
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

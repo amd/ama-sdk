@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="English" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+<!-- OneTrust Cookies Consent Notice start for amd.github.io -->
+<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="cb638ba1-8bc4-44a0-9338-632d4dc19be6" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script>
+<!-- OneTrust Cookies Consent Notice end for amd.github.io -->
+<!-- Google Tag Manager -->
+<script type="text/plain" class="optanon-category-C0002">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-5RHQV7');</script>
+<!-- End Google Tag Manager -->
+  <title>Software Migration Considerations &mdash; AMD AMA 1.2 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css" type="text/css" />
+      <link rel="stylesheet" href="_static/_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=28ab6b15"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/design-tabs.js?v=36754332"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Encoding Compatibility Matrix" href="encoder_comp_matrix.html" />
+    <link rel="prev" title="Card Management" href="card_management.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+<!-- Google Tag Manager -->
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5RHQV7" height="0" width="0" style="display:none;visibility:hidden" class="optanon-category-C0002"></iframe></noscript>
+<!-- End Google Tag Manager --> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+            <a href="index.html" class="icon icon-home"> AMD AMA
+          </a>
+              <div class="version">
+                1.2
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Get Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="release_notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started_on_prem.html">Hardware Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="virtualization.html">Virtualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Tutorials and Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="git_hub.html">AMA Repository</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference Guides</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="announcements.html">Announcements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="specs_and_features.html">Specs and Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="package_feed.html">Package Feed Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="using_ffmpeg.html">Using FFmpeg</a></li>
+<li class="toctree-l1"><a class="reference internal" href="using_gstreamer.html">Using Gstreamer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="unified_logging.html">Unified Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tuning_video_quality.html">Tuning Video Quality</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tuning_pipeline_latency.html">Tuning Latency of Transcode Pipeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="managing_compute_resources.html">Managing Compute Resources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="c_apis.html">C API Programming Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="card_management.html">Card Management</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Migration Path</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#api-changes-from-alveo-u30">API Changes from Alveo U30</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#ffmpeg-api-changes">FFmpeg API Changes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gstreamer-api-changes">Gstreamer API Changes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#cli-changes-from-1-1-2-to-1-2">CLI Changes from 1.1.2 to 1.2</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#pcie-addressing">PCIe Addressing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ffmpeg-cli-changes">FFmpeg CLI Changes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#card-management">Card Management</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#c-apis">C APIs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="encoder_comp_matrix.html">Encoding Compatibility Matrix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preview.html">New Feature Preview</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Support</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://www.xilinx.com/support.html">File an issue</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://support.xilinx.com/s/topic/0TO2E000000YKY8WAO/video?language=en_US">Video Forum</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other AMA SDK Versions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://amd.github.io/ama-sdk/v1.1.2/index.html">   v1.1.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://amd.github.io/ama-sdk/latest/index.html">   latest</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Video Products</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/video-sdk/v3.0/index.html">U30</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">AMD AMA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Software Migration Considerations</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>This version of the SDK has been superseded by the <a class="reference external" href="https://amd.github.io/ama-sdk/latest/index.html">latest release</a> of the SDK.</p>
+</div>
+<section id="software-migration-considerations">
+<span id="migration-path"></span><h1>Software Migration Considerations<a class="headerlink" href="#software-migration-considerations" title="Link to this heading">¶</a></h1>
+<nav class="contents local" id="table-of-contents">
+<p class="topic-title">Table of Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#api-changes-from-alveo-u30" id="id1">API Changes from Alveo U30</a></p>
+<ul>
+<li><p><a class="reference internal" href="#ffmpeg-api-changes" id="id2">FFmpeg API Changes</a></p></li>
+<li><p><a class="reference internal" href="#gstreamer-api-changes" id="id3">Gstreamer API Changes</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#cli-changes-from-1-1-2-to-1-2" id="id4">CLI Changes from 1.1.2 to 1.2</a></p>
+<ul>
+<li><p><a class="reference internal" href="#pcie-addressing" id="id5">PCIe Addressing</a></p></li>
+<li><p><a class="reference internal" href="#ffmpeg-cli-changes" id="id6">FFmpeg CLI Changes</a></p></li>
+<li><p><a class="reference internal" href="#card-management" id="id7">Card Management</a></p></li>
+<li><p><a class="reference internal" href="#c-apis" id="id8">C APIs</a></p></li>
+</ul>
+</li>
+</ul>
+</nav>
+<p>This section of documentation covers the notable API differences between the current release of SDK, 1.2, and previous versions.</p>
+<section id="api-changes-from-alveo-u30">
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">API Changes from Alveo U30</a><a class="headerlink" href="#api-changes-from-alveo-u30" title="Link to this heading">¶</a></h2>
+<p>This sub-section describes differences between <a class="reference external" href="https://xilinx.github.io/video-sdk/v3.0/index.html">U30</a> and MA35D</p>
+<section id="ffmpeg-api-changes">
+<h3><a class="toc-backref" href="#id2" role="doc-backlink">FFmpeg API Changes</a><a class="headerlink" href="#ffmpeg-api-changes" title="Link to this heading">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50.0%" />
+<col style="width: 25.0%" />
+<col style="width: 25.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Options General</p></th>
+<th class="head"><p>MA35D</p></th>
+<th class="head"><p>U30</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><cite>-c:v</cite>:</p>
+<p>Used for codec selection. Aside from naming convention changes, new AV1  codec and VP9 decoder are now available.</p>
+</td>
+<td><p><a class="reference internal" href="using_ffmpeg.html#cmdoption-c-v"><code class="xref std std-option docutils literal notranslate"><span class="pre">-c:v</span></code></a></p></td>
+<td><p><a class="reference external" href="https://xilinx.github.io/video-sdk/v3.0/using_ffmpeg.html#cmdoption-c-v">-c:v</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><cite>-filter_complex</cite>:</p>
+<p>Used for frame filtering operation. Aside from naming convention changes, new 2D composition and ML operations are now available.</p>
+</td>
+<td><p><a class="reference internal" href="using_ffmpeg.html#cmdoption-filter_complex"><code class="xref std std-option docutils literal notranslate"><span class="pre">-filter_complex</span></code></a></p></td>
+<td><p><a class="reference external" href="https://xilinx.github.io/video-sdk/v3.0/using_ffmpeg.html#cmdoption-filter_complex">-filter_complex</a></p></td>
+</tr>
+<tr class="row-even"><td><p><cite>-hwaccel</cite>:</p>
+<p>Used to select hardware accelerator engine. This option was previously referred to as <code class="docutils literal notranslate"><span class="pre">xlnx_hwdev</span></code>.</p>
+</td>
+<td><p><a class="reference internal" href="using_ffmpeg.html#cmdoption-hwaccel"><code class="xref std std-option docutils literal notranslate"><span class="pre">-hwaccel</span></code></a></p></td>
+<td><p><a class="reference external" href="https://xilinx.github.io/video-sdk/v3.0/using_ffmpeg.html#cmdoption-xlnx_hwdev">-xlnx_hwdev</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><cite>-vf</cite>:</p>
+<p>Used to select the DMA transfer direction between host and accelerator.</p>
+</td>
+<td><p><a class="reference internal" href="using_ffmpeg.html#cmdoption-vf"><code class="xref std std-option docutils literal notranslate"><span class="pre">-vf</span></code></a></p></td>
+<td><p><a class="reference external" href="https://xilinx.github.io/video-sdk/v3.0/examples/ffmpeg/tutorials.html?highlight=vf#decode-only">xvbm_convert</a></p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 48.5%" />
+<col style="width: 24.2%" />
+<col style="width: 27.3%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Options Encoder</p></th>
+<th class="head"><p>Version 1.2</p></th>
+<th class="head"><p>U30</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><cite>-level</cite>:</p>
+<p>Used to specify encoder's level. It now supports AV1's levels.</p>
+</td>
+<td><p><a class="reference internal" href="using_ffmpeg.html#cmdoption-level"><code class="xref std std-option docutils literal notranslate"><span class="pre">-level</span></code></a></p></td>
+<td><p><a class="reference external" href="https://xilinx.github.io/video-sdk/v3.0/using_ffmpeg.html#cmdoption-level">-level</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><cite>-profile</cite>:</p>
+<p>Used to set encoder's profile. It now supports AV1's <cite>main</cite>.</p>
+</td>
+<td><p><a class="reference internal" href="using_ffmpeg.html#cmdoption-profile"><code class="xref std std-option docutils literal notranslate"><span class="pre">-profile</span></code></a></p></td>
+<td><p><a class="reference external" href="https://xilinx.github.io/video-sdk/v3.0/using_ffmpeg.html#cmdoption-profile">-profile</a></p></td>
+</tr>
+<tr class="row-even"><td><p><cite>-control_rate</cite>:</p>
+<p>Used to set rate control mode. Options to this setting have changed.</p>
+</td>
+<td><p><a class="reference internal" href="using_ffmpeg.html#cmdoption-control_rate"><code class="xref std std-option docutils literal notranslate"><span class="pre">-control_rate</span></code></a></p></td>
+<td><p><a class="reference external" href="https://xilinx.github.io/video-sdk/v3.0/using_ffmpeg.html#cmdoption-control-rate">-control-rate</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><cite>-tune_metrics</cite>:</p>
+<p>Used to tune VQ metrics. Options to this setting have changed.</p>
+</td>
+<td><p><a class="reference internal" href="using_ffmpeg.html#cmdoption-tune_metrics"><code class="xref std std-option docutils literal notranslate"><span class="pre">-tune_metrics</span></code></a></p></td>
+<td><p><a class="reference external" href="https://xilinx.github.io/video-sdk/v3.0/using_ffmpeg.html#cmdoption-tune-metrics">-tune-metrics</a></p></td>
+</tr>
+<tr class="row-even"><td><p><cite>-cores</cite>:</p>
+<p>Used to explicitly specify the number of processing cores.</p>
+</td>
+<td><p>Deprecated</p></td>
+<td><p><a class="reference external" href="https://xilinx.github.io/video-sdk/v3.0/using_ffmpeg.html#cmdoption-cores">-cores</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><cite>-periodicity-idr</cite>:</p>
+<p>Used to determine IDR frame frequency.</p>
+</td>
+<td><p>Deprecated</p></td>
+<td><p><a class="reference external" href="https://xilinx.github.io/video-sdk/v3.0/using_ffmpeg.html#cmdoption-periodicity-idr">-periodicity-idr</a></p></td>
+</tr>
+<tr class="row-even"><td><p><cite>-disable-pipeline</cite>:</p>
+<p>Used to enable/disable pipelining.</p>
+</td>
+<td><p>Deprecated</p></td>
+<td><p><a class="reference external" href="https://xilinx.github.io/video-sdk/v3.0/using_ffmpeg.html#cmdoption-disable-pipeline">-disable-pipeline</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><cite>-aspect-ratio</cite>:</p>
+<p>Used to set video's aspect ratio.</p>
+</td>
+<td><p>Deprecated</p></td>
+<td><p><a class="reference external" href="https://xilinx.github.io/video-sdk/v3.0/using_ffmpeg.html#cmdoption-aspect-ratio">-aspect-ratio</a></p></td>
+</tr>
+<tr class="row-even"><td><p><cite>-expert-options</cite>:</p>
+<p>Used to set encoder's expert option.</p>
+</td>
+<td><p>Deprecated</p></td>
+<td><p><a class="reference external" href="https://xilinx.github.io/video-sdk/v3.0/using_ffmpeg.html#cmdoption-expert-options">-expert-options</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><cite>-avc-lowlat</cite>:</p>
+<p>Used to enable/disable ULL for AVC.</p>
+</td>
+<td><p>Deprecated</p></td>
+<td><p><a class="reference external" href="https://xilinx.github.io/video-sdk/v3.0/using_ffmpeg.html#cmdoption-avc-lowlat">-avc-lowlat</a></p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 48.5%" />
+<col style="width: 24.2%" />
+<col style="width: 27.3%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Options Decoder</p></th>
+<th class="head"><p>Version 1.2</p></th>
+<th class="head"><p>U30</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><cite>-splitbuff_mode</cite>:</p>
+<p>Used to configure decoder's buffer mode.</p>
+</td>
+<td><p>Deprecated</p></td>
+<td><p><a class="reference external" href="https://xilinx.github.io/video-sdk/v3.0/using_ffmpeg.html#cmdoption-splitbuff_mode">-splitbuff_mode</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><cite>-entropy_buffers_count</cite>:</p>
+<p>Used to set number of decoder's entropy buffers.</p>
+</td>
+<td><p>Deprecated</p></td>
+<td><p><a class="reference external" href="https://xilinx.github.io/video-sdk/v3.0/using_ffmpeg.html#cmdoption-entropy_buffers_count">-entropy_buffers_count</a></p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 48.5%" />
+<col style="width: 24.2%" />
+<col style="width: 27.3%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Options Scaler</p></th>
+<th class="head"><p>Version 1.2</p></th>
+<th class="head"><p>U30</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><cite>-out_{N}_width</cite>:</p>
+<p>Used to configure width of an output rung.</p>
+</td>
+<td><p>Deprecated</p></td>
+<td><p><a class="reference external" href="https://xilinx.github.io/video-sdk/v3.0/using_ffmpeg.html#cmdoption-arg-out_-N-_width">-out_{N}_width</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><cite>-out_{N}_height</cite>:</p>
+<p>Used to configure height of an output rung.</p>
+</td>
+<td><p>Deprecated</p></td>
+<td><p><a class="reference external" href="https://xilinx.github.io/video-sdk/v3.0/using_ffmpeg.html#cmdoption-arg-out_-N-_height">-out_{N}_height</a></p></td>
+</tr>
+<tr class="row-even"><td><p><cite>-out_{N}_rate</cite>:</p>
+<p>Used to configure frame rate of an output rung.</p>
+</td>
+<td><p>Deprecated</p></td>
+<td><p><a class="reference external" href="https://xilinx.github.io/video-sdk/v3.0/using_ffmpeg.html#cmdoption-arg-out_-N-_rate">-out_{N}_rate</a></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="gstreamer-api-changes">
+<h3><a class="toc-backref" href="#id3" role="doc-backlink">Gstreamer API Changes</a><a class="headerlink" href="#gstreamer-api-changes" title="Link to this heading">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 48.5%" />
+<col style="width: 24.2%" />
+<col style="width: 27.3%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Options Encoder</p></th>
+<th class="head"><p>Version 1.2</p></th>
+<th class="head"><p>U30</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><cite>tune_metrics</cite>:</p>
+<p>Used to tune VQ metrics. Options to this setting have changed.</p>
+</td>
+<td><p><a class="reference internal" href="using_gstreamer.html#cmdoption-arg-tune-metrics"><code class="xref std std-option docutils literal notranslate"><span class="pre">tune-metrics</span></code></a></p></td>
+<td><p><a class="reference external" href="https://xilinx.github.io/video-sdk/v3.0/using_gstreamer.html#cmdoption-arg-tune-metrics">tune-metrics</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><cite>ultra-low-latency</cite>:</p>
+<p>Used to set ULL mode.</p>
+</td>
+<td><p>Set <a class="reference internal" href="using_gstreamer.html#cmdoption-arg-lookahead-depth"><code class="xref std std-option docutils literal notranslate"><span class="pre">lookahead-depth</span></code></a> to 0.</p></td>
+<td><p><a class="reference external" href="https://xilinx.github.io/video-sdk/v3.0/using_gstreamer.html#cmdoption-arg-ultra-low-latency">ultra-low-latency</a></p></td>
+</tr>
+<tr class="row-even"><td><p><cite>target-bitrate</cite>:</p>
+<p>Used to set target bit rate.</p>
+</td>
+<td><p><a class="reference internal" href="using_gstreamer.html#cmdoption-arg-bitrate"><code class="xref std std-option docutils literal notranslate"><span class="pre">bitrate</span></code></a></p></td>
+<td><p><a class="reference external" href="https://xilinx.github.io/video-sdk/v3.0/using_gstreamer.html#cmdoption-arg-target-bitrate">target-bitrate</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><cite>control_rate</cite>:</p>
+<p>Used to set rate control mode. Options to this setting have changed.</p>
+</td>
+<td><p><a class="reference internal" href="using_gstreamer.html#cmdoption-arg-rate-control"><code class="xref std std-option docutils literal notranslate"><span class="pre">rate-control</span></code></a></p></td>
+<td><p><a class="reference external" href="https://xilinx.github.io/video-sdk/v3.0/using_gstreamer.html#cmdoption-arg-control-rate">control-rate</a></p></td>
+</tr>
+<tr class="row-even"><td><p><cite>dev-idx</cite>:</p>
+<p>Used to specify the index of the device on which the encoder should be executed.</p>
+</td>
+<td><p><a class="reference internal" href="using_gstreamer.html#cmdoption-arg-device"><code class="xref std std-option docutils literal notranslate"><span class="pre">device</span></code></a></p></td>
+<td><p><a class="reference external" href="https://xilinx.github.io/video-sdk/v3.0/using_gstreamer.html#cmdoption-arg-0">dev-idx</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><cite>aspect-ratio</cite>:</p>
+<p>Used to set video’s aspect ratio.</p>
+</td>
+<td><p>Deprecated</p></td>
+<td><p><a class="reference external" href="https://xilinx.github.io/video-sdk/v3.0/using_gstreamer.html#cmdoption-arg-aspect-ratio">aspect-ratio</a></p></td>
+</tr>
+<tr class="row-even"><td><p><cite>avc-lowlat</cite>:</p>
+<p>Used to enable/disable ULL for AVC.</p>
+</td>
+<td><p>Deprecated</p></td>
+<td><p><a class="reference external" href="https://xilinx.github.io/video-sdk/v3.0/using_gstreamer.html#cmdoption-arg-avc-lowlat">avc-lowlat</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><cite>dependent-slice</cite>:</p>
+<p>Used to specify slice dependency.</p>
+</td>
+<td><p>Deprecated</p></td>
+<td><p><a class="reference external" href="https://xilinx.github.io/video-sdk/v3.0/using_gstreamer.html#cmdoption-arg-dependent-slice">dependent-slice</a></p></td>
+</tr>
+<tr class="row-even"><td><p><cite>enable-pipeline</cite>:</p>
+<p>Used to enable/disable pipelining.</p>
+</td>
+<td><p>Deprecated</p></td>
+<td><p><a class="reference external" href="https://xilinx.github.io/video-sdk/v3.0/using_gstreamer.html#cmdoption-arg-enable-pipeline">enable-pipeline</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><cite>ip-delta</cite>:</p>
+<p>Used to set IP delta.</p>
+</td>
+<td><p>Deprecated</p></td>
+<td><p><a class="reference external" href="https://xilinx.github.io/video-sdk/v3.0/using_gstreamer.html#cmdoption-arg-ip-delta">ip-delta</a></p></td>
+</tr>
+<tr class="row-even"><td><p><cite>loop-filter-beta-offset</cite>:</p>
+<p>Used to set loop filter beta offset.</p>
+</td>
+<td><p>Deprecated</p></td>
+<td><p><a class="reference external" href="https://xilinx.github.io/video-sdk/v3.0/using_gstreamer.html#cmdoption-arg-loop-filter-beta-offset">loop-filter-beta-offset</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><cite>loop-filter-tc-offset</cite>:</p>
+<p>Used to set loop filter tc offset..</p>
+</td>
+<td><p>Deprecated</p></td>
+<td><p><a class="reference external" href="https://xilinx.github.io/video-sdk/v3.0/using_gstreamer.html#cmdoption-arg-loop-filter-tc-offset">loop-filter-tc-offset</a></p></td>
+</tr>
+<tr class="row-even"><td><p><cite>slice-qp</cite>:</p>
+<p>Used to set slice QP mode.</p>
+</td>
+<td><p>Deprecated</p></td>
+<td><p><a class="reference external" href="https://xilinx.github.io/video-sdk/v3.0/using_gstreamer.html#cmdoption-arg-slice-qp">slice-qp</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><cite>scaling-list</cite>:</p>
+<p>Used to set lscaling list mode.</p>
+</td>
+<td><p>Deprecated</p></td>
+<td><p><a class="reference external" href="https://xilinx.github.io/video-sdk/v3.0/using_gstreamer.html#cmdoption-arg-scaling-list">scaling-list</a></p></td>
+</tr>
+<tr class="row-even"><td><p><cite>reservation-id</cite>:</p>
+<p>Used to set resource pool reservation id.</p>
+</td>
+<td><p>Deprecated</p></td>
+<td><p><a class="reference external" href="https://xilinx.github.io/video-sdk/v3.0/using_gstreamer.html#cmdoption-arg-reservation-id">reservation-id</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><cite>rc-mode</cite>:</p>
+<p>Used to enable custom rate control mode.</p>
+</td>
+<td><p>Deprecated</p></td>
+<td><p><a class="reference external" href="https://xilinx.github.io/video-sdk/v3.0/using_gstreamer.html#cmdoption-arg-rc-mode">rc-mode</a></p></td>
+</tr>
+<tr class="row-even"><td><p><cite>qp-mode</cite>:</p>
+<p>Used to set QP control mode used by the encoder.</p>
+</td>
+<td><p>Deprecated</p></td>
+<td><p><a class="reference external" href="https://xilinx.github.io/video-sdk/v3.0/using_gstreamer.html#cmdoption-arg-qp-mode">qp-mode</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><cite>pb-delta</cite>:</p>
+<p>Used to set PB delta.</p>
+</td>
+<td><p>Deprecated</p></td>
+<td><p><a class="reference external" href="https://xilinx.github.io/video-sdk/v3.0/using_gstreamer.html#cmdoption-arg-pb-delta">pb-delta</a></p></td>
+</tr>
+<tr class="row-even"><td><p><cite>periodicity-idr</cite>:</p>
+<p>Used to set periodicity of IDR frames.</p>
+</td>
+<td><p>Deprecated</p></td>
+<td><p><a class="reference external" href="https://xilinx.github.io/video-sdk/v3.0/using_gstreamer.html#cmdoption-arg-periodicity-idr">periodicity-idr</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><cite>num-cores</cite>:</p>
+<p>Used to set the number of encoder cores to be used for current stream.</p>
+</td>
+<td><p>Deprecated</p></td>
+<td><p><a class="reference external" href="https://xilinx.github.io/video-sdk/v3.0/using_gstreamer.html#cmdoption-arg-num-cores">num-cores</a></p></td>
+</tr>
+<tr class="row-even"><td><p><cite>num-slices</cite>:</p>
+<p>Used to set the number of slices produced for each frame.</p>
+</td>
+<td><p>Deprecated</p></td>
+<td><p><a class="reference external" href="https://xilinx.github.io/video-sdk/v3.0/using_gstreamer.html#cmdoption-arg-num-slices">num-slices</a></p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 48.5%" />
+<col style="width: 24.2%" />
+<col style="width: 27.3%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Options Decoder</p></th>
+<th class="head"><p>Version 1.2</p></th>
+<th class="head"><p>U30</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><cite>dev-idx</cite>:</p>
+<p>Used to specify the index of the device on which the decoder should be executed.</p>
+</td>
+<td><p><a class="reference internal" href="using_gstreamer.html#cmdoption-arg-device"><code class="xref std std-option docutils literal notranslate"><span class="pre">device</span></code></a></p></td>
+<td><p><a class="reference external" href="https://xilinx.github.io/video-sdk/v3.0/using_gstreamer.html#cmdoption-arg-dev-idx">dev-idx</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><cite>avoid-dynamic-alloc</cite>:</p>
+<p>Used to set a flag to avoid dynamic allocation of output buffers.</p>
+</td>
+<td><p>Deprecated</p></td>
+<td><p><a class="reference external" href="https://xilinx.github.io/video-sdk/v3.0/using_gstreamer.html#cmdoption-arg-avoid-dynamic-alloc">avoid-dynamic-alloc</a></p></td>
+</tr>
+<tr class="row-even"><td><p><cite>avoid-output-copy</cite>:</p>
+<p>Used to set a flag to avoid output frames copy.</p>
+</td>
+<td><p>Deprecated</p></td>
+<td><p><a class="reference external" href="https://xilinx.github.io/video-sdk/v3.0/using_gstreamer.html#cmdoption-arg-avoid-output-copy">avoid-output-copy</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><cite>disable-hdr10-sei</cite>:</p>
+<p>Used to configure whether to passthrough HDR10/10+ SEI messages or not.</p>
+</td>
+<td><p>Deprecated</p></td>
+<td><p><a class="reference external" href="https://xilinx.github.io/video-sdk/v3.0/using_gstreamer.html#cmdoption-arg-disable-hdr10-sei">disable-hdr10-sei</a></p></td>
+</tr>
+<tr class="row-even"><td><p><cite>interpolate-timestamps</cite>:</p>
+<p>Used to configure interpolation of output buffers PTS.</p>
+</td>
+<td><p>Deprecated</p></td>
+<td><p><a class="reference external" href="https://xilinx.github.io/video-sdk/v3.0/using_gstreamer.html#cmdoption-arg-interpolate-timestamps">interpolate-timestamps</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><cite>num-entropy-buf</cite>:</p>
+<p>Used to specifie the number of decoder internal entropy buffers.</p>
+</td>
+<td><p>Deprecated</p></td>
+<td><p><a class="reference external" href="https://xilinx.github.io/video-sdk/v3.0/using_gstreamer.html#cmdoption-arg-num-entropy-buf">num-entropy-buf</a></p></td>
+</tr>
+<tr class="row-even"><td><p><cite>reservation-id</cite>:</p>
+<p>Used to set resource Pool Reservation id.</p>
+</td>
+<td><p>Deprecated</p></td>
+<td><p><a class="reference external" href="https://xilinx.github.io/video-sdk/v3.0/using_gstreamer.html#cmdoption-arg-reservation-id">reservation-id</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><cite>splitbuff-mode</cite>:</p>
+<p>Used to configure decoder in split/unsplit input buffer mode.</p>
+</td>
+<td><p>Deprecated</p></td>
+<td><p><a class="reference external" href="https://xilinx.github.io/video-sdk/v3.0/using_gstreamer.html#cmdoption-arg-splitbuff-mode">splitbuff-mode</a></p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 48.5%" />
+<col style="width: 24.2%" />
+<col style="width: 27.3%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Options Scaler</p></th>
+<th class="head"><p>Version 1.2</p></th>
+<th class="head"><p>U30</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><cite>dev-idx</cite>:</p>
+<p>Used to specify the index of the device on which the scaler should be executed.</p>
+</td>
+<td><p><a class="reference internal" href="using_gstreamer.html#cmdoption-arg-device"><code class="xref std std-option docutils literal notranslate"><span class="pre">device</span></code></a></p></td>
+<td><p><a class="reference external" href="https://xilinx.github.io/video-sdk/v3.0/using_gstreamer.html#cmdoption-arg-3">dev-idx</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><cite>avoid-output-copy</cite>:</p>
+<p>Used to set a flag to avoid output frames copy on all source pads.</p>
+</td>
+<td><p>Deprecated</p></td>
+<td><p><a class="reference external" href="https://xilinx.github.io/video-sdk/v3.0/using_gstreamer.html#cmdoption-arg-2">avoid-output-copy</a></p></td>
+</tr>
+<tr class="row-even"><td><p><cite>coef-load-type</cite>:</p>
+<p>Used to configure coefficients loading type for scaling.</p>
+</td>
+<td><p>Deprecated</p></td>
+<td><p><a class="reference external" href="https://xilinx.github.io/video-sdk/v3.0/using_gstreamer.html#cmdoption-arg-coef-load-type">coef-load-type</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><cite>enable-pipeline</cite>:</p>
+<p>Used to enable buffer pipelining to improve performance in non zero-copy use cases.</p>
+</td>
+<td><p>Deprecated</p></td>
+<td><p><a class="reference external" href="https://xilinx.github.io/video-sdk/v3.0/using_gstreamer.html#cmdoption-arg-enable-pipeline">enable-pipeline</a></p></td>
+</tr>
+<tr class="row-even"><td><p><cite>reservation-id</cite>:</p>
+<p>Used to configure resource pool reservation id.</p>
+</td>
+<td><p>Deprecated</p></td>
+<td><p><a class="reference external" href="https://xilinx.github.io/video-sdk/v3.0/using_gstreamer.html#cmdoption-arg-reservation-id">reservation-id</a></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="cli-changes-from-1-1-2-to-1-2">
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">CLI Changes from 1.1.2 to 1.2</a><a class="headerlink" href="#cli-changes-from-1-1-2-to-1-2" title="Link to this heading">¶</a></h2>
+<p>This sub-section describes differences between <a class="reference external" href="https://amd.github.io/ama-sdk/v1.1.2/index.html">1.1.2</a> and current version.</p>
+<section id="pcie-addressing">
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">PCIe Addressing</a><a class="headerlink" href="#pcie-addressing" title="Link to this heading">¶</a></h3>
+<p>Unlike the previous version, where PCIe devices were addressed as DBDF, this release uses BDF scheme. See <a class="reference internal" href="card_management.html"><span class="doc">Card Management</span></a>.</p>
+</section>
+<section id="ffmpeg-cli-changes">
+<h3><a class="toc-backref" href="#id6" role="doc-backlink">FFmpeg CLI Changes</a><a class="headerlink" href="#ffmpeg-cli-changes" title="Link to this heading">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50.0%" />
+<col style="width: 25.0%" />
+<col style="width: 25.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Options General</p></th>
+<th class="head"><p>1.2</p></th>
+<th class="head"><p>1.1.2</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><cite>-c:v</cite>:</p>
+<p>New still image codecs are now available. See <code class="docutils literal notranslate"><span class="pre">-c:v</span></code> for details.</p>
+</td>
+<td><p><a class="reference internal" href="using_ffmpeg.html#cmdoption-c-v"><code class="xref std std-option docutils literal notranslate"><span class="pre">-c:v</span></code></a></p></td>
+<td><p><a class="reference external" href="https://amd.github.io/ama-sdk/v1.1.2/using_ffmpeg.html#cmdoption-c-v">-c:v</a></p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50.0%" />
+<col style="width: 25.0%" />
+<col style="width: 25.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Options Encoder</p></th>
+<th class="head"><p>1.2</p></th>
+<th class="head"><p>1.1.2</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><cite>-control_rate</cite>:</p>
+<p><cite>cabr</cite> has been removed as a rate control mode, and can now be applied as a modifier to all encoding modes.</p>
+</td>
+<td><p><a class="reference internal" href="using_ffmpeg.html#cmdoption-control_rate"><code class="xref std std-option docutils literal notranslate"><span class="pre">-control_rate</span></code></a> and <a class="reference internal" href="using_ffmpeg.html#cmdoption-cabr"><code class="xref std std-option docutils literal notranslate"><span class="pre">-cabr</span></code></a></p></td>
+<td><p><a class="reference external" href="https://amd.github.io/ama-sdk/v1.1.2/using_ffmpeg.html#cmdoption-control_rate">-control_rate</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><cite>-crf</cite>:</p>
+<p>Changes have been made in the call parameters.</p>
+</td>
+<td><p><a class="reference internal" href="using_ffmpeg.html#cmdoption-crf"><code class="xref std std-option docutils literal notranslate"><span class="pre">-crf</span></code></a> &lt;value&gt;</p></td>
+<td><p><a class="reference external" href="https://amd.github.io/ama-sdk/v1.1.2/using_ffmpeg.html#cmdoption-crf">-crf</a> 1 -qp &lt;value&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50.0%" />
+<col style="width: 25.0%" />
+<col style="width: 25.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Options Decoder</p></th>
+<th class="head"><p>1.2</p></th>
+<th class="head"><p>1.1.2</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><cite>-resize</cite>:</p>
+<p>Option to perform downscaling through decoders has been added.</p>
+</td>
+<td><p><a class="reference internal" href="using_ffmpeg.html#cmdoption-resize"><code class="xref std std-option docutils literal notranslate"><span class="pre">-resize</span></code></a></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50.0%" />
+<col style="width: 25.0%" />
+<col style="width: 25.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Options 2D Engine</p></th>
+<th class="head"><p>1.2</p></th>
+<th class="head"><p>1.1.2</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><cite>crop, pad, drawbox</cite>, and other 2D operations:</p>
+<p>2D operations that were previously sub-commands of <cite>2d_ama</cite> are now invoked with a simpler syntax.</p>
+</td>
+<td><p><a class="reference internal" href="using_ffmpeg.html#d-processing"><span class="std std-ref">2D Engine</span></a></p></td>
+<td><p><a class="reference external" href="https://amd.github.io/ama-sdk/v1.1.2/using_ffmpeg.html#cmdoption-arg-scaler_ama">-scaler_ama</a> and <a class="reference external" href="https://amd.github.io/ama-sdk/v1.1.2/using_ffmpeg.html#cmdoption-arg-2d_ama">-2d_ama</a></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="card-management">
+<h3><a class="toc-backref" href="#id7" role="doc-backlink">Card Management</a><a class="headerlink" href="#card-management" title="Link to this heading">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50.0%" />
+<col style="width: 25.0%" />
+<col style="width: 25.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Options</p></th>
+<th class="head"><p>1.2</p></th>
+<th class="head"><p>1.1.2</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">maflash</span></code> has been deprecated and it is now a sub command of <code class="docutils literal notranslate"><span class="pre">mamgmt</span></code>.</p></td>
+<td><p>See <a class="reference internal" href="card_management.html#device-status"><span class="std std-ref">mamgmt</span></a>.</p></td>
+<td><p><a class="reference external" href="https://amd.github.io/ama-sdk/v1.1.2/card_management.html#checking-device-configuration-mamgmt">mamgmt</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>Syntax for creation of VF has been updated.</p></td>
+<td><p>See <a class="reference internal" href="card_management.html#device-status"><span class="std std-ref">mamgmt</span></a>.</p></td>
+<td><p><a class="reference external" href="https://amd.github.io/ama-sdk/v1.1.2/card_management.html#checking-system-status-mautil">mautil</a></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="c-apis">
+<h3><a class="toc-backref" href="#id8" role="doc-backlink">C APIs</a><a class="headerlink" href="#c-apis" title="Link to this heading">¶</a></h3>
+<p>See relevant sub-sections in <a class="reference internal" href="c_apis.html#c-api-programming-guide"><span class="std std-ref">C API Programming Guide</span></a>.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          
+				  
+				  <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="card_management.html" class="btn btn-neutral float-left" title="Card Management" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="encoder_comp_matrix.html" class="btn btn-neutral float-right" title="Encoding Compatibility Matrix" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022-2024, Advanced Micro Devices, Inc.
+      <span class="lastupdated">Last updated on October 21, 2024.
+      </span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div>
+										
+</br>
+
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

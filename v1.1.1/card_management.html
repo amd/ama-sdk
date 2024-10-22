@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="English" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+<!-- OneTrust Cookies Consent Notice start for amd.github.io -->
+<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="cb638ba1-8bc4-44a0-9338-632d4dc19be6" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script>
+<!-- OneTrust Cookies Consent Notice end for amd.github.io -->
+<!-- Google Tag Manager -->
+<script type="text/plain" class="optanon-category-C0002">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-5RHQV7');</script>
+<!-- End Google Tag Manager -->
+  <title>Card Management &mdash; AMD AMA 1.1.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=63426ac4"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Software Migration Considerations" href="migration.html" />
+    <link rel="prev" title="C API Programming Guide" href="c_apis.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+<!-- Google Tag Manager -->
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5RHQV7" height="0" width="0" style="display:none;visibility:hidden" class="optanon-category-C0002"></iframe></noscript>
+<!-- End Google Tag Manager --> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+            <a href="index.html" class="icon icon-home"> AMD AMA
+          </a>
+              <div class="version">
+                1.1.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Get Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="release_notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started_on_prem.html">On Premises</a></li>
+<li class="toctree-l1"><a class="reference internal" href="virtualization.html">Virtualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Tutorials and Examples</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference Guides</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="specs_and_features.html">Specs and Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="package_feed.html">Package Feed Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="using_ffmpeg.html">Using FFmpeg</a></li>
+<li class="toctree-l1"><a class="reference internal" href="using_gstreamer.html">Using Gstreamer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="unified_logging.html">Unified Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tuning_video_quality.html">Tuning Video Quality</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tuning_pipeline_latency.html">Tuning Latency of Transcode Pipeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="managing_compute_resources.html">Managing Compute Resources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="c_apis.html">C API Programming Guide</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Card Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#mautil-maflash-mamgmt-and-print-ma35-load">mautil, maflash, mamgmt and print_ma35_load</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#xrmadm-and-xrmd">xrmadm and xrmd</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#card-and-device-identifiers">Card and Device Identifiers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#device-dbdf-mautil">Device DBDF (mautil)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#device-dbdf-mamgmt">Device DBDF (mamgmt)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bus-id">Bus ID</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#firmware-version-number">Firmware Version Number</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#checking-system-status-mautil">Checking System Status - mautil</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#checking-device-status">Checking Device Status</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#checking-device-configuration-mamgmt">Checking Device Configuration - mamgmt</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#programming-a-device-maflash">Programming a Device - maflash</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#checking-resource-utilization">Checking Resource Utilization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#print-ma35-load">print_ma35_load</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="migration.html">Migration Path</a></li>
+<li class="toctree-l1"><a class="reference internal" href="encoder_comp_matrix.html">Encoding Compatibility Matrix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preview.html">New Feature Preview</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Support</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://www.xilinx.com/support.html">File an issue</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://support.xilinx.com/s/topic/0TO2E000000YKY8WAO/video?language=en_US">Video Forum</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other AMA SDK Versions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://amd.github.io/ama-sdk/v1.0/index.html">v1.0</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://amd.github.io/ama-sdk/">Latest Version</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Video Products</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/video-sdk/v3.0/index.html">U30</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">AMD AMA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Card Management</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>This version of the SDK has been superseded by the <a class="reference external" href="https://amd.github.io/ama-sdk/latest/index.html">latest release</a> of the SDK.</p>
+</div>
+<section id="card-management">
+<h1>Card Management<a class="headerlink" href="#card-management" title="Link to this heading">¶</a></h1>
+<nav class="contents local" id="table-of-contents">
+<p class="topic-title">Table of Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#overview" id="id1">Overview</a></p></li>
+<li><p><a class="reference internal" href="#card-and-device-identifiers" id="id2">Card and Device Identifiers</a></p></li>
+<li><p><a class="reference internal" href="#checking-system-status-mautil" id="id3">Checking System Status - mautil</a></p></li>
+<li><p><a class="reference internal" href="#checking-device-status" id="id4">Checking Device Status</a></p></li>
+<li><p><a class="reference internal" href="#checking-device-configuration-mamgmt" id="id5">Checking Device Configuration - mamgmt</a></p></li>
+<li><p><a class="reference internal" href="#programming-a-device-maflash" id="id6">Programming a Device - maflash</a></p></li>
+<li><p><a class="reference internal" href="#checking-resource-utilization" id="id7">Checking Resource Utilization</a></p></li>
+</ul>
+</nav>
+<section id="overview">
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">Overview</a><a class="headerlink" href="#overview" title="Link to this heading">¶</a></h2>
+<p>The AMD AMA Video SDK builds on the Xilinx Resource Manager (XRM) to interface with AMD video acceleration cards. The AMD AMA Video SDK includes the <code class="docutils literal notranslate"><span class="pre">mautil</span></code>, <code class="docutils literal notranslate"><span class="pre">mamgmt</span></code> , <code class="docutils literal notranslate"><span class="pre">maflash</span></code> and <code class="docutils literal notranslate"><span class="pre">xrmadm</span></code> command line tools for card installation, upgrade, and management.</p>
+<section id="mautil-maflash-mamgmt-and-print-ma35-load">
+<h3>mautil, maflash, mamgmt and print_ma35_load<a class="headerlink" href="#mautil-maflash-mamgmt-and-print-ma35-load" title="Link to this heading">¶</a></h3>
+<p>The AMD Board Utility (<code class="docutils literal notranslate"><span class="pre">mautil</span></code>), the AMD Flash Utility, (<code class="docutils literal notranslate"><span class="pre">maflash</span></code>) and the AMD Board Management Utility (<code class="docutils literal notranslate"><span class="pre">mamgmt</span></code>) are standalone command line tools used to query, flash and administer AMD acceleration cards. <code class="docutils literal notranslate"><span class="pre">print_ma35_load</span></code> prints load status of the card in a readable manner.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">mautil</span></code> is used to examine and identify the installed accelerator card(s). This option is meant for use by unprivileged users to get status information on AMD AMA devices. <code class="docutils literal notranslate"><span class="pre">mautil</span></code> is available on both the bare-metal host and guest VM.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">maflash</span></code> is used to flash card(s) firmware.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mamgmt</span></code> is used to examine devices, reset and administer the installed accelerator card(s). This option is meant for use by privileged users to get status information of AMD AMA devices, create VFs, and reset target evices. <code class="docutils literal notranslate"><span class="pre">mamgmt</span></code> is only available on the bare-metal host.</p></li>
+</ul>
+<p>The <code class="docutils literal notranslate"><span class="pre">mautil</span></code>, <code class="docutils literal notranslate"><span class="pre">maflash</span></code> and <code class="docutils literal notranslate"><span class="pre">mamgmt</span></code> commands target one device at a time using a PCIe DBDF (Domain:Bus:Device.Function) identifier. The DBDF notation works as follows:</p>
+<ul class="simple">
+<li><p>PCI Domain number, often padded using leading zeros to four digits</p></li>
+<li><p>A colon (:)</p></li>
+<li><p>PCI Bus number in hexadecimal, often padded using a leading zeros to two or four digits</p></li>
+<li><p>A colon (:)</p></li>
+<li><p>PCI Device number in hexadecimal, often padded using a leading zero to two digits . Sometimes this is also referred to as the slot number.</p></li>
+<li><p>A decimal point (.)</p></li>
+<li><p>PCI Function number in hexadecimal.</p></li>
+</ul>
+</section>
+<section id="xrmadm-and-xrmd">
+<span id="xrmd"></span><h3>xrmadm and xrmd<a class="headerlink" href="#xrmadm-and-xrmd" title="Link to this heading">¶</a></h3>
+<p>XRM is the software which manages the hardware accelerators available in the system. The XRM daemon (<code class="docutils literal notranslate"><span class="pre">xrmd</span></code>) is a background process supporting reservation, allocation, and release of hardware acceleration resources. The XRM <code class="docutils literal notranslate"><span class="pre">xrmadm</span></code> command line tool is used to interact with the XRM daemon (<code class="docutils literal notranslate"><span class="pre">xrmd</span></code>) in order to check status and generate resource utilization reports.</p>
+<p>For more details about the XRM commands specific to the AMD AMA Video SDK refer to the <a class="reference internal" href="managing_compute_resources.html#xrm-reference"><span class="std std-ref">XRM Command Reference Guide</span></a>.</p>
+</section>
+</section>
+<section id="card-and-device-identifiers">
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">Card and Device Identifiers</a><a class="headerlink" href="#card-and-device-identifiers" title="Link to this heading">¶</a></h2>
+<section id="device-dbdf-mautil">
+<span id="device-bdf"></span><h3>Device DBDF (mautil)<a class="headerlink" href="#device-dbdf-mautil" title="Link to this heading">¶</a></h3>
+<p>The list of all installed AMD AMA Video SDK compatible devices, including their DBDF is obtained with the <code class="docutils literal notranslate"><span class="pre">mautil</span> <span class="pre">examine</span></code> command.</p>
+<p>For example, the command below detected 2 devices and lists their BDFs:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ mautil examine
+List of available devices:
+0000:01:00.0
+0000:02:00.0
+Info: No action taken, no reports given.
+Info: Use --help to check cmd options to use for reports
+</pre></div>
+</div>
+<p>The last device listed has DBDF of 0000:02:00.0, which describes Domain 0, Bus 02, Device 00, Function 0.</p>
+</section>
+<section id="device-dbdf-mamgmt">
+<span id="device-management-bdf"></span><h3>Device DBDF (mamgmt)<a class="headerlink" href="#device-dbdf-mamgmt" title="Link to this heading">¶</a></h3>
+<p>The list of all installed AMD AMA Video SDK compatible devices, including their DBDF can also be obtained with the <code class="docutils literal notranslate"><span class="pre">mamgmt</span> <span class="pre">examine</span></code> command.</p>
+<p>For example, the command below detected 2 devices and lists their DBDF designations:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ mamgmt examine
+
+
+  List of available devices:
+  0000:01:00.0
+  0000:02:00.0
+  Info: No action taken, no reports given.
+  Info: Use --help to check cmd options to use for reports
+</pre></div>
+</div>
+<p>The last device listed has DBDF of 0000:02:00.0, which describes Domain 0, Bus 2, Device 00, Function 0.</p>
+</section>
+<section id="bus-id">
+<span id="device-device-id"></span><h3>Bus ID<a class="headerlink" href="#bus-id" title="Link to this heading">¶</a></h3>
+<p>You can look-up the PCIe bus ID of a device through the following command:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cat /sys/class/misc/ama_transcoder{x}/bus_id
+</pre></div>
+</div>
+<p>, where x is a number between 0 to total number of devices minus 1.</p>
+<p class="rubric">Example</p>
+<ul>
+<li><p>Bus id of /sys/class/misc/ama_transcoder0 is:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ cat /sys/class/misc/ama_transcoder0/bus_id
+  0000:01:00.0
+</pre></div>
+</div>
+</li>
+<li><p>This can be verified by <code class="docutils literal notranslate"><span class="pre">mautil</span> <span class="pre">examine</span></code> command.</p></li>
+</ul>
+</section>
+<section id="firmware-version-number">
+<span id="card-version-number"></span><h3>Firmware Version Number<a class="headerlink" href="#firmware-version-number" title="Link to this heading">¶</a></h3>
+<p>To look-up the version number of each installed firmware, proceed as follows:</p>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cat /sys/class/misc/ama_transcoder0/version_information
+</pre></div>
+</div>
+<p>It should return:</p>
+</div></blockquote>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ZSP Version = 2.0.4
+SC Version = 9.7.35
+eSecure Version = 1.0.0
+PCIe FW Version = 2.1.0
+PCIe CTRL Patch Version = 1.0.3
+PCIe PHY Patch A Version = 1.0.0
+</pre></div>
+</div>
+</div></blockquote>
+</section>
+</section>
+<section id="checking-system-status-mautil">
+<span id="examining-cards"></span><h2><a class="toc-backref" href="#id3" role="doc-backlink">Checking System Status - mautil</a><a class="headerlink" href="#checking-system-status-mautil" title="Link to this heading">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">mautil</span></code> commands provides useful details about your environment and can be used to ensure that your cards and devices are properly detected.:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mautil -d [&lt;DBDF&gt; | all] command, where &quot;command&quot; is one of the following: (&quot;all&quot; refers to every card in the chassis.)
+   examine    - Status of the system and device.
+   validate   - Validates the basic shell acceleration functionality
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>Running <code class="docutils literal notranslate"><span class="pre">validate</span></code> sub-command on a device running a video pipeline will impact the performance of the pipeline.</p></li>
+</ul>
+</div>
+<p>The list of applicable devices, for <code class="docutils literal notranslate"><span class="pre">mautil</span></code> sub-commands, can be obtained via <code class="docutils literal notranslate"><span class="pre">mautil</span> <span class="pre">examine</span></code>.</p>
+<p>For more details on <code class="docutils literal notranslate"><span class="pre">examine</span></code> command, see <a class="reference internal" href="#device-details"><span class="std std-ref">Checking Device Status</span></a>.</p>
+</section>
+<section id="checking-device-status">
+<span id="device-details"></span><h2><a class="toc-backref" href="#id4" role="doc-backlink">Checking Device Status</a><a class="headerlink" href="#checking-device-status" title="Link to this heading">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">mautil</span> <span class="pre">examine</span> <span class="pre">-d</span> <span class="pre">&lt;DBDF&gt;</span> <span class="pre">--report</span> <span class="pre">&lt;type&gt;</span></code> commands provides additional details about the status of each AMD AMA Video SDK compatible device installed.</p>
+<p>The --report (or -r) switch is used to view specific report(s) of interest:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">electrical</span></code>: Reports Electrical and power sensors present on the device</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">device-hw</span></code>: Provides information on the device's hardware</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">error-cnt</span></code>: Reports on device's error counter</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">flash-info</span></code>: Prints device's flash information</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">memory</span></code>: Reports memory topology of the device</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pcie-info</span></code>: PCIe information of the device</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">thermal</span></code>: Reports thermal sensors present on the device</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">all</span></code>: Prints all the known status</p></li>
+</ul>
+<p>These reports can also be generated in a JSON file, by adding <code class="docutils literal notranslate"><span class="pre">--format</span> <span class="pre">JSON</span> <span class="pre">-o</span> <span class="pre">&lt;filename&gt;</span></code> to the <code class="docutils literal notranslate"><span class="pre">mautil</span> <span class="pre">examine</span></code> command.</p>
+<p>An example usage for thermal and electrical reports, for the device with DBDF 0000:02:00.0 is:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mautil examine -r thermal electrical -d 0000:02:00.0
+
+---------------------------------
+1/1 [0000:01:00.0] : MA35 Device
+---------------------------------
+MA35 Thermal Info:
+Device Temperature:
+  id: ma35_temp_s2 [85 C]
+Board Temperature:
+  id: board_temp [44 C]
+MA35 Electrical Info:
+Device Electrical Info:
+  id: aux [732 mV]
+  id: ddr0 [868 mV]
+  id: ml_engine [747 mV]
+  id: enc [748 mV]
+Board Electrical Info:
+  id: 3V PEX Voltage [3304 mV]
+  id: 3V AUX Voltage [3320 mV]
+  id: 12V PEX Voltage [12040 mV]
+  id: 3V PEX Current [293 mA]
+  id: 3V AUX Current [93 mA]
+  id: 12V PEX Current [426 mA]
+  id: board_power [6405 mW]
+</pre></div>
+</div>
+</section>
+<section id="checking-device-configuration-mamgmt">
+<span id="device-status"></span><h2><a class="toc-backref" href="#id5" role="doc-backlink">Checking Device Configuration - mamgmt</a><a class="headerlink" href="#checking-device-configuration-mamgmt" title="Link to this heading">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">mamgmt</span></code> provides administrative commands for managing the installed devices. In addition to commands that are provided by <a class="reference internal" href="#device-details"><span class="std std-ref">mautil</span></a>, <code class="docutils literal notranslate"><span class="pre">mamgmt</span></code> also allows for managing Virtual Functions (VF) on a device:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mamgmt -d [&lt;DBDF&gt; | all] command, where &quot;command&quot; is one of the following: (&quot;all&quot; refers to every card in the chassis.)
+  examine      - Status of the system and device
+  numvfs       - Create a VF or destroys the active VF
+  reset        - Resets the given device
+</pre></div>
+</div>
+<p>An example usage for all available reports on 0000:01:00.0 is:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mamgmt examine -d 0000:01:00.0 -r all
+
+Memory Bandwidths:
+         Tag                 Current (MBps)
+  s2_dfi_w_MBps             : 0
+  s2_dfi_r_MBps             : 0
+  s2_axi_w_MBps             : 0
+  s2_axi_r_MBps             : 0
+  s1_dfi_w_MBps             : 0
+  s1_dfi_r_MBps             : 474
+  s1_axi_w_MBps             : 0
+  s1_axi_r_MBps             : 236
+
+  total_dfi_MBps            : 474
+       s1_dfi_bw(total)     : 474
+       s2_dfi_bw(total)     : 0
+  total_axi_MBps            : 236
+       s1_axi_bw(total)     : 236
+       s2_axi_bw(total)     : 0
+
+Pcie Info:
+  Vendor                 : 0x10ee
+  Device                 : 0x5070
+  PCIe                   : 16GT/s, Width 4
+
+MA35 Thermal Info:
+Device Temperature:
+  id: Device Temp [57 C]
+Board Temperature:
+  id: board_temp [53 C]
+
+MA35 Electrical Info:
+Device Electrical Info:
+  id: aux [736 mV]
+  id: ddr0 [864 mV]
+  id: ml_engine [752 mV]
+  id: enc [750 mV]
+Board Electrical Info:
+  id: 3V PEX Voltage [3304 mV]
+  id: 3V AUX Voltage [3296 mV]
+  id: 12V PEX Voltage [12208 mV]
+  id: 3V PEX Current [266 mA]
+  id: 3V AUX Current [80 mA]
+  id: 12V PEX Current [653 mA]
+  id: board_power [9114 mW]
+
+Device Hardware Info:
+Device uptime (sec):328344
+Device Firmware Info:
+  PciePhyPatch:  1.0.0
+  PcieCtlPatch:  1.0.3
+  PCIe:  2.1.0
+  eSecure:  1.0.0
+  SC:  9.7.32
+  ZSP:  2.0.4
+Device Threshold Info:
+  shutdown_temp_C:  110
+  max_operating_temp_C:  105
+  threshold_temp_C:  85
+Device Hardware Info:
+  oem_id:  0xe78
+  sku_number:  02
+  part_number:  05105-02
+  Product_Name:  ALVEO MA35D PQ
+  Product_Revision:  1
+  Product_SN:  XFL1AT3KLCY5
+  Processor_Type:  VPU (Video Processing Unit)
+
+MA35 Error Counter Info:
+         Tag                 Uncorrectable       Correctable
+    THS2_axi_sram            0                   0
+    THS1_axi_sram            0                   0
+    ddr_ch7                  0                   0
+    ddr_ch6                  0                   0
+    ddr_ch3                  0                   0
+    ddr_ch2                  0                   0
+    ddr_ch1                  0                   0
+    ddr_ch5                  0                   0
+    ddr_ch0                  0                   0
+    ddr_ch4                  0                   0
+    pcie                     0                   0
+</pre></div>
+</div>
+<p>An example usage to reset device 0000:01:00.0 is:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mamgmt reset -d 0000:01:00.0
+Are you sure you wish to proceed? [Y/n]: y
+****************************************************
+Reset command completed
+****************************************************
+</pre></div>
+</div>
+<p>To create and destroy a VF device, issue the following commands, respectively:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ sudo mamgmt -d &lt;DBDF&gt; numvfs -v 1 # Create VF device
+$ sudo mamgmt -d &lt;DBDF&gt; numvfs -v 0 # Destroy VF device
+</pre></div>
+</div>
+</section>
+<section id="programming-a-device-maflash">
+<span id="device-prog"></span><h2><a class="toc-backref" href="#id6" role="doc-backlink">Programming a Device - maflash</a><a class="headerlink" href="#programming-a-device-maflash" title="Link to this heading">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">maflash</span></code> utility provides means of programming and verifying flash images from a target device or for getting meta-data from a binary image file.</p>
+<p>To flash program or verify a flashing process, specify the &lt;DBDF&gt; of a target device or <code class="docutils literal notranslate"><span class="pre">all</span></code> for all devices in a chassis:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sudo maflash &lt;sub-command&gt; [-d [&lt;DBDF&gt; | all] | -p | -s | -b] &lt;path_to_flash_image&gt;
+    -d | --device         a comma separated list of PCIe DBDFs *or* the keyword &quot;all&quot; which will use all detected ma35 devices
+    -p | --parallel       perform the program or verify operation simultaneous across all specified devices
+    -s | --stop-on-error  for non-parallel operations, stop at the first error detected.  The default is to continue on error
+    -b | --backup         specify that the program or verify operation should use the backup regions (where appropriate)
+</pre></div>
+</div>
+<p>, where sub-command is one of:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>program             - To flash an image
+verify              - To verify proper image flashing
+</pre></div>
+</div>
+<p>For example, the following command flashes all relevant subsystems for 0000:01:00.0 device using ma35_firmware.bin image.:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sudo /opt/amd/ama/ma35/bin/maflash program -d 0000:01:00.0 ma35_firmware.bin
+
+Using flash image: zsp_firmware_packed_pq.bin [type: ZSP, version: 2.0.4, package_timestamp: 2024-01-30_02:16:39+00:00, keyset: AMD, md5sum: a0c16839e94e1cba0a8c54e2e4f720ec, schema: 1]
+  Device: 0000:01:00.0
+EraseFlash Started..
+9%  19%  29%  38%  48%  58%  67%  77%  87%  96%  100%
+
+WriteFlash Started, please Wait..
+flash_progress:
+10%  20%  30%  40%  50%  60%  70%  80%  90%  100%
+
+    Operation completed successfully
+Using flash image: BMC-MSP432.bin [type: SC, version: BMC-MSP432-9.7.32, package_timestamp: 2024-01-30_02:16:31+00:00, md5sum: f92a87bb92749276d4ecd12dc4f9887b, schema: 1]
+  Device: 0000:01:00.0
+EraseFlash Started..
+9%  18%  28%  37%  46%  56%  65%  75%  84%  93%  100%
+
+WriteFlash Started, please Wait..
+flash_progress:
+10%  20%  30%  40%  50%  60%  70%  80% 100%
+</pre></div>
+</div>
+<p>To verify proper programming of the primary ZSP flash, issue the following command:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sudo /opt/amd/ama/ma35/bin/maflash verify -d 0000:01:00.0  ma35_firmware.bin
+
+Using flash image: zsp_firmware_packed_pq.bin [type: ZSP, version: 2.0.4, package_timestamp: 2024-01-30_02:16:39+00:00, keyset: AMD, md5sum: a0c16839e94e1cba0a8c54e2e4f720ec, schema: 1]
+  Device: 0000:01:00.0
+    Operation completed successfully
+Using flash image: BMC-MSP432.bin [type: SC, version: BMC-MSP432-9.7.32, package_timestamp: 2024-01-30_02:16:31+00:00, md5sum: f92a87bb92749276d4ecd12dc4f9887b, schema: 1]
+  Device: 0000:01:00.0
+    Operation completed successfully
+</pre></div>
+</div>
+<p>To get meta-data from a binary file, use the <code class="docutils literal notranslate"><span class="pre">info</span></code> sub-command:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> sudo /opt/amd/ama/ma35/bin/maflash info ma35_firmware.bin
+
+zsp_firmware_packed_pq.bin: type: ZSP, version: 2.0.4, package_timestamp: 2024-01-30_02:16:39+00:00, keyset: AMD, md5sum: a0c16839e94e1cba0a8c54e2e4f720ec, schema: 1
+BMC-MSP432.bin: type: SC, version: BMC-MSP432-9.7.32, package_timestamp: 2024-01-30_02:16:31+00:00, md5sum: f92a87bb92749276d4ecd12dc4f9887b, schema: 1
+</pre></div>
+</div>
+</section>
+<section id="checking-resource-utilization">
+<h2><a class="toc-backref" href="#id7" role="doc-backlink">Checking Resource Utilization</a><a class="headerlink" href="#checking-resource-utilization" title="Link to this heading">¶</a></h2>
+<p>Configure the environment to use the AMD AMA Video SDK. This a mandatory step for all applications:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>source /opt/amd/ama/ma35/scripts/setup.sh
+</pre></div>
+</div>
+<p>Note that this command should be run only once per boot.</p>
+<p>To check the current loading of all the devices in your system, use the following command:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>xrmadm /opt/amd/ama/ma35/scripts/list_cmd.json
+</pre></div>
+</div>
+<p>This will generate a report in JSON format containing the load information for all the compute unit (CU) resources. The report contains a section for each device in the system. The device sections contain sub-sections for each of the CUs (decoder, scaler, lookahead, encoder) in that device. For example, the load information for the encoder on device 0 may look as follows:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&quot;device_0&quot;: {
+  ...
+  &quot;cu_2&quot;: {
+       &quot;cuId         &quot;: &quot;2&quot;,
+       &quot;cuType       &quot;: &quot;IP Kernel&quot;,
+       &quot;kernelName   &quot;: &quot;encoder&quot;,
+       &quot;kernelAlias  &quot;: &quot;ENCODER_TYPE1_AMA&quot;,
+       &quot;instanceName &quot;: &quot;encoder_1&quot;,
+       &quot;cuName       &quot;: &quot;encoder:encoder_1&quot;,
+       &quot;kernelPlugin &quot;: &quot;&quot;,
+       &quot;maxCapacity  &quot;: &quot;497664000&quot;,
+       &quot;numChanInuse &quot;: &quot;0&quot;,
+       &quot;usedLoad     &quot;: &quot;0 of 1000000&quot;,
+       &quot;reservedLoad &quot;: &quot;0 of 1000000&quot;,
+       &quot;resrvUsedLoad&quot;: &quot;0 of 1000000&quot;
+   },
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">usedLoad</span></code> value indicates how much of that resource is currently being used. The value will range from 0 (nothing running) to 1000000 (fully loaded). The <code class="docutils literal notranslate"><span class="pre">reservedLoad</span></code> value indicates how much of that resource is being reserved using XRM. The <code class="docutils literal notranslate"><span class="pre">resrvUsedLoad</span></code> value indicates how much of the reserved load is actually being used.</p>
+<section id="print-ma35-load">
+<h3>print_ma35_load<a class="headerlink" href="#print-ma35-load" title="Link to this heading">¶</a></h3>
+<p>This script provides a readable snapshot of resource utilization for AMA AMD compatible cards. For example, running a 1080p60 AV1 Type-1 encode, on single MA35D card, will result in the following output:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>===============================================================================================================
+MA35 - Device Loads
+===============================================================================================================
+deviceID   kernelAlias          numChanInuse    usedLoad        reservedLoad    resrvUsedLoad   Utilization(%)
+---------------------------------------------------------------------------------------------------------------
+device_0   SCALER_AMA           0               0               0               0                  0.0
+device_0   DECODER_AMA          0               0               0               0                  0.0
+device_0   ENCODER_TYPE1_AMA    1               250000          0               0                 25.0
+device_0   ENCODER_TYPE2_AMA    0               0               0               0                  0.0
+device_0   ENCODER_TYPE1_AMA    0               0               0               0                  0.0
+device_0   ENCODER_TYPE2_AMA    0               0               0               0                  0.0
+device_0   LOOKAHEAD_AMA        1               125000          0               0                 12.5
+device_0   LOOKAHEAD_AMA        0               0               0               0                  0.0
+device_0   ML_AMA               0               0               0               0                  0.0
+device_0   ML_AMA               0               0               0               0                  0.0
+device_0   ML_AMA               0               0               0               0                  0.0
+device_0   ML_AMA               0               0               0               0                  0.0
+---------------------------------------------------------------------------------------------------------------
+device_1   Not Used
+---------------------------------------------------------------------------------------------------------------
+</pre></div>
+</div>
+<p>Note that quarter of encoder, <code class="docutils literal notranslate"><span class="pre">ENCODER_TYPE1_AMA</span></code>, and 8th of the look ahead resources are consumed.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          
+				  
+				  <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="c_apis.html" class="btn btn-neutral float-left" title="C API Programming Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="migration.html" class="btn btn-neutral float-right" title="Software Migration Considerations" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022-2024, Advanced Micro Devices, Inc.
+      <span class="lastupdated">Last updated on September 23, 2024.
+      </span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div>
+										
+</br>
+
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

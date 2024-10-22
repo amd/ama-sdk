@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="English" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+<!-- OneTrust Cookies Consent Notice start for amd.github.io -->
+<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="cb638ba1-8bc4-44a0-9338-632d4dc19be6" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script>
+<!-- OneTrust Cookies Consent Notice end for amd.github.io -->
+<!-- Google Tag Manager -->
+<script type="text/plain" class="optanon-category-C0002">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-5RHQV7');</script>
+<!-- End Google Tag Manager -->
+  <title>FFmpeg Tutorials &mdash; AMD AMA 1.2 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=28ab6b15"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/design-tabs.js?v=36754332"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Video Quality Examples" href="quality_analysis.html" />
+    <link rel="prev" title="Tutorials and Examples" href="../../examples.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+<!-- Google Tag Manager -->
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5RHQV7" height="0" width="0" style="display:none;visibility:hidden" class="optanon-category-C0002"></iframe></noscript>
+<!-- End Google Tag Manager --> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+            <a href="../../index.html" class="icon icon-home"> AMD AMA
+          </a>
+              <div class="version">
+                1.2
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Get Started</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../release_notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started_on_prem.html">Hardware Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../virtualization.html">Virtualization</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../examples.html">Tutorials and Examples</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">FFmpeg Introductory Tutorials</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#device-selection">Device Selection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#environment-setup">Environment Setup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#simple-ffmpeg-examples">Simple FFmpeg Examples</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#decode-only">Decode Only</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#encode-only">Encode Only</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#basic-transcode">Basic Transcode</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#decode-only-into-multiple-resolution-outputs">Decode Only Into Multiple-Resolution Outputs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#encode-only-into-multiple-resolution-outputs">Encode Only Into Multiple-Resolution Outputs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#transcode-with-multiple-resolution-outputs">Transcode with Multiple-Resolution Outputs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#transcode-in-ull-mode">Transcode in ULL Mode</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kp30-transcode">8kp30 Transcode</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#multi-slice-transcode">Multi-slice Transcode</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#multi-device-transcode">Multi-device Transcode</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#double-density-example-with-xrmd">Double Density Example with xrmd</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#double-density-example-without-xrmd">Double Density Example without xrmd</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#full-double-density">Full Double Density</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#jpeg-image-decoding">JPEG Image Decoding</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#jpeg-image-encoding">JPEG Image Encoding</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#av1-image-encoding">AV1 Image Encoding</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#d-processing">2D Processing</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#cropping">Cropping</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#padding">Padding</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#video-rotation">Video Rotation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#color-space-conversion">Color Space Conversion</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#chroma-subsampling">Chroma Subsampling</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#picture-in-picture-pip">Picture In Picture (PIP)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tiling">Tiling</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#thumbnailing">Thumbnailing</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#composition">Composition</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#ml-processing">ML Processing</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#ml-based-face-roi">ML Based Face ROI</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#roi-gain-factor">ROI Gain Factor</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#roi-ladder-transcoding">ROI Ladder Transcoding</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#roi-face-detection">ROI Face Detection</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ml-based-text-roi">ML Based Text ROI</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="quality_analysis.html">FFmpeg Video Quality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="filters.html">FFmpeg Software Filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../gstreamer/tutorials.html">Gstreamer Introductory Tutorials</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../gstreamer/filters.html">Gstreamer Software Filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../gstreamer/xcompositor.html">Gstreamer Compositor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../gstreamer/xabrladder.html">Gstreamer ABR Ladder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../xma/xma_apps.html">XMA C-Based Applications</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../git_hub.html">AMA Repository</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../announcements.html">Announcements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../specs_and_features.html">Specs and Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../package_feed.html">Package Feed Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../using_ffmpeg.html">Using FFmpeg</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../using_gstreamer.html">Using Gstreamer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../unified_logging.html">Unified Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tuning_video_quality.html">Tuning Video Quality</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tuning_pipeline_latency.html">Tuning Latency of Transcode Pipeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../managing_compute_resources.html">Managing Compute Resources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../c_apis.html">C API Programming Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../card_management.html">Card Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../migration.html">Migration Path</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../encoder_comp_matrix.html">Encoding Compatibility Matrix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../preview.html">New Feature Preview</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Support</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://www.xilinx.com/support.html">File an issue</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://support.xilinx.com/s/topic/0TO2E000000YKY8WAO/video?language=en_US">Video Forum</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other AMA SDK Versions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://amd.github.io/ama-sdk/v1.1.2/index.html">   v1.1.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://amd.github.io/ama-sdk/latest/index.html">   latest</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Video Products</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/video-sdk/v3.0/index.html">U30</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">AMD AMA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../examples.html">Tutorials and Examples</a> &raquo;</li>
+      <li>FFmpeg Tutorials</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>This version of the SDK has been superseded by the <a class="reference external" href="https://amd.github.io/ama-sdk/latest/index.html">latest release</a> of the SDK.</p>
+</div>
+<section id="ffmpeg-tutorials">
+<h1>FFmpeg Tutorials<a class="headerlink" href="#ffmpeg-tutorials" title="Link to this heading">¶</a></h1>
+<p>This page provides tutorials on how to use FFmpeg with the AMD AMA Video SDK. The complete reference guide for the FFmpeg version included in the AMD AMA Video SDK can be found <a class="reference internal" href="../../using_ffmpeg.html"><span class="doc">here</span></a>.</p>
+<p>The tutorials break down the commands, starting with simple decode, scale and encode pipelines. The tutorials end with different varieties of full transcode pipelines.</p>
+<nav class="contents local" id="table-of-contents">
+<p class="topic-title">Table of Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#device-selection" id="id8">Device Selection</a></p></li>
+<li><p><a class="reference internal" href="#environment-setup" id="id9">Environment Setup</a></p></li>
+<li><p><a class="reference internal" href="#simple-ffmpeg-examples" id="id10">Simple FFmpeg Examples</a></p>
+<ul>
+<li><p><a class="reference internal" href="#decode-only" id="id11">Decode Only</a></p></li>
+<li><p><a class="reference internal" href="#encode-only" id="id12">Encode Only</a></p>
+<ul>
+<li><p><a class="reference internal" href="#bit-conversion" id="id13">4:2:2 10 Bit Conversion</a></p></li>
+<li><p><a class="reference internal" href="#constant-rate-factor-crf-mode" id="id14">Constant Rate Factor (CRF) Mode</a></p></li>
+<li><p><a class="reference internal" href="#insert-idr" id="id15">Insert IDR</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#basic-transcode" id="id16">Basic Transcode</a></p></li>
+<li><p><a class="reference internal" href="#decode-only-into-multiple-resolution-outputs" id="id17">Decode Only Into Multiple-Resolution Outputs</a></p></li>
+<li><p><a class="reference internal" href="#encode-only-into-multiple-resolution-outputs" id="id18">Encode Only Into Multiple-Resolution Outputs</a></p></li>
+<li><p><a class="reference internal" href="#transcode-with-multiple-resolution-outputs" id="id19">Transcode with Multiple-Resolution Outputs</a></p></li>
+<li><p><a class="reference internal" href="#transcode-in-ull-mode" id="id20">Transcode in ULL Mode</a></p></li>
+<li><p><a class="reference internal" href="#kp30-transcode" id="id21">8kp30 Transcode</a></p></li>
+<li><p><a class="reference internal" href="#multi-slice-transcode" id="id22">Multi-slice Transcode</a></p></li>
+<li><p><a class="reference internal" href="#multi-device-transcode" id="id23">Multi-device Transcode</a></p></li>
+<li><p><a class="reference internal" href="#double-density-example-with-xrmd" id="id24">Double Density Example with xrmd</a></p></li>
+<li><p><a class="reference internal" href="#double-density-example-without-xrmd" id="id25">Double Density Example without xrmd</a></p></li>
+<li><p><a class="reference internal" href="#full-double-density" id="id26">Full Double Density</a></p></li>
+<li><p><a class="reference internal" href="#jpeg-image-decoding" id="id27">JPEG Image Decoding</a></p></li>
+<li><p><a class="reference internal" href="#jpeg-image-encoding" id="id28">JPEG Image Encoding</a></p></li>
+<li><p><a class="reference internal" href="#av1-image-encoding" id="id29">AV1 Image Encoding</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#d-processing" id="id30">2D Processing</a></p>
+<ul>
+<li><p><a class="reference internal" href="#cropping" id="id31">Cropping</a></p></li>
+<li><p><a class="reference internal" href="#padding" id="id32">Padding</a></p></li>
+<li><p><a class="reference internal" href="#video-rotation" id="id33">Video Rotation</a></p></li>
+<li><p><a class="reference internal" href="#color-space-conversion" id="id34">Color Space Conversion</a></p></li>
+<li><p><a class="reference internal" href="#chroma-subsampling" id="id35">Chroma Subsampling</a></p></li>
+<li><p><a class="reference internal" href="#picture-in-picture-pip" id="id36">Picture In Picture (PIP)</a></p></li>
+<li><p><a class="reference internal" href="#tiling" id="id37">Tiling</a></p></li>
+<li><p><a class="reference internal" href="#thumbnailing" id="id38">Thumbnailing</a></p></li>
+<li><p><a class="reference internal" href="#composition" id="id39">Composition</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#ml-processing" id="id40">ML Processing</a></p>
+<ul>
+<li><p><a class="reference internal" href="#ml-based-face-roi" id="id41">ML Based Face ROI</a></p></li>
+<li><p><a class="reference internal" href="#roi-gain-factor" id="id42">ROI Gain Factor</a></p></li>
+<li><p><a class="reference internal" href="#roi-ladder-transcoding" id="id43">ROI Ladder Transcoding</a></p></li>
+<li><p><a class="reference internal" href="#roi-face-detection" id="id44">ROI Face Detection</a></p></li>
+<li><p><a class="reference internal" href="#ml-based-text-roi" id="id45">ML Based Text ROI</a></p></li>
+</ul>
+</li>
+</ul>
+</nav>
+<section id="device-selection">
+<h2><a class="toc-backref" href="#id8" role="doc-backlink">Device Selection</a><a class="headerlink" href="#device-selection" title="Link to this heading">¶</a></h2>
+<p>As noted in <a class="reference internal" href="../../specs_and_features.html#video-codec-unit"><span class="std std-ref">Video Codec Unit</span></a> section, each card is made of 2 devices, and by default all processing tasks are delegated to the first device in the systems. (See <a class="reference internal" href="../../card_management.html#examining-cards"><span class="std std-ref">mautil</span></a> to find out how many devices are available, in a runtime environment.) To override this behavior, default and non-default devices must be set, explicitly. To do so within a FFmpeg command, the default device is set by using FFmpeg's hardware acceleration framework, i.e., <code class="docutils literal notranslate"><span class="pre">ffmpeg</span> <span class="pre">-hwaccel</span> <span class="pre">ama</span>&#160; <span class="pre">-hwaccel_device</span> <span class="pre">/dev/ama_transcoder0</span> <span class="pre">...</span></code>, and can be further refined, by delegating subtasks to non-default devices by using <a class="reference internal" href="../../using_ffmpeg.html#cmdoption-arg-hwupload_ama"><code class="xref std std-option docutils literal notranslate"><span class="pre">hwupload_ama</span></code></a>. See <a class="reference internal" href="#ffmpeg-multidevice"><span class="std std-ref">Multi-device Transcode</span></a> for an example.</p>
+</section>
+<section id="environment-setup">
+<h2><a class="toc-backref" href="#id9" role="doc-backlink">Environment Setup</a><a class="headerlink" href="#environment-setup" title="Link to this heading">¶</a></h2>
+<ol class="arabic">
+<li><p>The AMD AMA Video SDK version of FFmpeg, Gstreamer and XMA applications can be found in the /opt/amd/ama/ma35/bin folder of your system. If this folder is not present, install the required packages:</p>
+<p>See <a class="reference internal" href="../../getting_started_on_prem.html"><span class="doc">On Premises</span></a></p>
+</li>
+<li><p>Configure the environment to use the AMD AMA Video SDK. This a mandatory step for all applications:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>source /opt/amd/ama/ma35/scripts/setup.sh
+</pre></div>
+</div>
+</li>
+</ol>
+<p>The setup script exports important environment variables and ensures proper execution environment for AMD AMA Video SDK.</p>
+<p>Sourcing the setup script should be performed each time you open a new terminal on your system. This is required for the environment to be correctly configured.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</section>
+<section id="simple-ffmpeg-examples">
+<h2><a class="toc-backref" href="#id10" role="doc-backlink">Simple FFmpeg Examples</a><a class="headerlink" href="#simple-ffmpeg-examples" title="Link to this heading">¶</a></h2>
+<p>Some of the examples read or write RAW files from disk (encode-only or decode-only pipelines). There is a chance that due to the massive bandwidth required for operating on these RAW files, you will notice a drop in FPS; this is not due to the AMD AMA Video SDK but the disk speeds. We recommend reading/writing from <code class="docutils literal notranslate"><span class="pre">/dev/shm</span></code> which is a RAM disk.</p>
+<p>In the following sections, description of command line options is done in an accumulative manner, i.e., previously described options are not explained further.</p>
+<section id="decode-only">
+<span id="id1"></span><h3><a class="toc-backref" href="#id11" role="doc-backlink">Decode Only</a><a class="headerlink" href="#decode-only" title="Link to this heading">¶</a></h3>
+<p>This example accepts a clip that is already encoded in H.264, and will decode the file into a RAW format and save it to disk.</p>
+<p><strong>Command Line</strong>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ffmpeg -y -hwaccel ama -c:v h264_ama -out_fmt nv12 -i &lt;INPUT&gt; \
+ -vf hwdownload_ama,format=nv12 -f rawvideo /tmp/dec_out.nv12
+</pre></div>
+</div>
+<p>Explanation of the flags:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ffmpeg</span></code></p>
+<ul>
+<li><p>The ffmpeg application, which is provided by AMD, and moved to the top of the PATH when you sourced the setup.sh script</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">hwaccel</span> <span class="pre">ama</span></code></p>
+<ul>
+<li><p>Instructs FFmpeg to use accelerated plugins provided by AMD AMA Video SDK</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-out_fmt</span> <span class="pre">nv12</span></code></p>
+<ul>
+<li><p>Specifies nv12 output format for the decoded video. Note that this option has to be specified twice: 1) To convert from the internal buffer format to <code class="docutils literal notranslate"><span class="pre">nv12</span></code> in the decoder and 2) To convert when transferring to the host.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-f</span> <span class="pre">rawvideo</span></code></p>
+<ul>
+<li><p>This signifies that the video is in a raw format, without container or other metadata/information about the clip</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-c:v</span> <span class="pre">h264_ama</span></code></p>
+<ul>
+<li><p>Declares the decoder's codec for video (as opposed to, e.g., audio <code class="docutils literal notranslate"><span class="pre">-c:a</span> <span class="pre">ac3</span></code>) is the hardware-accelerated H.264 decoder</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-i</span> <span class="pre">&lt;INPUT&gt;</span></code></p>
+<ul>
+<li><p>The input file to be transcoded</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-vf</span> <span class="pre">hwdownload_ama</span></code></p>
+<ul>
+<li><p>Internally, the decoder operates on AMD AMA Video SDK type buffers to improve performance. To convert back to a host-buffer, you must execute this filter.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-y</span></code></p>
+<ul>
+<li><p>Enable overwrite without prompting the user if they're sure</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/tmp/dec_out.yuv</span></code></p>
+<ul>
+<li><p>The decoder will save the file to the path above</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="encode-only">
+<span id="id2"></span><h3><a class="toc-backref" href="#id12" role="doc-backlink">Encode Only</a><a class="headerlink" href="#encode-only" title="Link to this heading">¶</a></h3>
+<p>This example accepts a RAW 1080p60 clip in YUV420 format. It will pass the clip to the encoder to produce an AV1 encoded MP4 output with a target bitrate of 5Mbps and saves it to disk. The command uses the default VQ setting. See <a class="reference internal" href="quality_analysis.html"><span class="doc">FFmpeg Video Quality</span></a> for details.</p>
+<p><strong>Command Line</strong>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ffmpeg -re -hwaccel ama -f rawvideo -s 1920x1080 -framerate 60 -i &lt;INPUT&gt; -vf &quot;hwupload_ama&quot; -c:v av1_ama -b:v 5M -f mp4 -y sn1_av1.mp4
+</pre></div>
+</div>
+<p>Explanation of the flags:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">-re</span></code></p>
+<ul>
+<li><p>Flag to maintain the target frame rate</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-s</span> <span class="pre">1920x1080</span></code></p>
+<ul>
+<li><p>Since there is no container or metadata in a RAW clip, the user must define the input clip's resolution/size. This example states the input is 1080p</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-framerate</span> <span class="pre">60</span></code></p>
+<ul>
+<li><p>Again, without metadata, the encoder requires the framerate of the incoming stream</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-pix_fmt</span> <span class="pre">yuv420p</span></code></p>
+<ul>
+<li><p>The color space of the encoder is by default yuv420p. this example is defining the input clip as being this same color space</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-f</span> <span class="pre">mp4</span></code></p>
+<ul>
+<li><p>Sets the output video container to MP4</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-b:v</span> <span class="pre">5M</span></code></p>
+<ul>
+<li><p>The target bitrate of the encoded stream. 8M signifies a target bitrate of 8 Megabits per second. You can also use 8000K or 8000000.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-c:v</span> <span class="pre">av1_ama</span></code></p>
+<ul>
+<li><p>Declares the encoder's codec for video (as opposed to audio <code class="docutils literal notranslate"><span class="pre">-c:a</span> <span class="pre">...</span></code>) is the hardware-accelerated AV1 encoder</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/tmp/enc_out.mp4</span></code></p>
+<ul>
+<li><p>Save the output in the above path.</p></li>
+</ul>
+</li>
+</ul>
+<section id="bit-conversion">
+<h4><a class="toc-backref" href="#id13" role="doc-backlink">4:2:2 10 Bit Conversion</a><a class="headerlink" href="#bit-conversion" title="Link to this heading">¶</a></h4>
+<p>To encode YUV, 4:2:2, 10 bit pixel format to YUV, 4:2:0, 8 bit use the following command:</p>
+<p><strong>Command Line</strong>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ffmpeg -hwaccel ama -i &lt;INPUT&gt;  -vf &quot;format=yuv420p,hwupload_ama&quot; -c:v h264_ama -b:v 8M &lt;OUTPUT&gt;
+</pre></div>
+</div>
+<p>Explanation of the flags:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">-vf</span> <span class="pre">&quot;format=yuv420p,hwupload_ama&quot;</span></code></p>
+<ul>
+<li><p>Instructs the pipeline to upload and convert the input video as <code class="docutils literal notranslate"><span class="pre">yuv420p</span></code>.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="constant-rate-factor-crf-mode">
+<h4><a class="toc-backref" href="#id14" role="doc-backlink">Constant Rate Factor (CRF) Mode</a><a class="headerlink" href="#constant-rate-factor-crf-mode" title="Link to this heading">¶</a></h4>
+<p>The following examples demonstrate the usage of the <a class="reference internal" href="../../using_ffmpeg.html#cmdoption-crf"><code class="xref std std-option docutils literal notranslate"><span class="pre">-crf</span></code></a> flag and impact of its value on the quality of the encoded streams.</p>
+<section id="high-quality-encoding">
+<h5>High Quality Encoding<a class="headerlink" href="#high-quality-encoding" title="Link to this heading">¶</a></h5>
+<p><strong>Command Line</strong>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ffmpeg -re -hwaccel ama -f rawvideo -s 1920x1080 -framerate 60 -i &lt;INPUT&gt; -vf &quot;hwupload_ama&quot; -c:v av1_ama -crf 0  -f mp4 sn1_crf_hq.mp4
+</pre></div>
+</div>
+<p>Explanation of the flags:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">-crf</span> <span class="pre">0</span></code></p>
+<ul>
+<li><p>Enables the highest quality <a class="reference internal" href="../../using_ffmpeg.html#cmdoption-crf"><code class="xref std std-option docutils literal notranslate"><span class="pre">-crf</span></code></a> mode</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="low-quality-encoding">
+<h5>Low Quality Encoding<a class="headerlink" href="#low-quality-encoding" title="Link to this heading">¶</a></h5>
+<p><strong>Command Line</strong>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ffmpeg -re -hwaccel ama -f rawvideo -s 1920x1080 -framerate 60 -i &lt;INPUT&gt; -vf &quot;hwupload_ama&quot; -c:v av1_ama -crf 63 -f mp4 sn1_crf_lq.mp4
+</pre></div>
+</div>
+<p>Explanation of the flags:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">-crf</span> <span class="pre">63</span></code></p>
+<ul>
+<li><p>Sets the encoded AV1 stream to lowest CRF quality</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+<section id="insert-idr">
+<span id="ffmpeg-idr"></span><h4><a class="toc-backref" href="#id15" role="doc-backlink">Insert IDR</a><a class="headerlink" href="#insert-idr" title="Link to this heading">¶</a></h4>
+<p>This example shows how to insert IDR frames at preassigned frame positions. See <a class="reference external" href="https://www.ffmpeg.org/ffmpeg.html#:~:text=the%20output%20file.-,For%20example,-%2C%20to%20insert%20a">-force_key_frames</a> for details:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ffmpeg -hide_banner -loglevel info -hwaccel ama -hwaccel_device /dev/ama_transcoder0  -re -f lavfi -i testsrc=duration=10:size=1920x1080:rate=60,format=yuv420p \
+-f rawvideo  -vf &quot;hwupload_ama&quot;  -c:v h264_ama  -g 30 -forced_idr 0  -force_key_frames &#39;expr:gte(t,n_forced*2)&#39; -b:v 8M -f mp4 -y idr.mp4
+</pre></div>
+</div>
+<p>Explanation of the flags:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">forced_idr</span> <span class="pre">0</span></code></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Disables setting all I frames as IDR</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-force_key_frames</span> <span class="pre">'expr:gte(t,n_forced*2)'</span></code></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Inserts IDR frames every 2 seconds</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<p>To confirm IDR insertion, observe the output of the following command:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ffprobe -hide_banner -loglevel error -select_streams v:0 -show_entries frame=best_effort_timestamp_time,pict_type,key_frame -select_streams v -of csv=p=0 -unit  idr.mp4 | grep I
+1,0.000000 s,I
+0,0.533333 s,I
+0,1.000000 s,I
+0,1.533333 s,I
+1,2.000000 s,I
+0,2.533333 s,I
+0,3.000000 s,I
+0,3.533333 s,I
+1,4.000000 s,I
+...
+</pre></div>
+</div>
+<p>Note that every 2 seconds <code class="docutils literal notranslate"><span class="pre">key_frame</span></code> flag is set to 1, indicating that the corresponding I frame is IDR.</p>
+</section>
+</section>
+<section id="basic-transcode">
+<h3><a class="toc-backref" href="#id16" role="doc-backlink">Basic Transcode</a><a class="headerlink" href="#basic-transcode" title="Link to this heading">¶</a></h3>
+<p>This example takes an H.264 clip and transcodes it to HEVC at the bitrate of 8Mbps. The output is written into <code class="file docutils literal notranslate"><span class="pre">/tmp/h264_to_hevc</span></code>.</p>
+<p><strong>Command Line</strong>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ffmpeg -y -hwaccel ama -c:v h264_ama -i &lt;INPUT&gt; \
+ -c:v hevc_ama -b:v 6M  -f rawvideo  /tmp/h264_to_hevc.hevc
+</pre></div>
+</div>
+</section>
+<section id="decode-only-into-multiple-resolution-outputs">
+<span id="decode-and-scale-only"></span><h3><a class="toc-backref" href="#id17" role="doc-backlink">Decode Only Into Multiple-Resolution Outputs</a><a class="headerlink" href="#decode-only-into-multiple-resolution-outputs" title="Link to this heading">¶</a></h3>
+<p>This example decodes an existing H.264 file and then scales it into multiple resolutions as defined below. It will not re-encode them, but save the RAW outputs to disk under <code class="docutils literal notranslate"><span class="pre">/tmp/_scale&lt;resolution&gt;.yuv</span></code></p>
+<p><strong>Command Line</strong>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> ffmpeg -y -hwaccel ama \
+-c:v h264_ama  -out_fmt nv12 -i &lt;INPUT&gt;  \
+-filter_complex &quot;scaler_ama=outputs=4:out_res=(1920x1080|full|nv12)(1280x720|full|nv12)(720x480|full|nv12)(360x240|full|nv12) [a][b][c][d]; \
+                 [a]hwdownload_ama,format=nv12[a1];[b]hwdownload_ama,format=nv12[b1];[c]hwdownload_ama,format=nv12[c1];[d]hwdownload_ama,format=nv12[d1]&quot; \
+-map &#39;[a1]&#39; -f rawvideo -pix_fmt nv12 -y /tmp/scale_1080p.yuv \
+-map &#39;[b1]&#39; -f rawvideo -pix_fmt nv12 -y /tmp/scale_720p.yuv  \
+-map &#39;[c1]&#39; -f rawvideo -pix_fmt nv12 -y /tmp/scale_480p.yuv \
+-map &#39;[d1]&#39; -f rawvideo -pix_fmt nv12 -y /tmp/scale_240p.yuv
+</pre></div>
+</div>
+<p>Explanation of the flags:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">-filter_complex</span></code></p>
+<ul>
+<li><p>The FFmpeg <code class="docutils literal notranslate"><span class="pre">-filter_complex</span></code> flag allows combining multiple filters together using a graph-like syntax. This example uses the <a class="reference internal" href="../../using_ffmpeg.html#cmdoption-arg-scaler_ama"><code class="xref std std-option docutils literal notranslate"><span class="pre">scaler_ama</span></code></a> to create 4 output resolutions from the input stream.</p></li>
+<li><p>The <a class="reference internal" href="../../using_ffmpeg.html#cmdoption-arg-scaler_ama"><code class="xref std std-option docutils literal notranslate"><span class="pre">scaler_ama</span></code></a> filter configures the hardware-accelerated scaler to produce 4 output resolutions (1920x1080, 1280x720, 720x480, and 360x240). For each output, the width, height, frame rate and pixel format are defined as arguments to <code class="docutils literal notranslate"><span class="pre">out_res</span></code> option as in (WidthxHeight|Rate|Format). The 4 outputs are transfered to the host as <code class="docutils literal notranslate"><span class="pre">a1</span></code>, <code class="docutils literal notranslate"><span class="pre">b1</span></code>, <code class="docutils literal notranslate"><span class="pre">c1</span></code> and <code class="docutils literal notranslate"><span class="pre">d1</span></code> respectively.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-map</span> <span class="pre">&quot;[ID]&quot;</span></code></p>
+<ul>
+<li><p>Selects an output of the filter graph. The flags that follow apply to the selected stream.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/tmp/scale_&lt;resolution&gt;.yuv</span></code></p>
+<ul>
+<li><p>Save the output files to the paths listed</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="encode-only-into-multiple-resolution-outputs">
+<span id="encode-only-multiple-res-outputs"></span><h3><a class="toc-backref" href="#id18" role="doc-backlink">Encode Only Into Multiple-Resolution Outputs</a><a class="headerlink" href="#encode-only-into-multiple-resolution-outputs" title="Link to this heading">¶</a></h3>
+<p>This example takes a raw 1080p60 YUV file, scales it down to different resolutions and frame rates, encodes each of the scaled streams to different formats and saves them to disk under <code class="file docutils literal notranslate"><span class="pre">/tmp/&lt;encode</span> <span class="pre">format&gt;_&lt;resolution&gt;p&lt;frame</span> <span class="pre">rate&gt;.mp4</span></code></p>
+<p><strong>Command Line</strong>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ffmpeg -y -hwaccel ama -f rawvideo -pix_fmt yuv420p -s:v 1920x1080 -framerate 60 -i &lt;INPUT&gt; \
+-filter_complex &quot;hwupload_ama,scaler_ama=outputs=4:out_res=(1920x1080|full)(1280x720|half)(720x480|half)(360x240|half) [a][b][c][d]&quot; \
+-map &#39;[a]&#39; -c:v hevc_ama -b:v 6M -f mp4 -y /tmp/hevc_1080p60.mp4 \
+-map &#39;[b]&#39; -c:v av1_ama  -b:v 2M -f mp4 -y /tmp/av1_720p30.mp4 \
+-map &#39;[c]&#39; -c:v h264_ama -b:v 1M -f mp4 -y /tmp/h264_480p30.mp4 \
+-map &#39;[d]&#39; -c:v av1_ama  -b:v 1M -f mp4 -y /tmp/av1_240p30.mp4
+</pre></div>
+</div>
+<p>Explanation of the flags:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">-filter_complex</span> <span class="pre">&quot;hwupload_ama...</span></code></p>
+<ul>
+<li><p>Specifies that video clip gets upload to the device.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-filter_complex</span> <span class="pre">&quot;...scaler_ama=outputs=4:out_res=...(1280x720|half)...</span></code></p>
+<ul>
+<li><p>Declares scaler output of given resolution and rate. See <a class="reference internal" href="../../using_ffmpeg.html#cmdoption-arg-scaler_ama"><code class="xref std std-option docutils literal notranslate"><span class="pre">scaler_ama</span></code></a> for more details.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-c:v</span> <span class="pre">[hevc_ama</span> <span class="pre">|</span> <span class="pre">av1_ama</span> <span class="pre">|</span> <span class="pre">h264_ama]</span></code></p>
+<ul>
+<li><p>Declares various encode types HEVC, AV1 and H.264, respectively.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/tmp/encode-format_resoultion.encode-format</span></code></p>
+<ul>
+<li><p>Saves the output clips to the location listed</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="transcode-with-multiple-resolution-outputs">
+<span id="transcode-with-abr-ladder"></span><h3><a class="toc-backref" href="#id19" role="doc-backlink">Transcode with Multiple-Resolution Outputs</a><a class="headerlink" href="#transcode-with-multiple-resolution-outputs" title="Link to this heading">¶</a></h3>
+<p>This example implements a complete transcoding pipeline on an 1080p60 H.264 input. It decodes the input stream, scales it to 4 different resolutions and encodes scaler's outputs into various formats and saves them to disk under <code class="file docutils literal notranslate"><span class="pre">/tmp/&lt;encoder</span> <span class="pre">format&gt;_&lt;resolution&gt;.mp4</span></code></p>
+<p><strong>Command Line</strong>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ffmpeg -y -hwaccel ama \
+-c:v h264_ama -i &lt;INPUT&gt; \
+-filter_complex &quot;scaler_ama=outputs=4:out_res=(1920x1080)(1280x720)(720x480)(360x240) [a][b][c][d]&quot; \
+-map &#39;[a]&#39; -c:v hevc_ama -b:v 6M -f mp4 -y /tmp/hevc_1080p.mp4 \
+-map &#39;[b]&#39; -c:v av1_ama  -b:v 2M -f mp4 -y /tmp/av1_720p.mp4 \
+-map &#39;[c]&#39; -c:v h264_ama -b:v 1M -f mp4 -y /tmp/h264_480p.mp4 \
+-map &#39;[d]&#39; -c:v av1_ama  -b:v 1M -f mp4 -y /tmp/av1_240p.mp4
+</pre></div>
+</div>
+</section>
+<section id="transcode-in-ull-mode">
+<h3><a class="toc-backref" href="#id20" role="doc-backlink">Transcode in ULL Mode</a><a class="headerlink" href="#transcode-in-ull-mode" title="Link to this heading">¶</a></h3>
+<p>This example implements an ultra low latency transcode pipeline. For more details refer <a class="reference internal" href="../../tuning_pipeline_latency.html#latency-tuning"><span class="std std-ref">Tuning Transcode Latency</span></a>.</p>
+<p><strong>Command Line</strong>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ffmpeg  -hide_banner -loglevel error -y -hwaccel ama -low_latency 1 -c:v h264_ama -i &lt;INPUT&gt; \
+-c:v hevc_ama -b:v 6M -lookahead_depth 0 -f rawvideo /tmp/h264_to_hevc.hevc
+</pre></div>
+</div>
+<p>Explanation of the flags:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">-low_latency</span> <span class="pre">1</span></code></p>
+<ul>
+<li><p>Enables low latency decoding mode.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-lookahead_depth</span> <span class="pre">0</span></code></p>
+<ul>
+<li><p>LA size of 0 triggers ultra low latency encoding mode.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="kp30-transcode">
+<h3><a class="toc-backref" href="#id21" role="doc-backlink">8kp30 Transcode</a><a class="headerlink" href="#kp30-transcode" title="Link to this heading">¶</a></h3>
+<p>This example shows how to construct an AV1 Type-1 8kp30 transcode pipeline.</p>
+<p><strong>Command Line</strong>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ffmpeg -y -hwaccel ama -hwaccel_device /dev/ama_transcoder0 -c:v h264_ama -i &lt;INPUT&gt; -c:v -b:v 25M av1_ama -cores 2 -y -f mp4 &lt;OUTPUT&gt;
+</pre></div>
+</div>
+<p>Explanation of the flags:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">-cores</span> <span class="pre">2</span></code></p>
+<ul>
+<li><p>Uses both cores for AV1 Type-1 encoding</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="multi-slice-transcode">
+<h3><a class="toc-backref" href="#id22" role="doc-backlink">Multi-slice Transcode</a><a class="headerlink" href="#multi-slice-transcode" title="Link to this heading">¶</a></h3>
+<p>This example shows how to transcode a 8kp30 input into a 4kp30 AVC and a 4kp30 HEVC.</p>
+<p><strong>Command Line</strong>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ffmpeg -y -hwaccel ama -hwaccel_device /dev/ama_transcoder0 -c:v h264_ama -resize 3840x2160 -i &lt;INPUT&gt; -filter_complex &quot;split=2[a][b]&quot; \
+-map &quot;[a]&quot; -c:v h264_ama -b:v 32M -slice 0 -f mp4 &lt;OUTPUT 1&gt; \
+-map &quot;[b]&quot; -c:v hevc_ama -b:v 24M -slice 1 -f mp4 &lt;OUTOUT 2&gt;
+</pre></div>
+</div>
+<p>Explanation of the flags:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">-resize</span> <span class="pre">3840x2160</span></code></p>
+<ul>
+<li><p>Uses decoder's downscaling capability</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-slice</span> <span class="pre">0</span> <span class="pre">and</span> <span class="pre">1</span></code></p>
+<ul>
+<li><p>Explicitly targets both slices, for 2x4kp60 encoding. Note that explicit slice assignment is only required if <a class="reference internal" href="../../card_management.html#xrmd"><span class="std std-ref">xrmd</span></a> is not enabled.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="multi-device-transcode">
+<span id="ffmpeg-multidevice"></span><h3><a class="toc-backref" href="#id23" role="doc-backlink">Multi-device Transcode</a><a class="headerlink" href="#multi-device-transcode" title="Link to this heading">¶</a></h3>
+<p>This example demonstrates <a class="reference internal" href="../../using_ffmpeg.html#cmdoption-arg-hwdownload_ama"><code class="xref std std-option docutils literal notranslate"><span class="pre">hwdownload_ama</span></code></a> ability to execute encoding or 2D processing tasks, on an arbitrary device.</p>
+<p><strong>Command Line</strong>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ffmpeg  -hwaccel ama -hwaccel_device /dev/ama_transcoderX -c:v h264_ama -out_fmt yuv420p -i &lt;INPUT&gt; -filter_complex &quot;hwdownload_ama,hwupload_ama=device=Y&quot; -c:v h264_ama -b:v 8M -f mp4 &lt;OUTPUT&gt;
+</pre></div>
+</div>
+<p>Explanation of the flags:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">hwdownload_ama</span></code></p>
+<ul>
+<li><p>Downloads the decoded stream from device <code class="docutils literal notranslate"><span class="pre">X</span></code> to the host</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">hwupload_ama=device=Y</span></code></p>
+<ul>
+<li><p>Uploads the decoded stream from the host to device <code class="docutils literal notranslate"><span class="pre">Y</span></code> for encoding</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="double-density-example-with-xrmd">
+<h3><a class="toc-backref" href="#id24" role="doc-backlink">Double Density Example with xrmd</a><a class="headerlink" href="#double-density-example-with-xrmd" title="Link to this heading">¶</a></h3>
+<p>This example demonstrates an example on how to achieve 4x4kp60 density on a single device</p>
+<p><strong>Command Line</strong>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ffmpeg -hide_banner -hwaccel ama -c:v h264_ama -i &lt;4Kp6 H.264 file&gt; \
+ -filter_complex &quot;split=4[a][b][c][d]&quot; \
+ -map &quot;[a]&quot; -c:v av1_ama -b:v 16M -f rawvideo -y /tmp/out_3840x2160_0.av1 \
+ -map &quot;[b]&quot; -c:v hevc_ama -b:v 24M -f rawvideo -y /tmp/out_3840x2160_0.hevc \
+ -map &quot;[c]&quot; -c:v av1_ama -b:v 16M -f rawvideo -y /tmp/out_3840x2160_1.av1 \
+ -map &quot;[d]&quot; -c:v hevc_ama -b:v 24M  -f rawvideo -y /tmp/out_3840x2160_1.hevc
+</pre></div>
+</div>
+<p>Explanation of the flags:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">-split</span></code></p>
+<ul>
+<li><p>Splits input into several identical outputs.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="double-density-example-without-xrmd">
+<h3><a class="toc-backref" href="#id25" role="doc-backlink">Double Density Example without xrmd</a><a class="headerlink" href="#double-density-example-without-xrmd" title="Link to this heading">¶</a></h3>
+<p>This example demonstrates how to achieve 4x4kp60 density on a single device, by explicitly allocating tasks on slices 0 and 1. Note in this example xrmd service has to be stopped.</p>
+<p><strong>Command Line</strong>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ffmpeg -hide_banner -hwaccel ama -c:v h264_ama -i &lt;4Kp6 H.264 file&gt; \
+ -filter_complex &quot;split=4[a][b][c][d]&quot; \
+ -map &quot;[a]&quot; -c:v av1_ama -b:v 16M  -slice 0 -f rawvideo -y /tmp/out_3840x2160_0.av1 \
+ -map &quot;[b]&quot; -c:v hevc_ama -b:v 24M -slice 0 -f rawvideo -y /tmp/out_3840x2160_0.hevc \
+ -map &quot;[c]&quot; -c:v av1_ama -b:v 16M -slice 1 -f rawvideo -y /tmp/out_3840x2160_1.av1 \
+ -map &quot;[d]&quot; -c:v hevc_ama -b:v 24M -slice 1 -f rawvideo -y /tmp/out_3840x2160_1.hevc
+</pre></div>
+</div>
+</section>
+<section id="full-double-density">
+<span id="double-density"></span><h3><a class="toc-backref" href="#id26" role="doc-backlink">Full Double Density</a><a class="headerlink" href="#full-double-density" title="Link to this heading">¶</a></h3>
+<p>This example demonstrates how to achieve full density, by distributing transcode pipelines, between 2 devices.</p>
+<p><strong>Command Line</strong>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>for i in `seq 1 16`; do
+ ffmpeg -y -nostdin -hwaccel ama -hwaccel_device /dev/ama_transcoderX -re -c:v h264_ama -i &lt;30 FPS INPUT&gt; -c:v &lt;TYPE 2 ENCODER&gt; -b:v 5M -lookahead_depth 10 -f null /dev/null &gt; out_T2_0_$i.log 2&gt;&amp;1 &amp;
+ ffmpeg -y -nostdin -hwaccel ama -hwaccel_device /dev/ama_transcoderX -re -c:v h264_ama -i &lt;30 FPS INPUT&gt; -c:v av1_ama -b:v 5M -lookahead_depth 10 -f null /dev/null &gt; out_av1_0_$i.log 2&gt;&amp;1 &amp;
+ ffmpeg -y -nostdin -hwaccel ama -hwaccel_device /dev/ama_transcoderY -re -c:v h264_ama -i &lt;30 FPS INPUT&gt; -c:v &lt;TYPE 2 ENCODER&gt; -b:v 5M -lookahead_depth 10 -f null /dev/null &gt; out_T2_1_$i.log 2&gt;&amp;1 &amp;
+ ffmpeg -y -nostdin -hwaccel ama -hwaccel_device /dev/ama_transcoderY -re -c:v h264_ama -i &lt;30 FPS INPUT&gt; -c:v av1_ama -b:v 5M -lookahead_depth 10 -f null /dev/null &gt; out_av1_1_$i.log 2&gt;&amp;1 &amp;
+done
+</pre></div>
+</div>
+<p>, where <code class="docutils literal notranslate"><span class="pre">X</span></code> and <code class="docutils literal notranslate"><span class="pre">Y</span></code> represent 2 different devices. <code class="docutils literal notranslate"><span class="pre">&lt;30</span> <span class="pre">FPS</span> <span class="pre">INPUT&gt;</span></code> is a 30 FPS encoded video input. (The above example assumes H264 encoded input.), and <code class="docutils literal notranslate"><span class="pre">&lt;TYPE</span> <span class="pre">2</span> <span class="pre">ENCODER&gt;</span></code> is any one of AV1 Type-2, H264 or HEVC encoder. Note that by default <code class="docutils literal notranslate"><span class="pre">av1_ama</span></code> uses Type-1 AV1 encoder.</p>
+<p>The above example transcodes 64 simultaneous 1080p30 pipelines. Note that if XRMD is disabled, then <a class="reference internal" href="../../using_ffmpeg.html#cmdoption-slice"><code class="xref std std-option docutils literal notranslate"><span class="pre">-slice</span></code></a> parameter must be set explicitly.</p>
+</section>
+<section id="jpeg-image-decoding">
+<h3><a class="toc-backref" href="#id27" role="doc-backlink">JPEG Image Decoding</a><a class="headerlink" href="#jpeg-image-decoding" title="Link to this heading">¶</a></h3>
+<p>The following example demonstrates how to decode a series of JPEG images into a AVC video.</p>
+<p><strong>Command Line</strong>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ffmpeg -framerate 60 -hwaccel ama -hwaccel_device /dev/ama_transcoder0 -c:v jpeg_ama -i &lt;FILE PRFIX&gt;_%03d.jpg  \
+-r 60 -c:v h264_ama -b:v 8M -f mp4 &lt;OUTPUT&gt;
+</pre></div>
+</div>
+<p>, where <code class="docutils literal notranslate"><span class="pre">&lt;FILE</span> <span class="pre">PRFIX&gt;_%03d.jpg</span></code> indicates the name pattern of the JPEG images.</p>
+</section>
+<section id="jpeg-image-encoding">
+<h3><a class="toc-backref" href="#id28" role="doc-backlink">JPEG Image Encoding</a><a class="headerlink" href="#jpeg-image-encoding" title="Link to this heading">¶</a></h3>
+<p>The following example demonstrates how to encode a video stream into a series of JPEG images.</p>
+<p><strong>Command Line</strong>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ffmpeg -y -hwaccel ama -s:v 1920x1080 -pix_fmt yuv420p -i &lt;YUV INPUT&gt; -vf &quot;fps=1,hwupload_ama&quot; -c:v jpeg_ama -quality 90 &lt;FILE PRFIX&gt;_%04d.jpg
+</pre></div>
+</div>
+<p>, where <a class="reference internal" href="../../using_ffmpeg.html#cmdoption-quality"><code class="xref std std-option docutils literal notranslate"><span class="pre">-quality</span></code></a> specifies JPEG encoding quality.</p>
+</section>
+<section id="av1-image-encoding">
+<h3><a class="toc-backref" href="#id29" role="doc-backlink">AV1 Image Encoding</a><a class="headerlink" href="#av1-image-encoding" title="Link to this heading">¶</a></h3>
+<p>The following example demonstrates how to encode a video stream into a series of AVIF images.</p>
+<p><strong>Command Line</strong>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ffmpeg -hide_banner -loglevel info -hwaccel ama -hwaccel_device /dev/ama_transcoder0 -f lavfi -i testsrc=duration=10:size=1920x1080:rate=1,format=yuv420p  -vf &quot;hwupload_ama&quot; -c:v av1_ama  -still_picture 1 test_avif_%03d.avif
+</pre></div>
+</div>
+<p>, where <a class="reference internal" href="../../using_ffmpeg.html#cmdoption-still_picture"><code class="xref std std-option docutils literal notranslate"><span class="pre">-still_picture</span></code></a> specifies AV1 image encoding.</p>
+</section>
+</section>
+<section id="d-processing">
+<h2><a class="toc-backref" href="#id30" role="doc-backlink">2D Processing</a><a class="headerlink" href="#d-processing" title="Link to this heading">¶</a></h2>
+<p>This section provides examples on usage of various 2D Processing utilities. See <a class="reference internal" href="../../using_ffmpeg.html#d-processing"><span class="std std-ref">2D Engine</span></a> for details.</p>
+<section id="cropping">
+<h3><a class="toc-backref" href="#id31" role="doc-backlink">Cropping</a><a class="headerlink" href="#cropping" title="Link to this heading">¶</a></h3>
+<p>The following example demonstrates a 720P crop at offset (320, 180).</p>
+<p><strong>Command Line</strong>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ffmpeg -y -hwaccel ama -hwaccel_device /dev/ama_transcoder0 -re -out_fmt yuv420p -c:v h264_ama -i &lt;INPUT&gt; \
+-filter_complex &quot;crop_ama=b_left=320:b_top=180:b_w=1280:b_h=720 [b]&quot; -map &quot;[b]&quot; -c:v h264_ama -b:v 4M -f mp4 &lt;OUTPUT&gt;
+</pre></div>
+</div>
+</section>
+<section id="padding">
+<h3><a class="toc-backref" href="#id32" role="doc-backlink">Padding</a><a class="headerlink" href="#padding" title="Link to this heading">¶</a></h3>
+<p>The following example demonstrates padding a 720P clip into a 1080p.</p>
+<p><strong>Command Line</strong>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ffmpeg -y -hwaccel ama -hwaccel_device /dev/ama_transcoder0 -c:v h264_ama -i &lt;720P INPUT&gt; \
+-filter_complex &quot;pad_ama=p_left=320:p_top=180:p_w=1920:p_h=1080:color=pink&quot; -c:v h264_ama -b:v 8M -f mp4 &lt;1080P OUTPUT&gt;
+</pre></div>
+</div>
+</section>
+<section id="video-rotation">
+<span id="id3"></span><h3><a class="toc-backref" href="#id33" role="doc-backlink">Video Rotation</a><a class="headerlink" href="#video-rotation" title="Link to this heading">¶</a></h3>
+<p>The following example demonstrates how to transcode a flip-over operation</p>
+<p><strong>Command Line</strong>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ffmpeg -y -hide_banner -hwaccel ama -hwaccel_device /dev/ama_transcoder0 \
+-c:v h264_ama -i &lt;INPUT&gt; -filter_complex &quot;rotate_ama=angle=180[c]&quot; -map &quot;[c]&quot; -c:v hevc_ama -b:v 6M -f mp4 &lt;OUTPUT&gt;
+</pre></div>
+</div>
+<p>, where <code class="docutils literal notranslate"><span class="pre">INPUT</span></code> and <code class="docutils literal notranslate"><span class="pre">OUTPUT</span></code> are any one of supported encoded files. Note that only rotations which are multiples of 90 degrees are supported.</p>
+</section>
+<section id="color-space-conversion">
+<span id="id4"></span><h3><a class="toc-backref" href="#id34" role="doc-backlink">Color Space Conversion</a><a class="headerlink" href="#color-space-conversion" title="Link to this heading">¶</a></h3>
+<p>The following example demonstrates how to convert from RGB to YUV:</p>
+<p><strong>Command Line</strong>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ffmpeg -y -hide_banner -hwaccel ama -hwaccel_device /dev/ama_transcoder0 -s 1920x1080 -pix_fmt bgra -i &lt;INPUT&gt; -filter_complex &quot;[0:v]hwupload_ama,colorspace_ama=csc=rgb2yuv,hwdownload_ama&quot; -pix_fmt yuv420p -f rawvideo &lt;OUTPUT&gt;
+</pre></div>
+</div>
+<p>The following example demonstrates how to encode a RGBA video file :</p>
+<p><strong>Command Line</strong>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ffmpeg -y -hide_banner -hwaccel ama -hwaccel_device /dev/ama_transcoder0 -f rawvideo -s 1920x1080 -pix_fmt bgra -i &lt;INPUT&gt; -filter_complex &quot;[0:v]hwupload_ama,colorspace_ama=csc=rgb2yuv&quot; -c:v hevc_ama -b:v 6M -f mp4 &lt;OUTPUT&gt;
+</pre></div>
+</div>
+<p>Similarly, the following example demonstrates YUV to planar RGB conversion:</p>
+<p><strong>Command Line</strong>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ffmpeg -y -hide_banner -hwaccel ama -hwaccel_device /dev/ama_transcoder0 -c:v h264_ama -i &lt;INPUT&gt; -filter_complex &quot;colorspace_ama=csc=yuv2rgb,hwdownload_ama&quot; -pix_fmt bgra -f rawvideo -y &lt;RGBP OUTPUT&gt;
+</pre></div>
+</div>
+</section>
+<section id="chroma-subsampling">
+<span id="id5"></span><h3><a class="toc-backref" href="#id35" role="doc-backlink">Chroma Subsampling</a><a class="headerlink" href="#chroma-subsampling" title="Link to this heading">¶</a></h3>
+<p>The following example demonstrates how to convert from 4:2:2 pixel format to 4:2:0:</p>
+<p><strong>Command Line</strong>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ffmpeg -y -hide_banner -hwaccel ama -hwaccel_device /dev/ama_transcoder0 -s 1920x1080 \
+-pix_fmt yuv422p -i &lt;INPUT&gt; -filter_complex &quot;hwupload_ama,subsample_ama,hwdownload_ama&quot; -pix_fmt yuv420p -f rawvideo &lt;OUTPUT&gt;
+</pre></div>
+</div>
+<p>, where graphic processor is set for pixel subsampling operation.</p>
+<p>The following example demonstrates how to transcode a 4:2:2 pixel format video to 4:2:0 using both the host, for decoding, and an AMA AMD compatible card, for subsampling and encoding:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ffmpeg -y -hide_banner -hwaccel ama -hwaccel_device /dev/ama_transcoder0 -i &lt;INPUT&gt; -filter_complex &quot;hwupload_ama,subsample_ama&quot; -c:v h264_ama -b:v 8M -f mp4 &lt;OUTPUT&gt;
+</pre></div>
+</div>
+<p>, where graphic processor is set for pixel subsampling operation.</p>
+</section>
+<section id="picture-in-picture-pip">
+<span id="pip"></span><h3><a class="toc-backref" href="#id36" role="doc-backlink">Picture In Picture (PIP)</a><a class="headerlink" href="#picture-in-picture-pip" title="Link to this heading">¶</a></h3>
+<p>The following example demonstrates how to create a PIP video:</p>
+<p><strong>Command Line</strong>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ffmpeg -y -hide_banner  -hwaccel ama -hwaccel_device /dev/ama_transcoder0  \
+-c:v h264_ama -out_fmt yuv420p -i &lt;INPUT 1&gt; \
+-c:v h264_ama -out_fmt yuv420p -i &lt;INPUT 2&gt; \
+-filter_complex &quot;[1:v]scaler_ama=outputs=1:out_res=(720x480|yuv420p)[p]; \
+                 [0:v][p]overlay_ama=x=0:y=0[x]&quot; \
+-map &quot;[x]&quot; -c:v h264_ama -frames 1000 -b:v 8M -f mp4 -y &lt;OUTPUT&gt;
+</pre></div>
+</div>
+<p>, where graphic processor is set for scaling and overlay operations, with <code class="docutils literal notranslate"><span class="pre">INPUT</span> <span class="pre">1</span></code> set as the background.</p>
+</section>
+<section id="tiling">
+<span id="id6"></span><h3><a class="toc-backref" href="#id37" role="doc-backlink">Tiling</a><a class="headerlink" href="#tiling" title="Link to this heading">¶</a></h3>
+<p>The following example demonstrates how to create a tiling video:</p>
+<p><strong>Command Line</strong>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ffmpeg -y -hide_banner -hwaccel ama -hwaccel_device /dev/ama_transcoder0 \
+-c:v h264_ama -out_fmt yuv420p -i &lt;INPUT 1&gt; \
+-c:v h264_ama -out_fmt yuv420p -i &lt;INPUT 2&gt; \
+-c:v h264_ama -out_fmt yuv420p -i &lt;INPUT 3&gt; \
+-c:v h264_ama -out_fmt yuv420p -i &lt;INPUT 4&gt; \
+-filter_complex &quot;[0:v]scaler_ama=outputs=1:out_res=(1280x720|yuv420p)[0]; \
+                 [1:v]scaler_ama=outputs=1:out_res=(1280x720|yuv420p)[1]; \
+                 [2:v]scaler_ama=outputs=1:out_res=(1280x720|yuv420p)[2]; \
+                 [3:v]scaler_ama=outputs=1:out_res=(1280x720|yuv420p)[3]; \
+                 [0][1][2][3]tile_ama=layout=2x2:inputs=4:w=1920:h=1080[r]&quot;
+-map &quot;[r]&quot; -c:v h264_ama -b:v 15M -f mp4 -y &lt;OUTPUT&gt;
+</pre></div>
+</div>
+<p>, where graphic processor's is set for scaling and tiling operations, with <code class="docutils literal notranslate"><span class="pre">INPUT</span> <span class="pre">1</span></code> ... <code class="docutils literal notranslate"><span class="pre">INPUT</span> <span class="pre">4</span></code> set as tiles.</p>
+</section>
+<section id="thumbnailing">
+<h3><a class="toc-backref" href="#id38" role="doc-backlink">Thumbnailing</a><a class="headerlink" href="#thumbnailing" title="Link to this heading">¶</a></h3>
+<p>The following example shows how to generate JPEG thumnails from a video asset.</p>
+<p><strong>Command Line</strong>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ffmpeg -hwaccel ama -c:v h264_ama -i &lt;INPUT&gt; -vf &quot;select=&#39;eq(pict_type\,I)&#39;, scaler_ama=outputs=1:out_res=(144x144|full)&quot; -vsync vfr -c:v jpeg_ama out_%03d.jpg
+</pre></div>
+</div>
+<p>JPEG thumbnails are named from out_000.jpg through out_999.jpg.</p>
+<p>Alternatively, down scaling can be done through the decoder.</p>
+<p><strong>Command Line</strong>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ffmpeg -hwaccel ama -c:v h264_ama -resize 144x144 -i &lt;INPUT&gt; -vf &quot;select=&#39;eq(pict_type\,I)&#39;&quot; -vsync vfr -c:v jpeg_ama out_%03d.jpg
+</pre></div>
+</div>
+</section>
+<section id="composition">
+<span id="id7"></span><h3><a class="toc-backref" href="#id39" role="doc-backlink">Composition</a><a class="headerlink" href="#composition" title="Link to this heading">¶</a></h3>
+<p>The following example demonstrates how to create a static composition.</p>
+<p><strong>Command Line</strong>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>/opt/amd/ama/ma35/bin/ffmpeg -y -hide_banner -hwaccel ama -hwaccel_device /dev/ama_transcoder0 \
+-c:v h264_ama -out_fmt yuv420p -i &lt;INPUT 1&gt; \
+-c:v h264_ama -out_fmt yuv420p -i &lt;INPUT 2&gt; \
+-c:v h264_ama -out_fmt yuv420p -i &lt;INPUT 3&gt; \
+-c:v h264_ama -out_fmt yuv420p -i &lt;INPUT 4&gt; \
+-filter_complex &quot;[0:v][1:v][2:v][3:v]\
+compositor_ama=inputs=4:out_res=1920x1080:enable_background=1:background=black:\
+input_params=\
+(960x540|angle=90|out_x=8|out_y=8|zorder=1)\
+(960x540|angle=90|out_x=408|out_y=208)\
+(960x540|angle=90|out_x=808|out_y=408|zorder=1)\
+(960x540|angle=90|out_x=1208|out_y=608|border_inner_size=2)[co];\
+[co]sendcmd=f=composite_static.txt[c]&quot; \
+-map &quot;[c]&quot; -c:v av1_ama -b:v 5M -vframes 570 -f mp4 composite_test.mp4
+</pre></div>
+</div>
+<p>, where composite_static.txt contains:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>00:00:01.000 compositor_ama &#39;background=pink&#39;;
+00:00:03.000 compositor_ama &#39;background=green:input=1:border_inner_size=4:border_outer_size=2:border_color=blue&#39;;
+00:00:06.000 compositor_ama &#39;input=2:border_inner_size=4:border_outer_size=2:border_color=brown:input=0:border_inner_size=10:border_outer_size=10&#39;;
+00:00:08.000 compositor_ama &#39;input=3:flip=h:zorder=2:out_res=1280x540:in_y=1082&#39;;
+00:00:10.000 compositor_ama &#39;input=0=flip=v&#39;;
+00:00:12.000 compositor_ama &#39;angle=90&#39;;
+00:00:15.000 compositor_ama &#39;inputs_enabled=2&#39;;
+00:00:16.000 compositor_ama &#39;inputs_enabled=3&#39;;
+00:00:17.000 compositor_ama &#39;zorder=0&#39;
+</pre></div>
+</div>
+<p>This example starts by overlapping 3 scaled and rotated input clips, with a black background. The static composition file, then directs the pipeline to change the background color, z order, boarder line,etc. at prescribed intervals.</p>
+<p>The compositor can also be executed in a dynamic manner, where different properties can be adjusted interactively, through <a class="reference external" href="https://zeromq.org/">ZeroMQ</a> protocol.</p>
+<p><strong>Command Line</strong>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>/opt/amd/ama/ma35/bin/ffmpeg -y -hide_banner -hwaccel ama -hwaccel_device /dev/ama_transcoder0 \
+-c:v h264_ama -out_fmt yuv420p -i &lt;INPUT 1&gt; \
+-c:v h264_ama -out_fmt yuv420p -i &lt;INPUT 2&gt; \
+-c:v h264_ama -out_fmt yuv420p -i &lt;INPUT 3&gt; \
+-c:v h264_ama -out_fmt yuv420p -i &lt;INPUT 4&gt; \
+-filter_complex &quot;[0:v][1:v][2:v][3:v]\
+compositor_ama=inputs=4:out_res=1920x1080:enable_background=1:background=black:\
+input_params=\
+(960x540|angle=90|out_x=8|out_y=8|zorder=1)\
+(960x540|angle=90|out_x=408|out_y=208)\
+(960x540|angle=90|out_x=808|out_y=408|zorder=1)\
+(960x540|angle=90|out_x=1208|out_y=608|border_inner_size=2)[co]; \
+[co]zmq=bind_address=tcp\\\://127.0.0.1\\\:5555[c]&quot; \
+-map &quot;[c]&quot; -c:v h264_ama -b:v 5M  -vframes 570 -f mpegts udp://MC_IP:MC_PORT??pkt_size=1316
+</pre></div>
+</div>
+<p>To interactively change the compositor's properties, create the following Python script:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>#!/usr/bin/python3
+import zmq
+import sys
+
+context = zmq.Context()
+Url=sys.argv[1]
+socket = context.socket(zmq.REQ)
+socket.connect(Url)
+cmd = sys.stdin.read()
+socket.send_string(cmd)
+recv = socket.recv()
+print(f&quot;Received reply [{recv.decode()}]&quot;)
+</pre></div>
+</div>
+<p>, and update properties as follows, e.g. the following changes the background to pink:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>printf &quot;compositor_ama background=pink&quot; |  ./zmq_send.py &quot;tcp://localhost:5555&quot;
+</pre></div>
+</div>
+<p>To observe the interactive updates, on a machine within the same multicast network, issue the following command:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ffplay udp://MC_IP:MC_PORT
+</pre></div>
+</div>
+<p>, where MC_IP and MC_PORT are multicast address and multicast ports, respectively.</p>
+</section>
+</section>
+<section id="ml-processing">
+<h2><a class="toc-backref" href="#id40" role="doc-backlink">ML Processing</a><a class="headerlink" href="#ml-processing" title="Link to this heading">¶</a></h2>
+<p>This section provides examples on usage of ROI for both face and text VQ enhancement.</p>
+<section id="ml-based-face-roi">
+<span id="roi-face"></span><h3><a class="toc-backref" href="#id41" role="doc-backlink">ML Based Face ROI</a><a class="headerlink" href="#ml-based-face-roi" title="Link to this heading">¶</a></h3>
+<p>The following example demonstrates how to perform ROI face encoding on an AMA AMD compatible card:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ffmpeg -y -hwaccel ama -hwaccel_device /dev/ama_transcoder0 -c:v h264_ama -i &lt;INPUT&gt; \
+-filter_complex &quot;scaler_ama=outputs=3:out_res=(1280x720|yuv420p)(1280x720|yuv420p)(1280x720|rgbp)[def][ori][a]; \
+                 [a]ml_ama=model=roi:model_args=type=face[mlop];[ori][mlop]roi_scale_ama[res1]&quot; \
+-map [res1] -c:v hevc_ama -b:v 300K -f mp4 &lt;OUTPUT 1&gt; \
+-map [def] -c:v hevc_ama -b:v 300K -f mp4 &lt;OUTPUT 2&gt;
+</pre></div>
+</div>
+<p>, where ML engine is set for face ROI enhancement, and the resulting enhanced image, <code class="docutils literal notranslate"><span class="pre">res1</span></code>, is encoded.</p>
+</section>
+<section id="roi-gain-factor">
+<h3><a class="toc-backref" href="#id42" role="doc-backlink">ROI Gain Factor</a><a class="headerlink" href="#roi-gain-factor" title="Link to this heading">¶</a></h3>
+<p>The following example demonstrates the impact of probability-to-QP mapping gain factor:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ffmpeg -y -hwaccel ama -hwaccel_device /dev/ama_transcoder0 -c:v h264_ama -i  &lt;INPUT&gt; \
+   -filter_complex &quot;split=outputs=5 [plain][ml0][l][n][h]; \
+                             [ml0] scaler_ama=outputs=1:out_res=(1280x720|rgbp) [ml1]; \
+                             [ml1] ml_ama=model=roi:model_args=type=face [ml2]; \
+                             [ml2] split=outputs=3 [ml3_1][ml3_2][ml3_3]; \
+                             [l][ml3_1] roi_scale_ama=strength=low [ml_l]; \
+                             [n][ml3_2] roi_scale_ama=strength=normal [ml_n]; \
+                             [h][ml3_3] roi_scale_ama=strength=high [ml_h]&quot; \
+     -map &#39;[plain]&#39; -c:v h264_ama -b:v 300k -f mp4 &lt;OUTPUT1&gt; \
+     -map &#39;[ml_l]&#39; -c:v h264_ama -b:v 300k -f mp4 &lt;OUTPUT2&gt; \
+     -map &#39;[ml_n]&#39; -c:v h264_ama -b:v 300k -f mp4 &lt;OUTPUT3&gt; \
+     -map &#39;[ml_h]&#39; -c:v h264_ama -b:v 300k -f mp4 &lt;OUTPUT4&gt;
+</pre></div>
+</div>
+<p>Here &lt;OUTPUTx&gt;, for x={1-4}, represent encode streams without ML, low, normal and high gain factors, respectively.</p>
+</section>
+<section id="roi-ladder-transcoding">
+<h3><a class="toc-backref" href="#id43" role="doc-backlink">ROI Ladder Transcoding</a><a class="headerlink" href="#roi-ladder-transcoding" title="Link to this heading">¶</a></h3>
+<p>The following example demonstrates how to perform ROI transcoding at different resolutions:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ffmpeg -y -hwaccel ama -hwaccel_device /dev/ama_transcoder0 -c:v h264_ama -i &lt;INPUT&gt; \
+ -filter_complex &quot;split=2[s_org][s_ml]; \
+                  [s_org]scaler_ama=outputs=4:out_res=(1920x1080)(1280x720)(720x480)(360x240) [sa][sb][sc][sd]; \
+                  [s_ml]scaler_ama=outputs=1:(1280x720|rgbp)[ml_in]; \
+                  [ml_in]ml_ama=model=roi:model_args=type=face[ml_out]; [ml_out]split=4[ml_out_sa][ml_out_sb][ml_out_sc][ml_out_sd]; \
+                  [sa][ml_out_sa]roi_scale_ama[roi_a]; \
+                  [sb][ml_out_sb]roi_scale_ama[roi_b]; \
+                  [sc][ml_out_sc]roi_scale_ama[roi_c]; \
+                  [sd][ml_out_sd]roi_scale_ama[roi_d]&quot; \
+-map [roi_a] -c:v av1_ama -b:v 300K -f rawvideo &lt;OUTPUT1&gt; \
+-map [roi_b] -c:v av1_ama -b:v 300K -f rawvideo &lt;OUTPUT2&gt; \
+-map [roi_c] -c:v av1_ama -b:v 300K -f rawvideo &lt;OUTPUT3&gt; \
+-map [roi_d] -c:v av1_ama -b:v 300K -f rawvideo &lt;OUTPUT4&gt;
+</pre></div>
+</div>
+<p>Note that scale engine is invoke twice. Once for scaling the outputs and second time to perform pixel conversion.</p>
+</section>
+<section id="roi-face-detection">
+<h3><a class="toc-backref" href="#id44" role="doc-backlink">ROI Face Detection</a><a class="headerlink" href="#roi-face-detection" title="Link to this heading">¶</a></h3>
+<p>The following example demonstrates inference engine's ability to detect faces:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ffmpeg -y -hwaccel ama -hwaccel_device /dev/ama_transcoder0 -c:v h264_ama  -i &lt;INPUT&gt; \
+-filter_complex &quot;scaler_ama=outputs=2:out_res=(1280x720|yuv420p)(1280x720|rgbp)[ori][mlip]; \
+                 [mlip]ml_ama=model=roi:model_args=type=face[mlop]; \
+                 [ori][mlop]roi_scale_ama=roi_map_type=roi[rso]; \
+                 [rso]hwdownload_ama, roi_overlay_ama[res1]&quot; \
+-map [res1] -f rawvideo -pix_fmt yuv420p -f rawvideo &lt;OUTPUT&gt;
+</pre></div>
+</div>
+<p>, where software plugin <a class="reference internal" href="../../using_ffmpeg.html#cmdoption-arg-roi_overlay_ama"><code class="xref std std-option docutils literal notranslate"><span class="pre">roi_overlay_ama</span></code></a> overlays transparent rectangular boxes around all detected faces.</p>
+</section>
+<section id="ml-based-text-roi">
+<span id="roi-text"></span><h3><a class="toc-backref" href="#id45" role="doc-backlink">ML Based Text ROI</a><a class="headerlink" href="#ml-based-text-roi" title="Link to this heading">¶</a></h3>
+<p>The following example demonstrates how to perform ROI text encoding on an AMA AMD compatible card:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ffmpeg -y -hwaccel ama -hwaccel_device /dev/ama_transcoder0 -c:v h264_ama  -i &lt;INPUT&gt; \
+-filter_complex &quot;scaler_ama=outputs=3:out_res=(1280x720|yuv420p)(1280x720|yuv420p)(1280x720|rgbp)[def][ori][a]; \
+                 [a]ml_ama=model=roi:model_args=type=text[mlop];[ori][mlop]roi_scale_ama[res1]&quot; \
+-map [res1] -c:v hevc_ama -b:v 200K -f mp4  &lt;OUTPUT 1&gt; \
+-map [def] -c:v hevc_ama -b:v 200K -f mp4  &lt;OUTPUT 2&gt;
+</pre></div>
+</div>
+<p>, where ML engine is set for text ROI enhancement, and the resulting enhanced image, <code class="docutils literal notranslate"><span class="pre">res1</span></code>, is encoded.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          
+				  
+				  <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../../examples.html" class="btn btn-neutral float-left" title="Tutorials and Examples" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="quality_analysis.html" class="btn btn-neutral float-right" title="Video Quality Examples" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022-2024, Advanced Micro Devices, Inc.
+      <span class="lastupdated">Last updated on October 21, 2024.
+      </span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div>
+										
+</br>
+
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

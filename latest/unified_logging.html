@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="English" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+<!-- OneTrust Cookies Consent Notice start for amd.github.io -->
+<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="cb638ba1-8bc4-44a0-9338-632d4dc19be6" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script>
+<!-- OneTrust Cookies Consent Notice end for amd.github.io -->
+<!-- Google Tag Manager -->
+<script type="text/plain" class="optanon-category-C0002">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-5RHQV7');</script>
+<!-- End Google Tag Manager -->
+  <title>Unified Logging &mdash; AMD AMA 1.2.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css" type="text/css" />
+      <link rel="stylesheet" href="_static/_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=e6179555"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/design-tabs.js?v=36754332"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Tuning Video Quality" href="tuning_video_quality.html" />
+    <link rel="prev" title="Using GStreamer" href="using_gstreamer.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+<!-- Google Tag Manager -->
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5RHQV7" height="0" width="0" style="display:none;visibility:hidden" class="optanon-category-C0002"></iframe></noscript>
+<!-- End Google Tag Manager --> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+            <a href="index.html" class="icon icon-home"> AMD AMA
+          </a>
+              <div class="version">
+                1.2.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Get Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="release_notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started_on_prem.html">Hardware Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="virtualization.html">Virtualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Tutorials and Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="git_hub.html">AMA Repository</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference Guides</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="specs_and_features.html">Specs and Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="package_feed.html">Package Feed Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="using_ffmpeg.html">Using FFmpeg</a></li>
+<li class="toctree-l1"><a class="reference internal" href="using_gstreamer.html">Using Gstreamer</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Unified Logging</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#log-ama-config">LOG_AMA_CONFIG</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#log-ama-filter">LOG_AMA_FILTER</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#log-ama-filter-perf">LOG_AMA_FILTER_PERF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#examples">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tuning_video_quality.html">Tuning Video Quality</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tuning_pipeline_latency.html">Tuning Latency of Transcode Pipeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="managing_compute_resources.html">Managing Compute Resources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="c_apis.html">C API Programming Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="card_management.html">Card Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="migration.html">Migration Path</a></li>
+<li class="toctree-l1"><a class="reference internal" href="encoder_comp_matrix.html">Encoding Compatibility Matrix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preview.html">New Feature Preview</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Support</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://www.xilinx.com/support.html">File an issue</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://support.xilinx.com/s/topic/0TO2E000000YKY8WAO/video?language=en_US">Video Forum</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other AMA SDK Versions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://amd.github.io/ama-sdk/v1.2/index.html">   v1.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://amd.github.io/ama-sdk/v1.1.2/index.html">   v1.1.2</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Video Products</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/video-sdk/v3.0/index.html">U30</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">AMD AMA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Unified Logging</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="unified-logging">
+<span id="id1"></span><h1>Unified Logging<a class="headerlink" href="#unified-logging" title="Link to this heading">¶</a></h1>
+<nav class="contents local" id="table-of-contents">
+<p class="topic-title">Table of Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#log-ama-config" id="id2">LOG_AMA_CONFIG</a></p></li>
+<li><p><a class="reference internal" href="#log-ama-filter" id="id3">LOG_AMA_FILTER</a></p></li>
+<li><p><a class="reference internal" href="#log-ama-filter-perf" id="id4">LOG_AMA_FILTER_PERF</a></p></li>
+<li><p><a class="reference internal" href="#examples" id="id5">Examples</a></p></li>
+</ul>
+</nav>
+<p>Unified Logging (UL) utility is aimed at providing an identical logging output, configuration and interaction for different video frameworks provided by AMD AMA Video SDK. Three environmental variables <code class="docutils literal notranslate"><span class="pre">LOG_AMA_CONFIG</span></code>, <code class="docutils literal notranslate"><span class="pre">LOG_AMA_FILTER</span></code> and <code class="docutils literal notranslate"><span class="pre">LOG_AMA_FILTER_PERF</span></code> control interactions with UL. <code class="docutils literal notranslate"><span class="pre">LOG_AMA_CONFIG</span></code> variable controls the global setting of logging, which includes log destination, max size, log source info, and log levels. <code class="docutils literal notranslate"><span class="pre">LOG_AMA_FILTER</span></code> variable filters the global configuration and narrows down the logging output to specific software layer, accelerator type or level. <code class="docutils literal notranslate"><span class="pre">LOG_AMA_FILTER_PERF</span></code> variable controls the flow of performance related logs. The following sections describe the configuration parameters of each variable.</p>
+<section id="log-ama-config">
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">LOG_AMA_CONFIG</a><a class="headerlink" href="#log-ama-config" title="Link to this heading">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">LOG_AMA_CONFIG</span></code> is utilized as follows:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>export LOG_AMA_CONFIG=&quot;[key=value | ...]&quot;
+</pre></div>
+</div>
+<p>, where <code class="docutils literal notranslate"><span class="pre">key</span></code> and <code class="docutils literal notranslate"><span class="pre">value</span></code> are defined as:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 9.1%" />
+<col style="width: 9.1%" />
+<col style="width: 81.8%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>key</p></th>
+<th class="head"><p>value</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>destination</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">console</span></code>, <code class="docutils literal notranslate"><span class="pre">file</span></code>, <code class="docutils literal notranslate"><span class="pre">syslog</span></code>, <code class="docutils literal notranslate"><span class="pre">release_preset</span></code> or <code class="docutils literal notranslate"><span class="pre">debug_preset</span></code></p></td>
+<td><p>Determines the target destination of output logs.</p>
+<p><code class="docutils literal notranslate"><span class="pre">console</span></code>: Terminal output</p>
+<p><code class="docutils literal notranslate"><span class="pre">file</span></code>: Defaults to <cite>&quot;async=1, max_size=10MB, location=log_ama_&lt;pid&gt;_&lt;timestamp&gt;.txt&quot;</cite></p>
+<p><code class="docutils literal notranslate"><span class="pre">syslog</span></code>: Defaults to <cite>&quot;async=1, location=localhost, facility=LOCAL0&quot;</cite></p>
+<p><code class="docutils literal notranslate"><span class="pre">release_preset</span></code>: Shortcut for <cite>&quot;destination=syslog, async=1 | log_level = WARN| perf_log=0 | debug_file_name=0 | debug_thread = 0 | debug_pid=0 | debug_time_stamp=0&quot;</cite></p>
+<p><code class="docutils literal notranslate"><span class="pre">debug_preset</span></code>: Shortcut for <cite>&quot;destination=file, max_size=1GB | log_level = DEBUG | async=1 | perf_log=1 | debug_file_name=1 | debug_thread = 1 | debug_pid=1 | debug_time_stamp=1&quot;</cite></p>
+<p><code class="docutils literal notranslate"><span class="pre">async</span></code> refers to asynchronous mode of write operation</p>
+<p><code class="docutils literal notranslate"><span class="pre">location</span></code> refers to output path of logs</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p>log_level</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">FATAL</span></code>, <code class="docutils literal notranslate"><span class="pre">ERROR</span></code>, <code class="docutils literal notranslate"><span class="pre">WARN</span></code>, <code class="docutils literal notranslate"><span class="pre">INFO</span></code>, <code class="docutils literal notranslate"><span class="pre">DEBUG</span></code>, <code class="docutils literal notranslate"><span class="pre">TRACE</span></code> or <code class="docutils literal notranslate"><span class="pre">ALL</span></code></p></td>
+<td><p>Determines the log level.</p>
+<p>Defaults to <code class="docutils literal notranslate"><span class="pre">WARN</span></code></p>
+</td>
+</tr>
+<tr class="row-even"><td><p>perf_log</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0</span></code> or <code class="docutils literal notranslate"><span class="pre">1</span></code></p></td>
+<td><p>Enables or disables performance measurements. If enabled, minimal information log level is set. Otherwise, log level is set by <code class="docutils literal notranslate"><span class="pre">log_level</span></code>.</p>
+<p>Defaults to <code class="docutils literal notranslate"><span class="pre">0</span></code></p>
+</td>
+</tr>
+<tr class="row-odd"><td><p>debug_file_name</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0</span></code> or <code class="docutils literal notranslate"><span class="pre">1</span></code></p></td>
+<td><p>Enables or disables addition of log file names.</p>
+<p>Defaults to <code class="docutils literal notranslate"><span class="pre">0</span></code></p>
+</td>
+</tr>
+<tr class="row-even"><td><p>debug_file_line</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0</span></code> or <code class="docutils literal notranslate"><span class="pre">1</span></code></p></td>
+<td><p>Enables or disables inclusion of log line numbers.</p>
+<p>Defaults to <code class="docutils literal notranslate"><span class="pre">0</span></code></p>
+</td>
+</tr>
+<tr class="row-odd"><td><p>debug_time_stamp</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0</span></code> or <code class="docutils literal notranslate"><span class="pre">1</span></code></p></td>
+<td><p>Enables or disables addition of timestamps.</p>
+<p>Defaults to <code class="docutils literal notranslate"><span class="pre">0</span></code></p>
+</td>
+</tr>
+<tr class="row-even"><td><p>debug_pid</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0</span></code> or <code class="docutils literal notranslate"><span class="pre">1</span></code></p></td>
+<td><p>Enables or disables reporting of process id.</p>
+<p>Defaults to <code class="docutils literal notranslate"><span class="pre">0</span></code></p>
+</td>
+</tr>
+<tr class="row-odd"><td><p>debug_thread</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0</span></code> or <code class="docutils literal notranslate"><span class="pre">1</span></code></p></td>
+<td><p>Enables or disables reporting of thread id.</p>
+<p>Defaults to <code class="docutils literal notranslate"><span class="pre">0</span></code></p>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="log-ama-filter">
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">LOG_AMA_FILTER</a><a class="headerlink" href="#log-ama-filter" title="Link to this heading">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">LOG_AMA_FILTER</span></code> is utilized as follows:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>export LOG_AMA_FILTER=&quot;[LAYER.ACCEL=log_level | ...]&quot;
+</pre></div>
+</div>
+<p>, where <code class="docutils literal notranslate"><span class="pre">LAYER</span></code> and <code class="docutils literal notranslate"><span class="pre">ACCEL</span></code> are defined as:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 23.1%" />
+<col style="width: 76.9%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>LAYER</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>SDK</p></td>
+<td><p>Any user space library</p></td>
+</tr>
+<tr class="row-odd"><td><p>VPI</p></td>
+<td><p>Video processing plugins</p></td>
+</tr>
+<tr class="row-even"><td><p>XMA</p></td>
+<td><p>XMA library</p></td>
+</tr>
+<tr class="row-odd"><td><p>FFMPEG</p></td>
+<td><p>FFmpeg plugins</p></td>
+</tr>
+<tr class="row-even"><td><p>GST</p></td>
+<td><p>Gstreamer plugins</p></td>
+</tr>
+<tr class="row-odd"><td><p>GEN</p></td>
+<td><p>General and common layers</p></td>
+</tr>
+<tr class="row-even"><td><p>XRM</p></td>
+<td><p>XRM library</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 23.1%" />
+<col style="width: 76.9%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>ACCEL</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>ABR</p></td>
+<td><p>ABR ladder</p></td>
+</tr>
+<tr class="row-odd"><td><p>DEC</p></td>
+<td><p>Decoder</p></td>
+</tr>
+<tr class="row-even"><td><p>ENC</p></td>
+<td><p>Encoder</p></td>
+</tr>
+<tr class="row-odd"><td><p>GEN</p></td>
+<td><p>General hardware logs</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="log-ama-filter-perf">
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">LOG_AMA_FILTER_PERF</a><a class="headerlink" href="#log-ama-filter-perf" title="Link to this heading">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">LOG_AMA_FILTER_PERF</span></code> is utilized as follows:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>export LOG_AMA_FILTER_PERF=&quot;[LAYER.ACCEL=log_level | ...]&quot;
+</pre></div>
+</div>
+<p>, where <code class="docutils literal notranslate"><span class="pre">LAYER</span></code> and <code class="docutils literal notranslate"><span class="pre">ACCEL</span></code> are defined as above.</p>
+</section>
+<section id="examples">
+<h2><a class="toc-backref" href="#id5" role="doc-backlink">Examples</a><a class="headerlink" href="#examples" title="Link to this heading">¶</a></h2>
+<ol class="arabic">
+<li><p>Send output to <code class="docutils literal notranslate"><span class="pre">log_ama_&lt;pid&gt;_&lt;timestamp&gt;.txt</span></code> file, and set <code class="docutils literal notranslate"><span class="pre">log_level</span></code> to warning:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>export LOG_AMA_CONFIG=&quot;destination=file | log_level=WARN | debug_file_line=1 | debug_time_stamp=1 | debug_pid=1 | debug_thread=1 | perf_log=0&quot;
+</pre></div>
+</div>
+</li>
+<li><p>Send output to <code class="docutils literal notranslate"><span class="pre">/tmp/log_ama.txt</span></code> file, and set <code class="docutils literal notranslate"><span class="pre">log_level</span></code> to info:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>export LOG_AMA_CONFIG=&quot;destination=file, location=/tmp/log_ama.txt | log_level=INFO | debug_file_line=1 | debug_time_stamp=1 | debug_pid=1 | debug_thread=1 | perf_log=0&quot;
+</pre></div>
+</div>
+</li>
+<li><p>Send output to <code class="docutils literal notranslate"><span class="pre">/tmp/log_ama.txt</span></code> file, and set <code class="docutils literal notranslate"><span class="pre">log_level</span></code> to info, with max log file size equal to 100MB:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>export LOG_AMA_CONFIG=&quot;destination=file, max_size=100MB, location=/tmp/log_ama.txt | log_level=INFO | debug_file_line=1 | debug_time_stamp=1 | debug_pid=1 | debug_thread=1 | perf_log=0&quot;
+</pre></div>
+</div>
+</li>
+<li><p>Get output on console, with <code class="docutils literal notranslate"><span class="pre">log_level</span></code> set to info:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>export LOG_AMA_CONFIG=&quot;destination=console | log_level=INFO | debug_file_line=1 | debug_time_stamp=1 | debug_pid=1 | debug_thread=1 | perf_log=0&quot;
+</pre></div>
+</div>
+</li>
+<li><p>Assume log_level was <code class="docutils literal notranslate"><span class="pre">WARN</span></code> in <code class="docutils literal notranslate"><span class="pre">LOG_AMA_CONFIG</span></code>, the following filter will additionally enable <code class="docutils literal notranslate"><span class="pre">TRACE</span></code> log level of <code class="docutils literal notranslate"><span class="pre">VPI</span></code> layer for <code class="docutils literal notranslate"><span class="pre">ABR</span></code> plugins:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>export LOG_AMA_FILTER=&quot; VPI.ABR=TRACE&quot;
+</pre></div>
+</div>
+</li>
+<li><p>If we want all layers logs for <code class="docutils literal notranslate"><span class="pre">ABR</span></code>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>export LOG_AMA_FILTER=&quot; *.ABR=TRACE&quot;
+</pre></div>
+</div>
+</li>
+<li><p>If we want all layers logs for <code class="docutils literal notranslate"><span class="pre">ABR</span></code> &amp; <code class="docutils literal notranslate"><span class="pre">ENC</span></code>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>export LOG_AMA_FILTER=&quot; *.ABR=TRACE | *.ENC=TRACE&quot;
+</pre></div>
+</div>
+</li>
+<li><p>Force all logs to <code class="docutils literal notranslate"><span class="pre">ERROR</span></code>, and generate debug logs from <code class="docutils literal notranslate"><span class="pre">SDK</span></code> for <code class="docutils literal notranslate"><span class="pre">ABR</span></code> type:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>export LOG_AMA_FILTER=&quot; *.*=ERROR | *.ABR=DEBUG&quot;
+</pre></div>
+</div>
+</li>
+<li><p>Set performance logs to info level:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>export LOG_AMA_CONFIG=&quot;destination=file, location=log_ama_perf.txt | log_level=WARN | perf_log=1&quot;
+</pre></div>
+</div>
+</li>
+<li><p>Set performance log level to <code class="docutils literal notranslate"><span class="pre">DEBUG</span></code> for <code class="docutils literal notranslate"><span class="pre">ABR</span></code> at <code class="docutils literal notranslate"><span class="pre">SDK</span></code> layer:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>export LOG_AMA_FILTER_PERF=&quot;SDK.ABR=DEBUG&quot;
+</pre></div>
+</div>
+</li>
+</ol>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          
+				  
+				  <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="using_gstreamer.html" class="btn btn-neutral float-left" title="Using GStreamer" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="tuning_video_quality.html" class="btn btn-neutral float-right" title="Tuning Video Quality" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022-2024, Advanced Micro Devices, Inc.
+      <span class="lastupdated">Last updated on October 22, 2024.
+      </span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div>
+										
+</br>
+
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

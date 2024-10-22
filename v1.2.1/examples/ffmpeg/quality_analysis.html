@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="English" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+<!-- OneTrust Cookies Consent Notice start for amd.github.io -->
+<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="cb638ba1-8bc4-44a0-9338-632d4dc19be6" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script>
+<!-- OneTrust Cookies Consent Notice end for amd.github.io -->
+<!-- Google Tag Manager -->
+<script type="text/plain" class="optanon-category-C0002">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-5RHQV7');</script>
+<!-- End Google Tag Manager -->
+  <title>Video Quality Examples &mdash; AMD AMA 1.2.1 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=e6179555"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/design-tabs.js?v=36754332"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="FFmpeg Examples using Software Filters" href="filters.html" />
+    <link rel="prev" title="FFmpeg Tutorials" href="tutorials.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+<!-- Google Tag Manager -->
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5RHQV7" height="0" width="0" style="display:none;visibility:hidden" class="optanon-category-C0002"></iframe></noscript>
+<!-- End Google Tag Manager --> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+            <a href="../../index.html" class="icon icon-home"> AMD AMA
+          </a>
+              <div class="version">
+                1.2.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Get Started</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../release_notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started_on_prem.html">Hardware Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../virtualization.html">Virtualization</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../examples.html">Tutorials and Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="tutorials.html">FFmpeg Introductory Tutorials</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">FFmpeg Video Quality</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#environment-setup">Environment Setup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#introduction-to-video-quality">Introduction to Video Quality</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#optimized-settings-for-the-sdk">Optimized Settings for the AMD AMA Video SDK</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#av1-vmaf-normal-latency-medium-preset">AV1 <em>VMAF</em> - Normal Latency - Medium Preset</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#avc-vmaf-normal-latency-slow-preset">AVC VMAF - Normal Latency - <em>Slow</em> Preset</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#av1-vmaf-ultra-low-latency-medium-preset">AV1 VMAF - <em>Ultra Low Latency</em> - Medium Preset</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#avc-vmaf-ultra-low-latency-slow-preset">AVC <em>VMAF</em> - <em>Ultra Low Latency</em> - Slow Preset</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#running-psnr-ssim-vmaf-scores">Running PSNR/SSIM/VMAF Scores</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="filters.html">FFmpeg Software Filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../gstreamer/tutorials.html">Gstreamer Introductory Tutorials</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../gstreamer/filters.html">Gstreamer Software Filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../gstreamer/xcompositor.html">Gstreamer Compositor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../gstreamer/xabrladder.html">Gstreamer ABR Ladder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../xma/xma_apps.html">XMA C-Based Applications</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../git_hub.html">AMA Repository</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../specs_and_features.html">Specs and Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../package_feed.html">Package Feed Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../using_ffmpeg.html">Using FFmpeg</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../using_gstreamer.html">Using Gstreamer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../unified_logging.html">Unified Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tuning_video_quality.html">Tuning Video Quality</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tuning_pipeline_latency.html">Tuning Latency of Transcode Pipeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../managing_compute_resources.html">Managing Compute Resources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../c_apis.html">C API Programming Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../card_management.html">Card Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../migration.html">Migration Path</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../encoder_comp_matrix.html">Encoding Compatibility Matrix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../preview.html">New Feature Preview</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Support</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://www.xilinx.com/support.html">File an issue</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://support.xilinx.com/s/topic/0TO2E000000YKY8WAO/video?language=en_US">Video Forum</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other AMA SDK Versions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://amd.github.io/ama-sdk/v1.2/index.html">   v1.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://amd.github.io/ama-sdk/v1.1.2/index.html">   v1.1.2</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Video Products</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/video-sdk/v3.0/index.html">U30</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">AMD AMA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../examples.html">Tutorials and Examples</a> &raquo;</li>
+      <li>Video Quality Examples</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="video-quality-examples">
+<h1>Video Quality Examples<a class="headerlink" href="#video-quality-examples" title="Link to this heading">¶</a></h1>
+<p>This page is dedicated to explaining some of the details behind Video Quality (VQ), how it is measured, and how you can optimize your FFmpeg commands with the AMD AMA Video SDK to maximize its performance.</p>
+<p>Further documentation on this topic can be found in the <a class="reference internal" href="../../tuning_video_quality.html#tuning-video-quality"><span class="std std-ref">Tuning Video Quality</span></a> section of the AMD AMA Video SDK user guide.</p>
+<nav class="contents local" id="table-of-contents">
+<p class="topic-title">Table of Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#environment-setup" id="id2">Environment Setup</a></p></li>
+<li><p><a class="reference internal" href="#introduction-to-video-quality" id="id3">Introduction to Video Quality</a></p></li>
+<li><p><a class="reference internal" href="#optimized-settings-for-the-sdk" id="id4">Optimized Settings for the AMD AMA Video SDK</a></p>
+<ul>
+<li><p><a class="reference internal" href="#av1-vmaf-normal-latency-medium-preset" id="id5">AV1 <em>VMAF</em> - Normal Latency - Medium Preset</a></p></li>
+<li><p><a class="reference internal" href="#avc-vmaf-normal-latency-slow-preset" id="id6">AVC VMAF - Normal Latency - <em>Slow</em> Preset</a></p></li>
+<li><p><a class="reference internal" href="#av1-vmaf-ultra-low-latency-medium-preset" id="id7">AV1 VMAF - <em>Ultra Low Latency</em> - Medium Preset</a></p></li>
+<li><p><a class="reference internal" href="#avc-vmaf-ultra-low-latency-slow-preset" id="id8">AVC <em>VMAF</em> - <em>Ultra Low Latency</em> - Slow Preset</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#running-psnr-ssim-vmaf-scores" id="id9">Running PSNR/SSIM/VMAF Scores</a></p></li>
+</ul>
+</nav>
+<section id="environment-setup">
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">Environment Setup</a><a class="headerlink" href="#environment-setup" title="Link to this heading">¶</a></h2>
+<ol class="arabic">
+<li><p>The AMD AMA Video SDK version of FFmpeg, Gstreamer and XMA applications can be found in the /opt/amd/ama/ma35/bin folder of your system. If this folder is not present, install the required packages:</p>
+<p>See <a class="reference internal" href="../../getting_started_on_prem.html"><span class="doc">On Premises</span></a></p>
+</li>
+<li><p>Configure the environment to use the AMD AMA Video SDK. This a mandatory step for all applications:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>source /opt/amd/ama/ma35/scripts/setup.sh
+</pre></div>
+</div>
+</li>
+</ol>
+<p>The setup script exports important environment variables and ensures proper execution environment for AMD AMA Video SDK.</p>
+<p>Sourcing the setup script should be performed each time you open a new terminal on your system. This is required for the environment to be correctly configured.</p>
+</section>
+<section id="introduction-to-video-quality">
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">Introduction to Video Quality</a><a class="headerlink" href="#introduction-to-video-quality" title="Link to this heading">¶</a></h2>
+<p>There has been a longstanding goal for video engineers to quantitatively determine the output quality of an encoder without having to watch and inspect every individual frame. This has led to an evolution of algorithmic solutions, the most common of which are:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Peak_signal-to-noise_ratio">Peak Signal to Noise Ratio (PSNR)</a></p></li>
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Structural_similarity">Structural Similarity Index Metric (SSIM)</a></p></li>
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Video_Multimethod_Assessment_Fusion">Video Multimethod Assessment Fusion (VMAF)</a></p></li>
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Mean_opinion_score">Mean Opinion Score (MOS) - Humans visually watching the screen and providing feedback</a></p></li>
+</ul>
+<p>Many people will argue which metric is best (although PSNR is commonly considered the least accurate). Jan Ozer from the Streaming Media Center posted his experimental correlation of MOS vs the above metrics. You can review the findings <a class="reference external" href="https://streaminglearningcenter.com/wp-content/uploads/2017/08/PSRN-vs.-VMAF-vs.-SSIMPlus.pdf">here.</a></p>
+<p>Furthermore, due to the industry standard of tracking encoder &quot;performance&quot; to quantitative metrics like the ones listed above, many encoders have &quot;taught to the test&quot;; that is, they provide different command-line arguments that will give higher scores but may look worse to the human eye. For example, common CPU encoders <a class="reference external" href="https://code.videolan.org/videolan/x264">x264</a> and <a class="reference external" href="http://hg.videolan.org/x265">x265</a> have a <code class="docutils literal notranslate"><span class="pre">tune</span></code> parameter which optimizes to objective metrics.</p>
+<p>This page discusses the AMD AMA Video SDK command line flags used to optimize for objective quality (scores) and subjective quality (visual appeal) and provides additional details as to what is happening behind the scenes and why.</p>
+</section>
+<section id="optimized-settings-for-the-sdk">
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">Optimized Settings for the AMD AMA Video SDK</a><a class="headerlink" href="#optimized-settings-for-the-sdk" title="Link to this heading">¶</a></h2>
+<p>It is highly recommended to perform encoding on raw video clips; that is, clips that have not undergone a transform/compression/encoding in the past. This ensures that the clips are in a universally known state in order to fairly compare encoders.</p>
+<p>Alternatively, you can add the flags to decode before encoding, and the results will remain accurate as long as the same pre-encoded file is used as the source across all encoders under test. Information on this process can be found on the <a class="reference internal" href="tutorials.html"><span class="doc">FFmpeg tutorial page</span></a>.</p>
+<p>Flags not illustrated in this page are covered in the <a class="reference internal" href="../../using_ffmpeg.html"><span class="doc">Using FFmpeg</span></a> chapter of the AMD AMA Video SDK user guide.</p>
+<p>The following table demonstrates various encoder parameters that effect VQ and latency.</p>
+<table class="docutils align-default" id="id1">
+<caption><span class="caption-text">Video Tuning Parameters</span><a class="headerlink" href="#id1" title="Link to this table">¶</a></caption>
+<colgroup>
+<col style="width: 31.2%" />
+<col style="width: 31.2%" />
+<col style="width: 18.8%" />
+<col style="width: 18.8%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Tune Mode</p></th>
+<th class="head"><p>Latency Setting</p></th>
+<th class="head"><p>Preset Type</p></th>
+<th class="head"><p>Encoder</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>VMAF</p>
+<p>VQ</p>
+<p>SSIM</p>
+<p>PSNR</p>
+<p>(See <a class="reference internal" href="../../using_ffmpeg.html#cmdoption-tune_metrics"><code class="xref std std-option docutils literal notranslate"><span class="pre">-tune_metrics</span></code></a>)</p>
+</td>
+<td><p>Normal</p>
+<p>Ultra Low Latency</p>
+<p>(See <a class="reference internal" href="../../using_ffmpeg.html#cmdoption-lookahead_depth"><code class="xref std std-option docutils literal notranslate"><span class="pre">-lookahead_depth</span></code></a>)</p>
+</td>
+<td><p>Fast</p>
+<p>Medium</p>
+<p>Slow</p>
+<p>(See <a class="reference internal" href="../../using_ffmpeg.html#cmdoption-preset"><code class="xref std std-option docutils literal notranslate"><span class="pre">-preset</span></code></a>)</p>
+</td>
+<td><p>h264_ama</p>
+<p>hevc_ama</p>
+<p>av1_ama</p>
+<p>(See <a class="reference internal" href="../../using_ffmpeg.html#cmdoption-c-v"><code class="xref std std-option docutils literal notranslate"><span class="pre">-c:v</span></code></a>)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Various permutations of <a class="reference internal" href="../../tuning_video_quality.html#tune-parameter-selection"><span class="std std-ref">Metrics, Latency and Preset</span></a> are possible. The following sections provide demonstrative examples.</p>
+<section id="av1-vmaf-normal-latency-medium-preset">
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">AV1 <em>VMAF</em> - Normal Latency - Medium Preset</a><a class="headerlink" href="#av1-vmaf-normal-latency-medium-preset" title="Link to this heading">¶</a></h3>
+<p>In this mode, which is the default mode, the only adjustable parameter is the tuning mode. The following example, illustrates the VMAF tune mode, for AV1 encoder</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ffmpeg -y -hwaccel ama -hwaccel_device /dev/ama_transcoder0 -s 1920x1080 -framerate 60 -pix_fmt yuv420p -i &lt;INPUT&gt; -vf hwupload -c:v av1_ama -tune_metrics 4 -b:v 2000k -f rawvideo &lt;OUTPUT&gt;
+</pre></div>
+</div>
+<p>, where <a class="reference internal" href="../../using_ffmpeg.html#cmdoption-tune_metrics"><code class="xref std std-option docutils literal notranslate"><span class="pre">-tune_metrics</span></code></a> 4 specifies VMAF optimization mode.</p>
+</section>
+<section id="avc-vmaf-normal-latency-slow-preset">
+<h3><a class="toc-backref" href="#id6" role="doc-backlink">AVC VMAF - Normal Latency - <em>Slow</em> Preset</a><a class="headerlink" href="#avc-vmaf-normal-latency-slow-preset" title="Link to this heading">¶</a></h3>
+<p>In this mode, real-time performance at capacity is not guaranteed; however, better results are obtained, with respect to the selected tune metric. Note that this mode is not applicable to either types of AV1.</p>
+<p>The following example, illustrates the VMAF tune mode, for AVC encoder.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ffmpeg -y -hwaccel ama -hwaccel_device /dev/ama_transcoder0 -s 1920x1080 -framerate 60 -pix_fmt yuv420p -i &lt;INPUT&gt; -vf hwupload -c:v h264_ama -tune_metrics 4 -preset slow -b:v 2000k -f rawvideo &lt;OUTPUT&gt;
+</pre></div>
+</div>
+<p>, where <a class="reference internal" href="../../using_ffmpeg.html#cmdoption-preset"><code class="xref std std-option docutils literal notranslate"><span class="pre">-preset</span></code></a> <code class="docutils literal notranslate"><span class="pre">slow</span></code> optimizes the objective tuning modes.</p>
+</section>
+<section id="av1-vmaf-ultra-low-latency-medium-preset">
+<h3><a class="toc-backref" href="#id7" role="doc-backlink">AV1 VMAF - <em>Ultra Low Latency</em> - Medium Preset</a><a class="headerlink" href="#av1-vmaf-ultra-low-latency-medium-preset" title="Link to this heading">¶</a></h3>
+<p>Ultra Low Latency (ULL) is achieved by setting the <a class="reference internal" href="../../using_ffmpeg.html#cmdoption-lookahead_depth"><code class="xref std std-option docutils literal notranslate"><span class="pre">-lookahead_depth</span></code></a> to 0. The following example, illustrates the VMAF tune ULL mode, for AV1 encoder.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ffmpeg -y -hwaccel ama -hwaccel_device /dev/ama_transcoder0 -s 1920x1080 -framerate 60 -pix_fmt yuv420p -i &lt;INPUT&gt; -vf hwupload -c:v av1_ama -tune_metrics 4 -b:v 2000k -lookahead_depth 0 -f rawvideo &lt;OUTPUT&gt;
+</pre></div>
+</div>
+</section>
+<section id="avc-vmaf-ultra-low-latency-slow-preset">
+<h3><a class="toc-backref" href="#id8" role="doc-backlink">AVC <em>VMAF</em> - <em>Ultra Low Latency</em> - Slow Preset</a><a class="headerlink" href="#avc-vmaf-ultra-low-latency-slow-preset" title="Link to this heading">¶</a></h3>
+<p>This mode is the combination of ULL and metric optimized options. Note that this mode is not applicable to either types of AV1.</p>
+<p>The following example, illustrates the VMAF tune ULL mode, for AVC encoder.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ffmpeg -y -hwaccel ama -hwaccel_device /dev/ama_transcoder0 -s 1920x1080 -framerate 60 -pix_fmt yuv420p -i &lt;INPUT&gt; -vf hwupload -c:v h264_ama -tune_metrics 4 -lookahead_depth 0 -preset slow -b:v 2000k -f rawvideo &lt;OUTPUT&gt;
+</pre></div>
+</div>
+<p>, where <a class="reference internal" href="../../using_ffmpeg.html#cmdoption-preset"><code class="xref std std-option docutils literal notranslate"><span class="pre">-preset</span></code></a> <code class="docutils literal notranslate"><span class="pre">slow</span></code> optimizes the objective tuning modes.</p>
+</section>
+</section>
+<section id="running-psnr-ssim-vmaf-scores">
+<h2><a class="toc-backref" href="#id9" role="doc-backlink">Running PSNR/SSIM/VMAF Scores</a><a class="headerlink" href="#running-psnr-ssim-vmaf-scores" title="Link to this heading">¶</a></h2>
+<p>Due to licensing reasons, the FFmpeg binary delivered in this package does not include a comprehensive set of codecs or plugins required for scoring video quality. You have many options:</p>
+<ol class="arabic simple">
+<li><p>(Easiest) Download a static FFmpeg build from <a class="reference external" href="https://johnvansickle.com/ffmpeg/">John Van Sickle</a>  which has VMAF (among other plugins) precompiled + installed</p></li>
+<li><p><a class="reference external" href="https://trac.ffmpeg.org/wiki/CompilationGuide">Recompile another version FFmpeg</a> and include the <a class="reference external" href="https://github.com/Netflix/vmaf/">VMAF library</a></p></li>
+<li><p>Recompile the FFmpeg starting from the source code included in this repository and include the <a class="reference external" href="https://github.com/Netflix/vmaf/">VMAF library</a>. For instructions on how to customize and rebuild the FFmpeg provided with the AMD AMA Video SDK, see the <a class="reference internal" href="../../using_ffmpeg.html#rebuild-ffmpeg"><span class="std std-ref">Rebuilding FFmpeg</span></a> section</p></li>
+</ol>
+<p>The following sample command line demonstrates a typical VMAF calculation, through FFmpeg:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;FFMPEG PATH&gt;/ffmpeg -i &lt;DISTORTED FILE&gt; -framerate &lt;FRAME RATE&gt; -s &lt;RESOLUTION&gt; -pix_fmt yuv420p -i &lt;ORIGINAL&gt; \
+-lavfi libvmaf=&quot;log_fmt=json:ms_ssim=1:ssim=1:psnr=1:log_path=/&lt;LOG FILE PATH&gt;.vmaf.json:model_path=&lt;PATH TO VMAF MODEL&gt;&quot; -f null -
+</pre></div>
+</div>
+<p>, where <code class="docutils literal notranslate"><span class="pre">FFMPEG</span> <span class="pre">PATH</span></code> is the path to modified FFmpeg, <code class="docutils literal notranslate"><span class="pre">DISTORTED</span> <span class="pre">FILE</span></code> is the encoded file, <code class="docutils literal notranslate"><span class="pre">RESOLUTION</span></code> is WidthxHeigth resolution of the original clip, <code class="docutils literal notranslate"><span class="pre">ORIGINAL</span></code> is the original clip, <code class="docutils literal notranslate"><span class="pre">LOG</span> <span class="pre">FILE</span> <span class="pre">PATH</span></code> is the path of log file and <code class="docutils literal notranslate"><span class="pre">PATH</span> <span class="pre">TO</span> <span class="pre">VMAF</span> <span class="pre">MODEL</span></code> is the path to an appropriate VMAF model, which typically is <code class="docutils literal notranslate"><span class="pre">vmaf_4k_v0.6.1.pkl</span></code> for 4K resolution or <code class="docutils literal notranslate"><span class="pre">vmaf_float_v0.6.1.pkl</span></code> for lower resolutions. See <a class="reference external" href="https://github.com/Netflix/vmaf/blob/master/resource/doc/models.md">Models</a> for relevant details. The above command line calculates PSNR, SSIM and VMAF, in json format.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          
+				  
+				  <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="tutorials.html" class="btn btn-neutral float-left" title="FFmpeg Tutorials" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="filters.html" class="btn btn-neutral float-right" title="FFmpeg Examples using Software Filters" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022-2024, Advanced Micro Devices, Inc.
+      <span class="lastupdated">Last updated on October 22, 2024.
+      </span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div>
+										
+</br>
+
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>
