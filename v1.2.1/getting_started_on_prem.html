@@ -183,7 +183,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sudo sh -c &quot;echo &#39;vm.nr_hugepages=4192&#39; &gt;&gt; /etc/sysctl.conf&quot;
 </pre></div>
 </div>
-<p>Note that if a chassis is being configured to host VMs, then the total number of huge pages, on the host, needs to be the sum of allocated RAM of all VM instances plus 96. As an example, running 6 VMs, each with 12GB of RAM, requires 6*12GB/2MB+96=36960 huge pages. (See <a class="reference internal" href="virtualization.html"><span class="doc">Virtualization</span></a> for details.)</p>
+<p>Note that if a chassis is being configured to host VMs, then the total number of huge pages, on the host, needs to be the sum of allocated RAM of all VM instances plus 96. As an example, running 6 VMs, each with 12GB of RAM, requires 6*12GB/2MB+96=36096 huge pages. (See <a class="reference internal" href="virtualization.html"><span class="doc">Virtualization</span></a> for details.)</p>
 </li>
 <li><p>Reboot</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sudo reboot
