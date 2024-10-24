@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="English" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+<!-- OneTrust Cookies Consent Notice start for amd.github.io -->
+<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="cb638ba1-8bc4-44a0-9338-632d4dc19be6" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script>
+<!-- OneTrust Cookies Consent Notice end for amd.github.io -->
+<!-- Google Tag Manager -->
+<script type="text/plain" class="optanon-category-C0002">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-5RHQV7');</script>
+<!-- End Google Tag Manager -->
+  <title>Using GStreamer &mdash; AMD AMA 1.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=cd5f4460"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Unified Logging" href="unified_logging.html" />
+    <link rel="prev" title="Using FFmpeg" href="using_ffmpeg.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+<!-- Google Tag Manager -->
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5RHQV7" height="0" width="0" style="display:none;visibility:hidden" class="optanon-category-C0002"></iframe></noscript>
+<!-- End Google Tag Manager --> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+            <a href="index.html" class="icon icon-home"> AMD AMA
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Get Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="release_notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started_on_prem.html">On Premises</a></li>
+<li class="toctree-l1"><a class="reference internal" href="virtualization.html">Virtualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Tutorials and Examples</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference Guides</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="specs_and_features.html">Specs and Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="package_feed.html">Package Feed Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="using_ffmpeg.html">Using FFmpeg</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Using Gstreamer</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#introduction">Introduction</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview-of-the-gstreamer-plugins">Overview of the GStreamer Plugins</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#decoder-plugin">Decoder Plugin</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#decoder-inputs-and-outputs">Decoder Inputs and Outputs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#decoder-parameters">Decoder Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#decoder-example-pipelines">Decoder Example Pipelines</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#encoder-plugin">Encoder Plugin</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#encoder-inputs-and-outputs">Encoder Inputs and Outputs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#encoder-parameters">Encoder Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#encoder-example-pipelines">Encoder Example Pipelines</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#scaler-plugin">Scaler Plugin</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#scaler-inputs-and-outputs">Scaler Inputs and Outputs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#scaler-parameters">Scaler Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#scaler-example-pipelines">Scaler Example Pipelines</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#hardware-down-and-up-loads">Hardware Down and Up Loads</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#inputs-and-outputs">Inputs and Outputs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dma-parameters">DMA Parameters</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#moving-data-through-the-pipeline">Moving Data through the Pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#working-with-multiple-devices">Working with Multiple Devices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#rebuilding-gstreamer-and-application-examples">Rebuilding GStreamer and Application Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="unified_logging.html">Unified Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tuning_video_quality.html">Tuning Video Quality</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tuning_pipeline_latency.html">Tuning Latency of Transcode Pipeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="managing_compute_resources.html">Managing Compute Resources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="c_apis.html">C API Programming Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="card_management.html">Card Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="migration.html">Migration Path</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Support</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/amd/ama-sdk/issues">File an issue</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other AMA SDK Versions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://amd.github.io/ama-sdk/">Latest Version</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Video Products</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/video-sdk/v3.0/index.html">U30</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">AMD AMA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Using GStreamer</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="using-gstreamer">
+<span id="id1"></span><h1>Using GStreamer<a class="headerlink" href="#using-gstreamer" title="Link to this heading">¶</a></h1>
+<nav class="contents local" id="table-of-contents">
+<p class="topic-title">Table of Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#introduction" id="id2">Introduction</a></p></li>
+<li><p><a class="reference internal" href="#decoder-plugin" id="id3">Decoder Plugin</a></p></li>
+<li><p><a class="reference internal" href="#encoder-plugin" id="id4">Encoder Plugin</a></p></li>
+<li><p><a class="reference internal" href="#scaler-plugin" id="id5">Scaler Plugin</a></p></li>
+<li><p><a class="reference internal" href="#hardware-down-and-up-loads" id="id6">Hardware Down and Up Loads</a></p></li>
+<li><p><a class="reference internal" href="#moving-data-through-the-pipeline" id="id7">Moving Data through the Pipeline</a></p></li>
+<li><p><a class="reference internal" href="#working-with-multiple-devices" id="id8">Working with Multiple Devices</a></p></li>
+<li><p><a class="reference internal" href="#rebuilding-gstreamer-and-application-examples" id="id9">Rebuilding GStreamer and Application Examples</a></p></li>
+</ul>
+</nav>
+<section id="introduction">
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">Introduction</a><a class="headerlink" href="#introduction" title="Link to this heading">¶</a></h2>
+<p>GStreamer is a pipeline-based multimedia framework that links together a wide variety of media processing systems to complete complex workflows. The pipeline design serves as a base to create many types of multimedia applications such as video editors, transcoders, streaming media broadcasters and media players. The AMD AMA Video SDK includes an enhanced version of GStreamer which can communicate with the hardware accelerated transcode pipeline in AMD devices.</p>
+<p>It is not within the scope of this document to provide an exhaustive guide on the usage of GStreamer. Various resources can be found online, for example:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://gstreamer.freedesktop.org/">https://gstreamer.freedesktop.org/</a></p></li>
+</ul>
+<section id="overview-of-the-gstreamer-plugins">
+<h3>Overview of the GStreamer Plugins<a class="headerlink" href="#overview-of-the-gstreamer-plugins" title="Link to this heading">¶</a></h3>
+<p>The AMD AMA Video SDK provides the following GStreamer plugins for building hardware-accelerated video pipelines using AMA compatible devices:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ama_av1dec</span></code> for av1 decoding</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ama_av1enc</span></code> for av1 encoding</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ama_h264dec</span></code> for h264 decoding</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ama_h264enc</span></code> for h264 encoding</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ama_h265dec</span></code> for h264 decoding</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ama_h264enc</span></code> for h265 encoding</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ama_scaler</span></code> for hardware accelerated scaling and color conversion</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ama_download</span></code> data download from device to host</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ama_upload</span></code> data upload from host to device</p></li>
+</ul>
+<p>The following sections describe the options used with GStreamer to configure and use the various hardware accelerators available on AMA compatible devices.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</section>
+</section>
+<section id="decoder-plugin">
+<span id="gst-decoder-plugin"></span><h2><a class="toc-backref" href="#id3" role="doc-backlink">Decoder Plugin</a><a class="headerlink" href="#decoder-plugin" title="Link to this heading">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">ama_av1dec</span></code>, <code class="docutils literal notranslate"><span class="pre">ama_h264dec</span></code> and <code class="docutils literal notranslate"><span class="pre">ama_hevcdec</span></code> plugins provide support for hardware-accelerated decoding using AMA compatible devices, for AV1, AVC and HEVC.</p>
+<section id="decoder-inputs-and-outputs">
+<h3>Decoder Inputs and Outputs<a class="headerlink" href="#decoder-inputs-and-outputs" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Input: 8 or 10 bits AV1, AVC or HEVC encoded stream, in OBU format for AV1 or byte-stream format for AVC or HEVC</p></li>
+<li><p>Output: One of NV12_4L4, NV12_10LE_4L4, I420, NV12, I420_10LE, I420_10BE, ARGB, ABGR, RGBA, BGRA, RGB or BGR formats</p></li>
+</ul>
+</section>
+<section id="decoder-parameters">
+<h3>Decoder Parameters<a class="headerlink" href="#decoder-parameters" title="Link to this heading">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Property Name</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-device">
+<span class="sig-name descname"><span class="pre">device</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-device" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Numeric ID of an XMA device</strong></div>
+<div class="line">Type: Integer</div>
+<div class="line">Default Value: -1 (auto)</div>
+<div class="line">Range -1 to 2147483647</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-low-latency">
+<span class="sig-name descname"><span class="pre">low-latency</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-low-latency" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Whether to enable low latency decoding</strong></div>
+<div class="line">Type: Boolean</div>
+<div class="line">Default Value: false</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="decoder-example-pipelines">
+<h3>Decoder Example Pipelines<a class="headerlink" href="#decoder-example-pipelines" title="Link to this heading">¶</a></h3>
+<p>Refer to the <a class="reference internal" href="examples/gstreamer/tutorials.html#gstreamer-decode-only"><span class="std std-ref">Decoder Pipeline</span></a> example for an illustration of how to use this plugin.</p>
+</section>
+</section>
+<section id="encoder-plugin">
+<span id="gst-encoder-plugin"></span><h2><a class="toc-backref" href="#id4" role="doc-backlink">Encoder Plugin</a><a class="headerlink" href="#encoder-plugin" title="Link to this heading">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">ama_av1enc</span></code>, <code class="docutils literal notranslate"><span class="pre">ama_h264enc</span></code> and <code class="docutils literal notranslate"><span class="pre">ama_h265enc</span></code> plugins provide support for hardware-accelerated encoding using AMA compatible devices, for AV1, AVC and HEVC.</p>
+<section id="encoder-inputs-and-outputs">
+<h3>Encoder Inputs and Outputs<a class="headerlink" href="#encoder-inputs-and-outputs" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Input: NV12_4L4, NV12_10LE_4L4, I420, I420_10LE, I420_10BE, NV12 or NV12_10LE32</p></li>
+<li><p>Output: One of AV1, AVC or HEVC 8-bit/10-bit encoded stream, in OBU format for AV1 and byte-stream for AVC and HEVC</p></li>
+</ul>
+</section>
+<section id="encoder-parameters">
+<h3>Encoder Parameters<a class="headerlink" href="#encoder-parameters" title="Link to this heading">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Property Name</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-b-frames">
+<span class="sig-name descname"><span class="pre">b-frames</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-b-frames" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Number of B-frames between two consecutive P-frames</strong></div>
+<div class="line">Type: Integer</div>
+<div class="line">Range: -1 - 7, for AV1</div>
+<div class="line">Range: -1 - 3, for AVC and HEVC</div>
+<div class="line">Default: -1 (auto)</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-bitrate">
+<span class="sig-name descname"><span class="pre">bitrate</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-bitrate" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Fixed output bitrate in bits per second</strong></div>
+<div class="line">Type: Integer</div>
+<div class="line">Range: 0 - 4294967295</div>
+<div class="line">Default: 5000000</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-crf">
+<span class="sig-name descname"><span class="pre">crf</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-crf" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>If specified, enable CRF mode</strong></div>
+<div class="line">Type: Boolean</div>
+<div class="line">Default: False</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-0">
+<span class="sig-name descname"><span class="pre">device</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-0" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Numeric ID of an XMA device</strong></div>
+<div class="line">Type: Integer</div>
+<div class="line">Range: -1 - 2147483647</div>
+<div class="line">Default: -1 (auto)</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-device-type">
+<span class="sig-name descname"><span class="pre">device-type</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-device-type" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>AV1 device type to use</strong></div>
+<div class="line">Type: Enum</div>
+<div class="line-block">
+<div class="line">(0): any</div>
+<div class="line">(1): Type 1</div>
+<div class="line">(2): Type 2</div>
+</div>
+<div class="line">Default: 1</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-forced-idr">
+<span class="sig-name descname"><span class="pre">forced-idr</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-forced-idr" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Encode all intra frames as IDR</strong></div>
+<div class="line">Type: Boolean</div>
+<div class="line">Default: True</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-gop-length">
+<span class="sig-name descname"><span class="pre">gop-length</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-gop-length" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Maximum distance between two consecutive I frames</strong></div>
+<div class="line">Type: Integer</div>
+<div class="line">Range: -1 - 2147483647</div>
+<div class="line">Default: -1 (auto)</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-idr-interval">
+<span class="sig-name descname"><span class="pre">idr-interval</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-idr-interval" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>The periodicity of IDR frames</strong></div>
+<div class="line">Type: Integer</div>
+<div class="line">Range: 0 - 4294967295</div>
+<div class="line">Default: 4294967295</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-lookahead-depth">
+<span class="sig-name descname"><span class="pre">lookahead-depth</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-lookahead-depth" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Number of frames in the future of the currently encoded frame that the encoder will analyze and take into account</strong></div>
+<div class="line">Type: Integer</div>
+<div class="line">Range: 0 - 40</div>
+<div class="line">Default: -1 (auto)</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-max-bitrate">
+<span class="sig-name descname"><span class="pre">max-bitrate</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-max-bitrate" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Use to limit encoding bitrate if you have not specified</strong> <a class="reference internal" href="#cmdoption-arg-bitrate"><code class="xref std std-option docutils literal notranslate"><span class="pre">bitrate</span></code></a> <strong>parameter</strong></div>
+<div class="line">Type: Integer</div>
+<div class="line">Range: 0 - 35000000000</div>
+<div class="line">Default: -1 (auto)</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-max-qp">
+<span class="sig-name descname"><span class="pre">max-qp</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-max-qp" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Maximum QP value allowed for the rate control</strong></div>
+<div class="line">Type: Integer</div>
+<div class="line">Range: 0 - 51, for AVC and HEVC</div>
+<div class="line">Range: 0 - 255, for AV1</div>
+<div class="line">Default: 51, for AVC and HEVC</div>
+<div class="line">Default: 255, for AV1</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-min-qp">
+<span class="sig-name descname"><span class="pre">min-qp</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-min-qp" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Minimum QP value allowed for the rate control</strong></div>
+<div class="line">Type: Integer</div>
+<div class="line">Range: 0 - 51, for AVC and HEVC</div>
+<div class="line">Range: 0 - 255, for AV1</div>
+<div class="line">Default: 0</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-qp">
+<span class="sig-name descname"><span class="pre">qp</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-qp" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Fixed quantization value. When constant quality is enabled,</strong> <a class="reference internal" href="#cmdoption-arg-bitrate"><code class="xref std std-option docutils literal notranslate"><span class="pre">bitrate</span></code></a> <strong>must be set to 0</strong></div>
+<div class="line">Type: Integer</div>
+<div class="line">Range: -1 - 255</div>
+<div class="line">Default: -1 (disable)</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-qp-mode">
+<span class="sig-name descname"><span class="pre">qp-mode</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-qp-mode" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>QP control mode.</strong></div>
+<div class="line">Type: Enum</div>
+<div class="line-block">
+<div class="line">(0): auto             - Auto</div>
+<div class="line">(1): relative-load    - Relative load (spatial AQ + temporal AQ)</div>
+<div class="line">(2): uniform          - Uniform (AQ off)</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-rate-control">
+<span class="sig-name descname"><span class="pre">rate-control</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-rate-control" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Rate control mode to use for encoding</strong></div>
+<div class="line">Type: Enum</div>
+<div class="line-block">
+<div class="line">(-1): auto             - Auto</div>
+<div class="line">(0): cqp              - Constant QP</div>
+<div class="line">(1): cbr              - Constant bitrate</div>
+<div class="line">(2): vbr              - Variable bitrate</div>
+<div class="line">(3): cvbr             - Constrained variable bitrate</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-slice">
+<span class="sig-name descname"><span class="pre">slice</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-slice" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Which slice of the XMA device to use</strong></div>
+<div class="line">Type: Integer</div>
+<div class="line">Range: -1 - 1</div>
+<div class="line">Default: -1</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-spatial-aq">
+<span class="sig-name descname"><span class="pre">spatial-aq</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-spatial-aq" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Enable spatial AQ</strong></div>
+<div class="line">Type: Boolean</div>
+<div class="line">Default: True</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-spatial-aq-gain">
+<span class="sig-name descname"><span class="pre">spatial-aq-gain</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-spatial-aq-gain" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Spatial AQ gain scale factor</strong></div>
+<div class="line">Type: Integer</div>
+<div class="line">Range: 0 -255</div>
+<div class="line">Default: 255</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-temporall-aq">
+<span class="sig-name descname"><span class="pre">temporall-aq</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-temporall-aq" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Enable temporal AQ</strong></div>
+<div class="line">Type: Boolean</div>
+<div class="line">Default: True</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-temporal-aq-gain">
+<span class="sig-name descname"><span class="pre">temporal-aq-gain</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-temporal-aq-gain" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Temporal AQ gain scale factor</strong></div>
+<div class="line">Type: Integer</div>
+<div class="line">Range: 0 -255</div>
+<div class="line">Default: 255</div>
+<div class="line">Default: 1</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-tier">
+<span class="sig-name descname"><span class="pre">tier</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-tier" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Tier</strong></div>
+<div class="line">Type: Boolean</div>
+<div class="line-block">
+<div class="line">(-1): auto             - Auto</div>
+<div class="line">(0): main             - Main</div>
+<div class="line">(1): high             - High</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-preset">
+<span class="sig-name descname"><span class="pre">preset</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-preset" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Encoder VQ-Density preset</strong></div>
+<div class="line">Valid values: medium or slow. (default is medium)</div>
+<div class="line-block">
+<div class="line">(medium) Full density with medium VQ - default</div>
+<div class="line">(slow) High VQ at lower density</div>
+</div>
+<div class="line">Consult the <a class="reference internal" href="tuning_video_quality.html#tuning-video-quality"><span class="std std-ref">Tuning Video Quality</span></a> section for more details on how to use this option.</div>
+<div class="line">Note that this option has no effects on AV1 <a class="reference internal" href="#cmdoption-arg-device-type"><code class="xref std std-option docutils literal notranslate"><span class="pre">device-type</span></code></a> 1 encoding.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-tune-metrics">
+<span class="sig-name descname"><span class="pre">tune-metrics</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-tune-metrics" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Tune VQ for objective metrics</strong></div>
+<div class="line">Type: Enum</div>
+<div class="line-block">
+<div class="line">(1): vq               - Best visual quality</div>
+<div class="line">(2): psnr             - Best PSNR</div>
+<div class="line">(3): ssim             - Best SSIM</div>
+<div class="line">(4): vmaf             - Best VMA</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-encoding-params-file">
+<span class="sig-name descname"><span class="pre">encoding-params-file</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-encoding-params-file" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Dynamic Configuration File</strong></div>
+<div class="line">Path to dynamic file location (default is empty)</div>
+<div class="line">Consult the <a class="reference internal" href="tuning_video_quality.html#dyn-parameters"><span class="std std-ref">Dynamic Encoder Parameters</span></a> section for more details on how to use this option.</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="encoder-example-pipelines">
+<h3>Encoder Example Pipelines<a class="headerlink" href="#encoder-example-pipelines" title="Link to this heading">¶</a></h3>
+<p>Refer to the <a class="reference internal" href="examples/gstreamer/tutorials.html#gstreamer-encode-only"><span class="std std-ref">Encoder Pipeline</span></a> example for an illustration of how to use this plugin.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</section>
+</section>
+<section id="scaler-plugin">
+<span id="gst-scaler-plugin"></span><h2><a class="toc-backref" href="#id5" role="doc-backlink">Scaler Plugin</a><a class="headerlink" href="#scaler-plugin" title="Link to this heading">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">ama_scaler</span></code> plugin provides support for hardware-accelerated resizing and cropping.</p>
+<section id="scaler-inputs-and-outputs">
+<h3>Scaler Inputs and Outputs<a class="headerlink" href="#scaler-inputs-and-outputs" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Input: NV12_4L4, NV12_10LE_4L4, I420, NV12, I420_10LE, I420_10BE, ARGB, ABGR, RGBA, BGRA, RGB, and BGR</p></li>
+<li><p>Output: NV12_4L4, NV12_10LE_4L4, I420, NV12, I420_10LE, I420_10BE, ARGB, ABGR, RGBA, BGRA, RGB, and BGR</p></li>
+</ul>
+</section>
+<section id="scaler-parameters">
+<h3>Scaler Parameters<a class="headerlink" href="#scaler-parameters" title="Link to this heading">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Property Name</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-crop">
+<span class="sig-name descname"><span class="pre">crop</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-crop" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Crop the input frame before scaling.</strong></div>
+<div class="line">Type: Boolean</div>
+<div class="line">Default Value: false</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-crop-height">
+<span class="sig-name descname"><span class="pre">crop-height</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-crop-height" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Height of crop area. Must be &lt; input height - crop-top and a multiple of 2</strong></div>
+<div class="line">Type: Integer</div>
+<div class="line">Range: 0 - 2147483647</div>
+<div class="line">Default: 0</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-crop-left">
+<span class="sig-name descname"><span class="pre">crop-left</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-crop-left" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Left position of crop area. Must be &lt; input width and a multiple of 2</strong></div>
+<div class="line">Type: Integer</div>
+<div class="line">Range: 0 - 2147483647</div>
+<div class="line">Default: 0</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-crop-top">
+<span class="sig-name descname"><span class="pre">crop-top</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-crop-top" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Top position of crop area. Must be &lt; input height and a multiple of 2</strong></div>
+<div class="line">Type: Integer</div>
+<div class="line">Range: 0 - 2147483647</div>
+<div class="line">Default: 0</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-crop-width">
+<span class="sig-name descname"><span class="pre">crop-width</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-crop-width" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line">** Width of crop area. Must be &lt; input width - crop-left and a multiple of 2**</div>
+<div class="line">Type: Integer</div>
+<div class="line">Range: 0 - 2147483647</div>
+<div class="line">Default: 0</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-1">
+<span class="sig-name descname"><span class="pre">device</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-1" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Numeric ID of an XMA device</strong></div>
+<div class="line">Type: Integer</div>
+<div class="line">Range: -1 - 2147483647</div>
+<div class="line">Default: -1 (auto)</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="scaler-example-pipelines">
+<h3>Scaler Example Pipelines<a class="headerlink" href="#scaler-example-pipelines" title="Link to this heading">¶</a></h3>
+<p>Refer to the <a class="reference internal" href="examples/gstreamer/tutorials.html#gstreamer-transcode-and-scale"><span class="std std-ref">Transcode with Multiple-Resolution Outputs</span></a> example for an illustration of how to use this plugin.</p>
+</section>
+</section>
+<section id="hardware-down-and-up-loads">
+<span id="gst-lookahead-plugin"></span><h2><a class="toc-backref" href="#id6" role="doc-backlink">Hardware Down and Up Loads</a><a class="headerlink" href="#hardware-down-and-up-loads" title="Link to this heading">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">ama_download</span></code> and <code class="docutils literal notranslate"><span class="pre">ama_upload</span></code> plugins provide support for DMA transfer of data to and from the host, respectively. Note that transaction directions are with respect to the host.</p>
+<section id="inputs-and-outputs">
+<h3>Inputs and Outputs<a class="headerlink" href="#inputs-and-outputs" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Input: I420, NV12, I420_10LE, I420_10BE, ARGB, ABGR, RGBA, BGRA, RGB, BGR</p></li>
+<li><p>Output: I420, NV12, I420_10LE, I420_10BE, ARGB, ABGR, RGBA, BGRA, RGB, BGR</p></li>
+</ul>
+</section>
+<section id="dma-parameters">
+<h3>DMA Parameters<a class="headerlink" href="#dma-parameters" title="Link to this heading">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Property Name</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-2">
+<span class="sig-name descname"><span class="pre">device</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-2" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Numeric ID of an XMA device</strong></div>
+<div class="line">Type: Integer</div>
+<div class="line">Range: -1 - 2147483647</div>
+<div class="line">Default: -1 (auto)</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="moving-data-through-the-pipeline">
+<h2><a class="toc-backref" href="#id7" role="doc-backlink">Moving Data through the Pipeline</a><a class="headerlink" href="#moving-data-through-the-pipeline" title="Link to this heading">¶</a></h2>
+<p>The GStreamer plugins included in the AMD AMA Video SDK take care of efficiently moving data through the video processing pipeline. For optimal performance, video buffers will be moved between the host and the appropriate device only if needed by plugins in the pipeline. This is known as &quot;zero-copy&quot;.</p>
+<ul class="simple">
+<li><p>The decoder plugin will only copy the output buffer from the device to the host if a downstream element (e.g. filesink) running on the host needs to access the decoded frame. This allows downstream hardware-accelerated plugins (e.g. scaler, encoder) running on the same AMD device to process the decoded frames without unnecessary data transfers.</p></li>
+<li><p>The encoder plugin will only copy the input buffer from host to the device if it is allocated in user-space memory on the host or in a different device. This allows the encoder to process frames produced by upstream hardware-accelerated plugins (e.g. decoder, scaler) running on the same AMD device without unnecessary data transfers.</p></li>
+</ul>
+</section>
+<section id="working-with-multiple-devices">
+<span id="gst-multiple-devices"></span><h2><a class="toc-backref" href="#id8" role="doc-backlink">Working with Multiple Devices</a><a class="headerlink" href="#working-with-multiple-devices" title="Link to this heading">¶</a></h2>
+<p>By default (if no device identifier is specified) a job is submitted to device 0. When running large jobs or multiple jobs in parallel, device 0 is bound to run out of resources rapidly and additional jobs will error out due to insufficient resources.</p>
+<p>By using the <a class="reference internal" href="#cmdoption-arg-device"><code class="xref std std-option docutils literal notranslate"><span class="pre">device</span></code></a> option of the GStreamer plugins included in the AMD AMA Video SDK, the different functions (decoder, scaler, encoder) of a pipeline can be individually submitted to a specific device. This makes it easy and straightforward to leverage the entire video acceleration capacity of your system, regardless of the number of cards and devices.</p>
+</section>
+<section id="rebuilding-gstreamer-and-application-examples">
+<span id="rebuild-gstreamer"></span><h2><a class="toc-backref" href="#id9" role="doc-backlink">Rebuilding GStreamer and Application Examples</a><a class="headerlink" href="#rebuilding-gstreamer-and-application-examples" title="Link to this heading">¶</a></h2>
+<p>Obtain the zipped version of SDK's Gstreamer code from <a class="reference external" href="https://www.xilinx.com/content/dam/xilinx/guest-resources/2023/video/ma35d_sdk_v1.0_gstreamer.zip">ma35d_sdk_v1.0_gstreamer.zip</a>. Unzip this file into <code class="file docutils literal notranslate"><span class="pre">ma35_gstreamer</span></code> folder. This folder will contain the source code for AMA SDK plugins and a patch for Gstreamer.</p>
+<p>You can rebuild the Gstreamer executable with optional plugins by following the instructions below.</p>
+<ol class="arabic">
+<li><p>Install the prerequisite packages:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sudo apt install ninja-build flex bison python3-pip unzip pkg-config libjansson-dev uuid-dev
+sudo snap install cmake --classic
+sudo pip3 install meson ninja
+</pre></div>
+</div>
+</li>
+<li><p>Unzip the downloaded zip file:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>unzip ma35d_sdk_v1.0_gstreamer.zip -d ma35_gstreamer
+</pre></div>
+</div>
+</li>
+<li><p>Get Gstreamer:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/GStreamer/gstreamer.git
+cd gstreamer
+git checkout f6e672f27fcac06af58d7ac995551893d36944ce
+</pre></div>
+</div>
+</li>
+<li><p>Apply the patch to Gstreamer:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cp ../ma35_gstreamer/ama_gstreamer.patch .
+git apply ama_gstreamer.patch
+</pre></div>
+</div>
+</li>
+<li><p>Build Gstreamer and AMA SDK plugins:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cd ../ma35_gstreamer
+ln -s ../gstreamer/subprojects ./
+export C_INCLUDE_PATH=/opt/amd/ama/ma35/include/xma/:/opt/amd/ama/ma35/include/xrm/:/opt/amd/ama/ma35/include/xrm_interface/:$C_INCLUDE_PATH
+export LIBRARY_PATH=/opt/amd/ama/ma35/lib/:$LIBRARY_PATH
+meson setup build
+cd build
+ninja
+</pre></div>
+</div>
+</li>
+<li><p>Install Gstreamer and plugins:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ninja install
+</pre></div>
+</div>
+</li>
+</ol>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          
+				  
+				  <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="using_ffmpeg.html" class="btn btn-neutral float-left" title="Using FFmpeg" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="unified_logging.html" class="btn btn-neutral float-right" title="Unified Logging" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022-2024, Advanced Micro Devices, Inc.
+      <span class="lastupdated">Last updated on August 14, 2024.
+      </span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div>
+										
+</br>
+
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

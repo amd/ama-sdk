@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="English" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+<!-- OneTrust Cookies Consent Notice start for amd.github.io -->
+<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="cb638ba1-8bc4-44a0-9338-632d4dc19be6" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script>
+<!-- OneTrust Cookies Consent Notice end for amd.github.io -->
+<!-- Google Tag Manager -->
+<script type="text/plain" class="optanon-category-C0002">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-5RHQV7');</script>
+<!-- End Google Tag Manager -->
+  <title>Tuning Video Quality &mdash; AMD AMA 1.2.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css" type="text/css" />
+      <link rel="stylesheet" href="_static/_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=e6179555"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/design-tabs.js?v=36754332"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Tuning Latency" href="tuning_pipeline_latency.html" />
+    <link rel="prev" title="Unified Logging" href="unified_logging.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+<!-- Google Tag Manager -->
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5RHQV7" height="0" width="0" style="display:none;visibility:hidden" class="optanon-category-C0002"></iframe></noscript>
+<!-- End Google Tag Manager --> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+            <a href="index.html" class="icon icon-home"> AMD AMA
+          </a>
+              <div class="version">
+                1.2.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Get Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="release_notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started_on_prem.html">Hardware Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="virtualization.html">Virtualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Tutorials and Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="git_hub.html">AMA Repository</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference Guides</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="specs_and_features.html">Specs and Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="package_feed.html">Package Feed Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="using_ffmpeg.html">Using FFmpeg</a></li>
+<li class="toctree-l1"><a class="reference internal" href="using_gstreamer.html">Using Gstreamer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="unified_logging.html">Unified Logging</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Tuning Video Quality</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#metrics">Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#latency">Latency</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#preset">Preset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#content-adaptive-bit-rate-cabr">Content Adaptive Bit Rate (CABR)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#gop-composition">GOP Composition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#roi">ROI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#av1-type-selection">AV1 Type Selection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dynamic-encoder-parameters">Dynamic Encoder Parameters</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tuning_pipeline_latency.html">Tuning Latency of Transcode Pipeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="managing_compute_resources.html">Managing Compute Resources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="c_apis.html">C API Programming Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="card_management.html">Card Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="migration.html">Migration Path</a></li>
+<li class="toctree-l1"><a class="reference internal" href="encoder_comp_matrix.html">Encoding Compatibility Matrix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preview.html">New Feature Preview</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Support</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://www.xilinx.com/support.html">File an issue</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://support.xilinx.com/s/topic/0TO2E000000YKY8WAO/video?language=en_US">Video Forum</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other AMA SDK Versions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://amd.github.io/ama-sdk/v1.2/index.html">   v1.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://amd.github.io/ama-sdk/v1.1.2/index.html">   v1.1.2</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Video Products</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/video-sdk/v3.0/index.html">U30</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">AMD AMA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Tuning Video Quality</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="tuning-video-quality">
+<span id="id1"></span><h1>Tuning Video Quality<a class="headerlink" href="#tuning-video-quality" title="Link to this heading">¶</a></h1>
+<nav class="contents local" id="table-of-contents">
+<p class="topic-title">Table of Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#metrics" id="id5">Metrics</a></p></li>
+<li><p><a class="reference internal" href="#latency" id="id6">Latency</a></p></li>
+<li><p><a class="reference internal" href="#preset" id="id7">Preset</a></p></li>
+<li><p><a class="reference internal" href="#content-adaptive-bit-rate-cabr" id="id8">Content Adaptive Bit Rate (CABR)</a></p></li>
+<li><p><a class="reference internal" href="#gop-composition" id="id9">GOP Composition</a></p></li>
+<li><p><a class="reference internal" href="#roi" id="id10">ROI</a></p></li>
+<li><p><a class="reference internal" href="#av1-type-selection" id="id11">AV1 Type Selection</a></p></li>
+<li><p><a class="reference internal" href="#dynamic-encoder-parameters" id="id12">Dynamic Encoder Parameters</a></p></li>
+</ul>
+</nav>
+<p>The quality of encoded video depends on various factors. It is primarily a function of the target bit rate and the type of video content. However, there are some encoder parameters which can be used to adjust the video quality. This document describes the major parameters impacting video quality, as they specifically pertain to AMA SDK compatible devices. These parameters and the underlying concepts are applicable whether using FFmpeg or the C example programs.</p>
+<p>Currently, there are 3 significant parameters that effect the visual quality of the video:</p>
+<ol class="arabic simple">
+<li><p>Metric, which is specified by <a class="reference internal" href="using_ffmpeg.html#cmdoption-tune_metrics"><code class="xref std std-option docutils literal notranslate"><span class="pre">-tune_metrics</span></code></a></p></li>
+<li><p>Latency, which is specified by <a class="reference internal" href="using_ffmpeg.html#cmdoption-lookahead_depth"><code class="xref std std-option docutils literal notranslate"><span class="pre">-lookahead_depth</span></code></a></p></li>
+<li><p>Preset, which is specified by <a class="reference internal" href="using_ffmpeg.html#cmdoption-preset"><code class="xref std std-option docutils literal notranslate"><span class="pre">-preset</span></code></a></p></li>
+</ol>
+<p>Sections below will describe each of these parameters in detail.</p>
+<p>Various examples illustrating the effect of these settings can be found here:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="examples/ffmpeg/quality_analysis.html"><span class="doc">FFmpeg quality analysis examples</span></a>.</p></li>
+</ul>
+<section id="metrics">
+<span id="tune-parameter-selection"></span><h2><a class="toc-backref" href="#id5" role="doc-backlink">Metrics</a><a class="headerlink" href="#metrics" title="Link to this heading">¶</a></h2>
+<p>This parameters defines means of scoring the observed video quality, for both subjective and objective measures. To control this parameter, set <a class="reference internal" href="using_ffmpeg.html#cmdoption-tune_metrics"><code class="xref std std-option docutils literal notranslate"><span class="pre">-tune_metrics</span></code></a> to its desired target value. It is important to note that the encode engine has specific optimizations per mode, e.g., while setting the <a class="reference internal" href="using_ffmpeg.html#cmdoption-tune_metrics"><code class="xref std std-option docutils literal notranslate"><span class="pre">-tune_metrics</span></code></a> parameter to 1, will optimize the visual quality, it may not necessarily provide the best PSNR, SSIM or VMAF scores.</p>
+</section>
+<section id="latency">
+<h2><a class="toc-backref" href="#id6" role="doc-backlink">Latency</a><a class="headerlink" href="#latency" title="Link to this heading">¶</a></h2>
+<p>Through this parameter one has the ability to control the end to end delay, within a transcode pipeline. See <a class="reference internal" href="tuning_pipeline_latency.html"><span class="doc">Tuning Latency of Transcode Pipeline</span></a> for more details. It is understood that typically allowing for more delay in a pipeline, results in a better visual quality, e.g., increasing the depth of the look ahead buffer, results in a higher score, for a given bit rate. This parameter is controlled <a class="reference internal" href="using_ffmpeg.html#cmdoption-lookahead_depth"><code class="xref std std-option docutils literal notranslate"><span class="pre">-lookahead_depth</span></code></a>. See <a class="reference internal" href="examples/ffmpeg/quality_analysis.html"><span class="doc">FFmpeg Video Quality</span></a> for example usage. Note that look ahead depth can be reduced to 15 frames with (limited) impact to video quality.</p>
+</section>
+<section id="preset">
+<h2><a class="toc-backref" href="#id7" role="doc-backlink">Preset</a><a class="headerlink" href="#preset" title="Link to this heading">¶</a></h2>
+<p>Speed preset determines the amount of time that is spent in encoding the incoming bit stream. This time in turn is determined by the number of encode optimization tools deployed, during the encoding process. Specifically, for this release, motion vector search range, Rate-Distortion Optimized Quantization (RDOQ) and other such tools are used to enhance the visual quality, at the expense of processing time. For example, <a class="reference internal" href="using_ffmpeg.html#cmdoption-preset"><code class="xref std std-option docutils literal notranslate"><span class="pre">-preset</span></code></a> <code class="docutils literal notranslate"><span class="pre">slow</span></code> provides about 2% improvement, in terms of <a class="reference external" href="https://vicuesoft.com/glossary/term/bd_rate/">BD Rate</a>, for AVC encoding, while decreasing the throughput by 20%. It should be noted that <code class="docutils literal notranslate"><span class="pre">slow</span></code> preset also increases the ULL mode latency, by 25%. See <a class="reference internal" href="examples/ffmpeg/quality_analysis.html"><span class="doc">FFmpeg quality analysis examples</span></a> for example usage. Note that the specific values noted in these example are the only ones that are recommended for usage.</p>
+</section>
+<section id="content-adaptive-bit-rate-cabr">
+<span id="cabr"></span><h2><a class="toc-backref" href="#id8" role="doc-backlink">Content Adaptive Bit Rate (CABR)</a><a class="headerlink" href="#content-adaptive-bit-rate-cabr" title="Link to this heading">¶</a></h2>
+<p>CABR, <a class="reference internal" href="using_ffmpeg.html#cmdoption-cabr"><code class="xref std std-option docutils literal notranslate"><span class="pre">-cabr</span></code></a>, opportunistically lowers bitrate for easy contents, without causing any noticeable visual quality degradation. Given that the threshold for noticeable visual degradation is around VMAF 90, CABR is set such that it targets the VMAF-90 point. CABR operates by lowering bitrate in sections of the content that exceed the VMAF-90 point. <code class="docutils literal notranslate"><span class="pre">vq_offset</span></code> allows for fine tuning CABR. Specifically,  a positive value will decrease the encoded bit rate, but will also lower the maximum VQ. Similarly, a negative value will increase the encoded bit rate, but will increase the maximum VQ. CABR modifier is applicable to all rate control, metrics, and preset modes.</p>
+</section>
+<section id="gop-composition">
+<span id="id2"></span><h2><a class="toc-backref" href="#id9" role="doc-backlink">GOP Composition</a><a class="headerlink" href="#gop-composition" title="Link to this heading">¶</a></h2>
+<p>By default, the GOP structure of all AMD AMA encoders is configured to ensure optimal VQ. This implies that GOP topologies among different encoders may not be the same or the GOP itself may not have a homogeneous structure. As an example, while both AVC and HEVC encoders use hierarchical B frames, to further enhance VQ measure, unidirectional B frames that only reference prior anchor frames are also used. See <a class="reference internal" href="using_ffmpeg.html#cmdoption-no_bll"><code class="xref std std-option docutils literal notranslate"><span class="pre">-no_bll</span></code></a> for how to turn this option off.</p>
+</section>
+<section id="roi">
+<h2><a class="toc-backref" href="#id10" role="doc-backlink">ROI</a><a class="headerlink" href="#roi" title="Link to this heading">¶</a></h2>
+<p>AMA SDK allows for further enhancement, in subjective VQ, by utilizing ML driven encoding. This is achieved by encoding regions with high probability of face and text classes, with lower QP values. Such improvements are most visible, when encoding high resolution video streams with low bit rates. As such, video conferencing applications, where faces do not occupy the majority of the frame area and are larger than 5x5 pixels, are most amenable to ROI based encoding. ROI model sensitivity, i.e., its probability mapping to QP gain, can be tuned by <a class="reference internal" href="using_ffmpeg.html#cmdoption-arg-strength"><code class="xref std std-option docutils literal notranslate"><span class="pre">strength</span></code></a> parameter. It should be noted, as with all subjective improvements, the resulting objective measures, e.g., SSIM, VMAF, etc. may not reflect such improvements. See <a class="reference internal" href="using_ffmpeg.html#video-ml"><span class="std std-ref">Video Machine Learing</span></a> and examples therein for sample usage.</p>
+</section>
+<section id="av1-type-selection">
+<span id="id3"></span><h2><a class="toc-backref" href="#id11" role="doc-backlink">AV1 Type Selection</a><a class="headerlink" href="#av1-type-selection" title="Link to this heading">¶</a></h2>
+<p>AMD AMA Video SDK offers 2 flavors of AV1 encoding: the default type 1 and type 2. For most use-cases, it is recommended to stay with the default value, as it not only provides better visual quality, but also provides per frame objective stats. However, given that these 2 encoders employ 2 independent pipelines if the primary concern is to increase the number of encoded streams, then addition of type 2 AV1 will increase the channel density.</p>
+</section>
+<section id="dynamic-encoder-parameters">
+<span id="dyn-parameters"></span><h2><a class="toc-backref" href="#id12" role="doc-backlink">Dynamic Encoder Parameters</a><a class="headerlink" href="#dynamic-encoder-parameters" title="Link to this heading">¶</a></h2>
+<p>Dynamic parameters are parameters which can be changed during runtime. This is useful to optimize video quality and compression rate for different segments of the video. This capability is supported for FFmpeg and GStreamer.</p>
+<p>The following encoder parameters can be dynamically modified:</p>
+<ul class="simple">
+<li><p>Number of B frames (0 to 4)</p></li>
+<li><p>Min/Max bitrate (0 to INT_MAX)</p></li>
+<li><p>Bitrate (0 to INT_MAX) (Should be in Min-Max bit rates range)</p></li>
+<li><p>Temporal AQ mode (0 to 1)</p></li>
+<li><p>Temporal AQ gain (0 to 255)</p></li>
+<li><p>Spatial AQ mode (0 to 1)</p></li>
+<li><p>Spatial AQ gain (0 to 255)</p></li>
+<li><p>Min/Max QP (See <a class="reference internal" href="#qp-range"><span class="std std-ref">QP Ranges</span></a>)</p></li>
+<li><p>QP (See <a class="reference internal" href="#qp-range"><span class="std std-ref">QP Ranges</span></a>) (Should be in Min and Max QP range)</p></li>
+<li><p>QP I frame offset (See <a class="reference internal" href="#qp-range"><span class="std std-ref">QP Ranges</span></a>) (Should be in Min and Max QP range)</p></li>
+<li><p>QP B frame offset (See <a class="reference internal" href="#qp-range"><span class="std std-ref">QP Ranges</span></a>) (Should be in Min and Max QP range)</p></li>
+</ul>
+<div class="admonition note" id="qp-range">
+<p class="admonition-title">Note</p>
+<p>AVC and HEVC QP ranges are 0-51</p>
+<p>AV1 QP range is 0-255</p>
+</div>
+<p>When using FFmpeg or GStreamer, the encoder parameters which should be changed are specified in a configuration file as key-value pairs. This means that these key-value pairs must be known ahead of time.</p>
+<p class="rubric">Dynamic Parameters Considerations</p>
+<ul class="simple">
+<li><p>Recommended settings for dynamic B frames are:</p>
+<ul>
+<li><p>0 for gaming clips with fast motion, camera pan/rotation scenes</p></li>
+<li><p>2 for static or slow moving scenes, talking heads, or video conferencing type of content</p></li>
+<li><p>1 for all medium motion and all other content</p></li>
+</ul>
+</li>
+<li><p>B frames changes do not happen at the exact frame number specified. Instead, the change comes into effect one or two frames from the actual frame number specified in the config file.</p></li>
+<li><p>The maximum value for the number of B frames is the value configured at initilization</p></li>
+<li><p>The configuration files for dynamic parameters must comply with the format specified above. Ill-formed files may result in unexpected behavior.</p></li>
+</ul>
+<p>The following table shows supported combinations of rate control modes and dynamic parameters:</p>
+<table class="docutils align-default" id="id4">
+<caption><span class="caption-text">Valid Rate Control Modes and Dynamic Parameters Combinations</span><a class="headerlink" href="#id4" title="Link to this table">¶</a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>CQP</p></th>
+<th class="head"><p>CBR</p></th>
+<th class="head"><p>VBR</p></th>
+<th class="head"><p>CVBR</p></th>
+<th class="head"><p>CRF</p></th>
+<th class="head"><p>CABR</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Temporal AQ Mode</p></td>
+<td><div class="line-block">
+<div class="line">Y</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">Y</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">Y</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">Y</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">Y</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">Y</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>Temporal AQ Gain</p></td>
+<td><div class="line-block">
+<div class="line">Y</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">Y</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">Y</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">Y</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">Y</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">Y</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>Spatial AQ Mode</p></td>
+<td><div class="line-block">
+<div class="line">Y</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">Y</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">Y</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">Y</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">Y</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">Y</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>Spatial AQ Gain</p></td>
+<td><div class="line-block">
+<div class="line">Y</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">Y</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">Y</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">Y</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">Y</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">Y</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>Bit Rate</p></td>
+<td><div class="line-block">
+<div class="line">N</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">Y</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">Y</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">Y</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">N</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">Y</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>Min Bit Rate</p></td>
+<td><div class="line-block">
+<div class="line">N</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">N</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">Y</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">Y</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">N</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">N</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>Max Bit Rate</p></td>
+<td><div class="line-block">
+<div class="line">Y</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">N</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">Y</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">Y</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">Y</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">N</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>Number of B Frames</p></td>
+<td><div class="line-block">
+<div class="line">Y</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">Y</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">Y</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">Y</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">Y</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">Y</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>Min QP</p></td>
+<td><div class="line-block">
+<div class="line">Y</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">Y</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">Y</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">Y</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">Y</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">Y</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>Max QP</p></td>
+<td><div class="line-block">
+<div class="line">Y</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">Y</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">Y</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">Y</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">Y</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">Y</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>QP</p></td>
+<td><div class="line-block">
+<div class="line">Y</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">N</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">N</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">N</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">Y</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">N</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>QP I Offset</p></td>
+<td><div class="line-block">
+<div class="line">Y</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">Y</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">Y</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">Y</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">Y</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">Y</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>QP B Offset</p></td>
+<td><div class="line-block">
+<div class="line">Y</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">Y</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">Y</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">Y</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">Y</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">Y</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">FFmpeg</p>
+<p>Encoder parameters which should be changed dynamically are specified as key-value pairs in a configuration file. This configuration file is provided to FFmpeg using the <a class="reference internal" href="using_ffmpeg.html#cmdoption-dynamic_params_file"><code class="xref std std-option docutils literal notranslate"><span class="pre">-dynamic_params_file</span></code></a> encoder option.</p>
+<p>The <a class="reference internal" href="using_ffmpeg.html#cmdoption-dynamic_params_file"><code class="xref std std-option docutils literal notranslate"><span class="pre">-dynamic_params_file</span></code></a> option is specific to an encoded output. For use cases with multiple encoded outputs (such as ABR ladders), each output can have its own <a class="reference internal" href="using_ffmpeg.html#cmdoption-dynamic_params_file"><code class="xref std std-option docutils literal notranslate"><span class="pre">-dynamic_params_file</span></code></a> option and associated configuration file.</p>
+<p>The configuration file should contain one line for each frame where one or more parameters are changed. Each line should start with the frame number followed by a list of key-value pairs for all the modified parameters:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;frameNumberN1&gt;:&lt;key1&gt;=&lt;value1&gt;
+&lt;frameNumberN2&gt;:&lt;key2&gt;=&lt;value2&gt;,&lt;key3&gt;=&lt;value3&gt;
+</pre></div>
+</div>
+<p>Below is a table listing the parameters which can be changed at runtime, the corresponding key and valid values.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Dynamic Parameter</p></th>
+<th class="head"><p>Key</p></th>
+<th class="head"><p>Valid Values</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Number of B frames</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">NumB=&lt;int&gt;</span></code></p></td>
+<td><p>0 to 4</p></td>
+</tr>
+<tr class="row-odd"><td><p>Min/Max bit rate</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">MinBRkbps=&lt;int&gt;</span></code></p></td>
+<td><p>0 to INT_MAX</p></td>
+</tr>
+<tr class="row-even"><td><p>Max bit rate</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">MaxBRkbps=&lt;int&gt;</span></code></p></td>
+<td><p>0 to INT_MAX</p></td>
+</tr>
+<tr class="row-odd"><td><p>Bitrate (in bits per second)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">BRkbps=&lt;int&gt;</span></code></p></td>
+<td><p>0 to INT_MAX</p></td>
+</tr>
+<tr class="row-even"><td><p>Temporal AQ mode</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">tAQ=&lt;int&gt;</span></code></p></td>
+<td><p>0 to 1</p></td>
+</tr>
+<tr class="row-odd"><td><p>Temporal AQ gain</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">tAQGain=&lt;int&gt;</span></code></p></td>
+<td><p>0 to 255</p></td>
+</tr>
+<tr class="row-even"><td><p>Spatial AQ mode</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sAQ=&lt;int&gt;</span></code></p></td>
+<td><p>0 to 1</p></td>
+</tr>
+<tr class="row-odd"><td><p>Spatial AQ gain</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sAQGain=&lt;int&gt;</span></code></p></td>
+<td><p>0 to 255</p></td>
+</tr>
+<tr class="row-even"><td><p>Min/Max QP</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">MinQP=&lt;int&gt;,MaxQP=&lt;int&gt;</span></code></p></td>
+<td><p>See <a class="reference internal" href="#qp-range"><span class="std std-ref">QP Ranges</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>QP</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">QP=&lt;int&gt;</span></code></p></td>
+<td><p>See <a class="reference internal" href="#qp-range"><span class="std std-ref">QP Ranges</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>QP I frame offset</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">QPOffsetI</span></code></p></td>
+<td><p>See <a class="reference internal" href="#qp-range"><span class="std std-ref">QP Ranges</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>QP B frame offset</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">QPOffsetB</span></code></p></td>
+<td><p>See <a class="reference internal" href="#qp-range"><span class="std std-ref">QP Ranges</span></a></p></td>
+</tr>
+</tbody>
+</table>
+<p>Sample FFmpeg encode command:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ffmpeg -hwaccel ama -re -f lavfi -i testsrc=duration=60:size=1920x1080:rate=60,format=yuv420p -f rawvideo  -vf &quot;hwupload&quot; -c:v hevc_ama -b:v 5M  -dynamic_params_file ./param.txt -y -f rawvideo  output.h265
+</pre></div>
+</div>
+<p>Sample configuration file for dynamic parameters:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>300:NumB=1
+600:BRkbps=6000
+1200:sAQ=1,sAQGain=50
+1800:tAQ=1,tAQGain=50
+2400:NumB=0,BRkbps=10000,sAQ=0,sAQGain=50,tAQ=0
+5000:MinQP=30,MaxQP=35
+</pre></div>
+</div>
+<p class="rubric">GStreamer</p>
+<p>Gstreamer uses the same formated configuration file as FFmpeg:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>gst-launch-1.0 fakesrc sizetype=fixed sizemax=4147200 num-buffers=4000 ! capsfilter caps=&#39;video/x-raw&#39; ! rawvideoparse width=1920 height=1080 format=i420 framerate=60/1 ! ama_upload ! ama_h265enc encoding-params-file=./param1.txt ! fakesink
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          
+				  
+				  <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="unified_logging.html" class="btn btn-neutral float-left" title="Unified Logging" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="tuning_pipeline_latency.html" class="btn btn-neutral float-right" title="Tuning Latency" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022-2024, Advanced Micro Devices, Inc.
+      <span class="lastupdated">Last updated on October 24, 2024.
+      </span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div>
+										
+</br>
+
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

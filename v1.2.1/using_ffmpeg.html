@@ -1,0 +1,1704 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="English" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+<!-- OneTrust Cookies Consent Notice start for amd.github.io -->
+<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="cb638ba1-8bc4-44a0-9338-632d4dc19be6" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script>
+<!-- OneTrust Cookies Consent Notice end for amd.github.io -->
+<!-- Google Tag Manager -->
+<script type="text/plain" class="optanon-category-C0002">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-5RHQV7');</script>
+<!-- End Google Tag Manager -->
+  <title>Using FFmpeg &mdash; AMD AMA 1.2.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css" type="text/css" />
+      <link rel="stylesheet" href="_static/_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=e6179555"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/design-tabs.js?v=36754332"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Using GStreamer" href="using_gstreamer.html" />
+    <link rel="prev" title="Distribution Package Feed" href="package_feed.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+<!-- Google Tag Manager -->
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5RHQV7" height="0" width="0" style="display:none;visibility:hidden" class="optanon-category-C0002"></iframe></noscript>
+<!-- End Google Tag Manager --> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+            <a href="index.html" class="icon icon-home"> AMD AMA
+          </a>
+              <div class="version">
+                1.2.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Get Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="release_notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started_on_prem.html">Hardware Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="virtualization.html">Virtualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Tutorials and Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="git_hub.html">AMA Repository</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference Guides</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="specs_and_features.html">Specs and Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="package_feed.html">Package Feed Setup</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Using FFmpeg</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#introduction">Introduction</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#example-commands">Example Commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#general-ffmpeg-options">General FFmpeg Options</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#video-decoding">Video Decoding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#video-encoding">Video Encoding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#d-engines">2D Engines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#video-machine-learning">Video Machine Learning</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#inference-engine">Inference Engine</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#roi-scaler">ROI Scaler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#roi-overlay">ROI Overlay</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#other-ama-filters">Other AMA Filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#rebuilding-ffmpeg">Rebuilding FFmpeg</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="using_gstreamer.html">Using Gstreamer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="unified_logging.html">Unified Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tuning_video_quality.html">Tuning Video Quality</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tuning_pipeline_latency.html">Tuning Latency of Transcode Pipeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="managing_compute_resources.html">Managing Compute Resources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="c_apis.html">C API Programming Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="card_management.html">Card Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="migration.html">Migration Path</a></li>
+<li class="toctree-l1"><a class="reference internal" href="encoder_comp_matrix.html">Encoding Compatibility Matrix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preview.html">New Feature Preview</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Support</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://www.xilinx.com/support.html">File an issue</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://support.xilinx.com/s/topic/0TO2E000000YKY8WAO/video?language=en_US">Video Forum</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other AMA SDK Versions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://amd.github.io/ama-sdk/v1.2/index.html">   v1.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://amd.github.io/ama-sdk/v1.1.2/index.html">   v1.1.2</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Video Products</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/video-sdk/v3.0/index.html">U30</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">AMD AMA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Using FFmpeg</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="using-ffmpeg">
+<h1>Using FFmpeg<a class="headerlink" href="#using-ffmpeg" title="Link to this heading">¶</a></h1>
+<p>This page documents how to use FFmpeg with the AMD AMA Video SDK.</p>
+<nav class="contents local" id="table-of-contents">
+<p class="topic-title">Table of Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#introduction" id="id13">Introduction</a></p></li>
+<li><p><a class="reference internal" href="#video-decoding" id="id14">Video Decoding</a></p></li>
+<li><p><a class="reference internal" href="#video-encoding" id="id15">Video Encoding</a></p></li>
+<li><p><a class="reference internal" href="#d-engines" id="id16">2D Engines</a></p></li>
+<li><p><a class="reference internal" href="#video-machine-learning" id="id17">Video Machine Learning</a></p></li>
+<li><p><a class="reference internal" href="#other-ama-filters" id="id18">Other AMA Filters</a></p></li>
+<li><p><a class="reference internal" href="#rebuilding-ffmpeg" id="id19">Rebuilding FFmpeg</a></p></li>
+</ul>
+</nav>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<section id="introduction">
+<h2><a class="toc-backref" href="#id13" role="doc-backlink">Introduction</a><a class="headerlink" href="#introduction" title="Link to this heading">¶</a></h2>
+<p>FFmpeg is an industry standard, open source, widely used utility for handling video. FFmpeg has many capabilities, including encoding and decoding of all video compression formats, encoding and decoding of audio, encapsulating, and extracting audio, and video from transport streams, and many more. The AMD AMA Video SDK includes an enhanced version of FFmpeg, version n4.4, which communicates with the hardware accelerated transcode pipeline.</p>
+<p>It is not within the scope of this document to provide an exhaustive guide on the usage of FFmpeg. Various resources can be found online, for example:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.ffmpeg.org/documentation.html">https://www.ffmpeg.org/documentation.html</a></p></li>
+<li><p><a class="reference external" href="http://howto-pages.org/ffmpeg/">http://howto-pages.org/ffmpeg/</a></p></li>
+</ul>
+<p>The following sections describe the options used with FFmpeg to configure the various hardware accelerators available on an MA35 device.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<section id="example-commands">
+<h3>Example Commands<a class="headerlink" href="#example-commands" title="Link to this heading">¶</a></h3>
+<p>To obtain the FFmpeg version used in this SDK, issue the following command:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ffmpeg -version
+</pre></div>
+</div>
+<p>A simple FFmpeg command for accelerated transcoding with the AMD AMA Video SDK will look like the following:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ffmpeg -hwaccel ama -hwaccel_device /dev/ama_transcoder0 -c:v h264_ama -i infile.mp4 -c:v hevc_ama -b:v 1000K -r 60 -f mp4 -y transcoded.mp4
+</pre></div>
+</div>
+<p>There are many other ways in which FFmpeg can be used to leverage the video transcoding features of an MA35 device. Examples illustrating how to run FFmpeg for encoding, decoding, and transcoding with or without ABR scaling, video composition and ML are included in <a class="reference internal" href="examples/ffmpeg/tutorials.html"><span class="doc">FFmpeg tutorials</span></a>.</p>
+<p>To</p>
+</section>
+<section id="general-ffmpeg-options">
+<h3>General FFmpeg Options<a class="headerlink" href="#general-ffmpeg-options" title="Link to this heading">¶</a></h3>
+<table class="docutils align-default" id="id3">
+<caption><span class="caption-text">General FFmpeg Options</span><a class="headerlink" href="#id3" title="Link to this table">¶</a></caption>
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Options</p></th>
+<th class="head"><p>Descriptions</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-i">
+<span class="sig-name descname"><span class="pre">-i</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-i" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line">Input video URI.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-c-v">
+<span class="sig-name descname"><span class="pre">-c:v</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-c-v" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Specify video or image codec</strong></div>
+<div class="line">This option must be set for any input processed on an MA35 device.</div>
+<div class="line">Valid video decode values are <code class="docutils literal notranslate"><span class="pre">vp9_ama</span></code>, <code class="docutils literal notranslate"><span class="pre">h264_ama</span></code>, <code class="docutils literal notranslate"><span class="pre">hevc_ama</span></code>, and <code class="docutils literal notranslate"><span class="pre">av1_ama</span></code> for VP9, H.264, HEVC, and AV1, respectively.</div>
+<div class="line">Valid video encode values are <code class="docutils literal notranslate"><span class="pre">h264_ama</span></code>, <code class="docutils literal notranslate"><span class="pre">hevc_ama</span></code>, and <code class="docutils literal notranslate"><span class="pre">av1_ama</span></code> for H.264, HEVC, and AV1, respectively.</div>
+<div class="line">Valid image decode value is <code class="docutils literal notranslate"><span class="pre">jpeg_ama</span></code> for JPEG images.</div>
+<div class="line">Valid image encode values are <code class="docutils literal notranslate"><span class="pre">jpeg_ama</span></code>, <code class="docutils literal notranslate"><span class="pre">ljpeg_ama</span></code>, and <code class="docutils literal notranslate"><span class="pre">av1_ama</span></code> for JPEG, lossless JPEG and AV1 images. See <a class="reference internal" href="#image-encoding"><span class="std std-ref">Image Encoding Options</span></a> for details.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-s">
+<span class="sig-name descname"><span class="pre">-s</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-s" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line">The frame size (WidthxHeight). For example 1920x1080 or 3840x2160.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-f">
+<span class="sig-name descname"><span class="pre">-f</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-f" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line">The container format.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-r">
+<span class="sig-name descname"><span class="pre">-r</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-r" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line">The frame rate in fps (Hz).</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-filter_complex">
+<span class="sig-name descname"><span class="pre">-filter_complex</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-filter_complex" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line">Used for frame filtering operation.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-hwaccel">
+<span class="sig-name descname"><span class="pre">-hwaccel</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-hwaccel" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line">Global option used to specify on which MA35 device the FFmpeg job should run. Consult <a class="reference internal" href="managing_compute_resources.html#using-explicit-device-ids"><span class="std std-ref">Using Explicit Device IDs</span></a> for more details on how to use this option. Valid values are positive integers in [0..N-1] range. Default is device 0.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-vf">
+<span class="sig-name descname"><span class="pre">-vf</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-vf" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line">Used for simple filtering operations, e.g., <code class="docutils literal notranslate"><span class="pre">hwdownload</span></code> and <code class="docutils literal notranslate"><span class="pre">hwupload</span></code>, for DMA transfer of data to and from the host, respectively. Note that transaction directions are with respect to the host.</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Detailed help for encoder, decoder and scaler is obtained through FFmpeg extended help, e.g. <code class="docutils literal notranslate"><span class="pre">ffmpeg</span> <span class="pre">-h</span> <span class="pre">encoder=h264_ama</span></code>, <code class="docutils literal notranslate"><span class="pre">ffmpeg</span> <span class="pre">-h</span> <span class="pre">decoder=hevc_ama</span></code> or <code class="docutils literal notranslate"><span class="pre">ffmpeg</span> <span class="pre">-h</span> <span class="pre">filter=scaler_ama</span></code>.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Using -stream_loop option along with jpeg_ama, results in the following benign error message:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[ERROR] AMA.VPI.DEC.jpeg_ama@0x5555b71aa980:{492302} Can&#39;t find valid pts info
+</pre></div>
+</div>
+</div>
+<p>The following conventions are used in the following tables:</p>
+<ol class="arabic">
+<li><p>When parameters can be specified as both numerical and string values, they are noted as:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>(&lt;number&gt;) &lt;string&gt;
+</pre></div>
+</div>
+<p>Conversely, when this is not the case, options are noted with Roman numerals as:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;Roman numeral&gt;) &lt;option&gt;
+</pre></div>
+</div>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">auto</span></code> or <code class="docutils literal notranslate"><span class="pre">-1</span></code> note that values are selected by the SDK to optimally meet the specified constraints.</p></li>
+</ol>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</section>
+</section>
+<section id="video-decoding">
+<h2><a class="toc-backref" href="#id14" role="doc-backlink">Video Decoding</a><a class="headerlink" href="#video-decoding" title="Link to this heading">¶</a></h2>
+<p>For the complete list of features and capabilities of the AMD AMA Video SDK decoder, refer to <a class="reference internal" href="release_notes.html"><span class="doc">Release Notes</span></a> chapter of the documentation.</p>
+<p>The table below describes all the options for the AMD AMA Video SDK decoder.</p>
+<table class="docutils align-default" id="id4">
+<caption><span class="caption-text">Video Decoding Options</span><a class="headerlink" href="#id4" title="Link to this table">¶</a></caption>
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Options</p></th>
+<th class="head"><p>Descriptions</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-resize">
+<span class="sig-name descname"><span class="pre">-resize</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-resize" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Decoder down scaler</strong></div>
+<div class="line">Valid global values are of the for WidthxHeight.</div>
+<div class="line">Note that this parameter must be specified before the intended input.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-out_fmt">
+<span class="sig-name descname"><span class="pre">-out_fmt</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-out_fmt" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Decoder output pixel format</strong></div>
+<div class="line">Valid global values for pixel format: <code class="docutils literal notranslate"><span class="pre">nv12</span></code>, <code class="docutils literal notranslate"><span class="pre">p010le</span></code>, <code class="docutils literal notranslate"><span class="pre">packed10</span></code>, <code class="docutils literal notranslate"><span class="pre">rgbp</span></code>, <code class="docutils literal notranslate"><span class="pre">yuv420p</span></code>, and <code class="docutils literal notranslate"><span class="pre">yuv420p10le</span></code>.</div>
+<div class="line">Note that an identical pixel format must be specified as value to <code class="docutils literal notranslate"><span class="pre">format</span></code> option, within <a class="reference internal" href="#cmdoption-vf"><code class="xref std std-option docutils literal notranslate"><span class="pre">-vf</span></code></a>. See <a class="reference internal" href="examples/ffmpeg/tutorials.html#decode-only"><span class="std std-ref">Decode Only</span></a> for an example.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-low_latency">
+<span class="sig-name descname"><span class="pre">-low_latency</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-low_latency" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Enable/Disable single frame level decode</strong></div>
+<div class="line">When enabled, the decoding latency of streams not containing any B frames is reduced. This option has no impact on streams that include B frames.</div>
+<div class="line">Valid values: 0 or 1. (default is 0)</div>
+<div class="line-block">
+<div class="line">(0) disable - default</div>
+<div class="line">(1) enable</div>
+</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</section>
+<section id="video-encoding">
+<span id="id1"></span><h2><a class="toc-backref" href="#id15" role="doc-backlink">Video Encoding</a><a class="headerlink" href="#video-encoding" title="Link to this heading">¶</a></h2>
+<p>For the complete list of features and capabilities of the AMD AMA Video SDK encoder, refer to <a class="reference internal" href="release_notes.html"><span class="doc">Release Notes</span></a> chapter of the documentation.</p>
+<p>The table below describes all the options for the AMD AMA Video SDK encoder.</p>
+<table class="docutils align-default" id="id5">
+<caption><span class="caption-text">Video Encoding Options</span><a class="headerlink" href="#id5" title="Link to this table">¶</a></caption>
+<colgroup>
+<col style="width: 35.8%" />
+<col style="width: 64.2%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Options</p></th>
+<th class="head"><p>Descriptions</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-b-v">
+<span class="sig-name descname"><span class="pre">-b:v</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-b-v" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Specify the video bitrate</strong></div>
+<div class="line">You can specify this in Mb or Kb. For example -b:v 1M or -b:v 1000K.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-max_bitrate">
+<span class="sig-name descname"><span class="pre">-max_bitrate</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-max_bitrate" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Maximum bitrate</strong></div>
+<div class="line">Valid values: 0 to 3.5e+10</div>
+<div class="line">You may want to use this to limit encoding bitrate if you have not specified a <a class="reference internal" href="#cmdoption-b-v"><code class="xref std std-option docutils literal notranslate"><span class="pre">-b:v</span></code></a> bitrate</div>
+<div class="line">Default value <code class="docutils literal notranslate"><span class="pre">-1</span></code> implies unspecified.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-g">
+<span class="sig-name descname"><span class="pre">-g</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-g" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>GOP size</strong></div>
+<div class="line">Valid values: 0 to UINT32_MAX</div>
+<div class="line">Default value is <code class="docutils literal notranslate"><span class="pre">-1</span></code>, implying 2[s] gop duration, i.e., twice the frame rate</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-level">
+<span class="sig-name descname"><span class="pre">-level</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-level" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Encoding level restriction</strong></div>
+<div class="line">Valid values for H.264: 1, 1.1, 1.2, 1.3, 2, 2.1, 2.2, 3, 3.1, 3.2, 4, 4.1, 4.2, 5, 5.1, 5.2 6, 6.1, 6.2</div>
+<div class="line">Valid values for HEVC: 1, 2, 2.1, 3, 3.1, 4, 4.1, 5, 5.1,5.2, 6, 6.1, 6.2</div>
+<div class="line">Valid values for AV1: 2, 2.1, 3, 4, 4.1, 5, 5.1, 5.2, 5.3 6, 6.1, 6.2, 6.3</div>
+<div class="line">Default value is <code class="docutils literal notranslate"><span class="pre">auto</span></code>.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-profile">
+<span class="sig-name descname"><span class="pre">-profile</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-profile" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Set the encoding profile</strong></div>
+<div class="line">Valid values for H.264: baseline, main, high</div>
+<div class="line">Valid values for HEVC: main, main-intra, main-10 and main-10-intra</div>
+<div class="line">Valid values for AV1: main</div>
+<div class="line">Default value is <code class="docutils literal notranslate"><span class="pre">auto</span></code>.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-tier">
+<span class="sig-name descname"><span class="pre">-tier</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-tier" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Set the encoding tier</strong> (AV1 and HEVC only)</div>
+<div class="line">Valid values: -1, 0, 1</div>
+<div class="line-block">
+<div class="line">(-1) auto</div>
+<div class="line">(0) main</div>
+<div class="line">(1) high</div>
+</div>
+<div class="line">Default value is <code class="docutils literal notranslate"><span class="pre">auto</span></code></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-bufsize">
+<span class="sig-name descname"><span class="pre">-bufsize</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-bufsize" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Rate control buffer size flag</strong></div>
+<div class="line">Valid values: 0, or non-zero (default is 1)</div>
+<div class="line-block">
+<div class="line">(0) Disable relaxed ULL</div>
+<div class="line">(non-zero) Enable relaxed ULL</div>
+</div>
+<div class="line">This option is ignored unless:</div>
+<div class="line-block">
+<div class="line">1) lookahead_depth is 0 (ULL)</div>
+<div class="line">2) control_rate is CBR</div>
+</div>
+<div class="line">Value 0 implies strict ULL, whereas, other values imply relaxed ULL. See <a class="reference internal" href="tuning_pipeline_latency.html#latency-adjustment"><span class="std std-ref">Latency Adjustment</span></a>.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-crf">
+<span class="sig-name descname"><span class="pre">-crf</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-crf" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Constant Rate Factor</strong></div>
+<div class="line">Valid values: -1 to 63</div>
+<div class="line-block">
+<div class="line">(-1) default</div>
+</div>
+<div class="line">Note that this option ignores all other options that may impose restrictions on qp values. These include <code class="docutils literal notranslate"><span class="pre">-min_qp</span></code>, <code class="docutils literal notranslate"><span class="pre">-max_qp</span></code>, <code class="docutils literal notranslate"><span class="pre">-b:v</span></code>, and <code class="docutils literal notranslate"><span class="pre">-control_mode</span></code>.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-qp">
+<span class="sig-name descname"><span class="pre">-qp</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-qp" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Quantization Parameter</strong></div>
+<div class="line">Valid values for H.264 and HEVC 0-51</div>
+<div class="line">Valid values for AV1 0-255</div>
+<div class="line">Default value <code class="docutils literal notranslate"><span class="pre">-1</span></code> implies not used. Note that if this option is used, it implies Constant QP for <a class="reference internal" href="#cmdoption-control_rate"><code class="xref std std-option docutils literal notranslate"><span class="pre">-control_rate</span></code></a> option.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-bf">
+<span class="sig-name descname"><span class="pre">-bf</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-bf" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Number of B frames</strong></div>
+<div class="line">Valid values for H.264, HEVC and type-2 AV1: 0-3, with default 3.</div>
+<div class="line">Valid values for type-1 AV1: 0-7, with default 7 for FPS greater than 30, and 3 otherwise.</div>
+<div class="line">Default auto selection value is <code class="docutils literal notranslate"><span class="pre">-1</span></code>.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-lookahead_depth">
+<span class="sig-name descname"><span class="pre">-lookahead_depth</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-lookahead_depth" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Number of frames to lookahead for qp maps</strong></div>
+<div class="line">Valid values: -1 to 47+Maximum number of B frames <a class="reference internal" href="#cmdoption-bf"><code class="xref std std-option docutils literal notranslate"><span class="pre">-bf</span></code></a></div>
+<div class="line">Lookahead depth of <code class="docutils literal notranslate"><span class="pre">0</span></code> implies ULL mode</div>
+<div class="line">Default auto selection value, based on frame rate, is <code class="docutils literal notranslate"><span class="pre">-1</span></code>.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-spatial_aq">
+<span class="sig-name descname"><span class="pre">-spatial_aq</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-spatial_aq" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Enable spatial AQ</strong></div>
+<div class="line">Valid values: auto, disable or enable</div>
+<div class="line-block">
+<div class="line">(-1) auto</div>
+<div class="line">(0) disable</div>
+<div class="line">(1) enable</div>
+</div>
+<div class="line">Default value is <code class="docutils literal notranslate"><span class="pre">auto</span></code>.</div>
+<div class="line">When qp_mode is uniform, this parameter is ignored and treated as disable.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-spatial_aq_gain">
+<span class="sig-name descname"><span class="pre">-spatial_aq_gain</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-spatial_aq_gain" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Scale for spatial AQ gain</strong></div>
+<div class="line">Valid values: 0 to 255</div>
+<div class="line-block">
+<div class="line">(255) For auto selection</div>
+</div>
+<div class="line">Default value for H264, HEVC and AV1 is 64</div>
+<div class="line">Default value for type-1 AV1 is 72</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-temporal_aq">
+<span class="sig-name descname"><span class="pre">-temporal_aq</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-temporal_aq" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Enable temporal AQ</strong></div>
+<div class="line">Valid values: auto, disable or enable</div>
+<div class="line-block">
+<div class="line">(-1) auto</div>
+<div class="line">(0) disable</div>
+<div class="line">(1) enable</div>
+</div>
+<div class="line">Default value is <code class="docutils literal notranslate"><span class="pre">auto</span></code>.</div>
+<div class="line-block">
+<div class="line">When qp_mode is uniform, this parameter is ignored and treated as disable.</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-temporal_aq_gain">
+<span class="sig-name descname"><span class="pre">-temporal_aq_gain</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-temporal_aq_gain" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Scale for temporal AQ gain</strong></div>
+<div class="line">Valid values: 0 to 255</div>
+<div class="line-block">
+<div class="line">(255) For auto selection</div>
+</div>
+<div class="line">Default value for H264, HEVC and AV1 is <code class="docutils literal notranslate"><span class="pre">80</span></code></div>
+<div class="line">Default value for type-1 AV1 is <code class="docutils literal notranslate"><span class="pre">0</span></code></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-qp_mode">
+<span class="sig-name descname"><span class="pre">-qp_mode</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-qp_mode" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>QP control mode</strong></div>
+<div class="line">Valid values: auto, relative_load and uniform.</div>
+<div class="line-block">
+<div class="line">(0) auto for best VQ</div>
+<div class="line">(1) relative_load implying both spatial and temporal AQ</div>
+<div class="line">(2) uniform meaning no AQ</div>
+</div>
+<div class="line">Default value is <code class="docutils literal notranslate"><span class="pre">auto</span></code>.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-control_rate">
+<span class="sig-name descname"><span class="pre">-control_rate</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-control_rate" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Set the rate control mode</strong></div>
+<div class="line">Valid values: -1 to 6</div>
+<div class="line-block">
+<div class="line">(-1) auto</div>
+<div class="line">(0) const_qp for Constant QP</div>
+<div class="line">(1) cbr for Constant Bit Rate</div>
+<div class="line">(2) vbr for Variable Bit Rate</div>
+<div class="line">(3) cvbr for Capped Variable Bit Rate</div>
+<div class="line">(4) cabr <em>DEPRECATED</em> Content Adaptive Bit Rate</div>
+<div class="line">(5) crf <em>RESERVED</em></div>
+<div class="line">(6) mlcae <em>Experimental</em> <a class="reference internal" href="preview.html#mlcae"><span class="std std-ref">Machine Learning Content Aware Encoding</span></a></div>
+<div class="line">See <a class="reference internal" href="#rc-mode"><span class="std std-ref">RC Mode</span></a> Table for details.</div>
+</div>
+<div class="line">Default value is <code class="docutils literal notranslate"><span class="pre">auto</span></code>.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-cabr">
+<span class="sig-name descname"><span class="pre">-cabr</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-cabr" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>CABR parameters</strong></div>
+<div class="line">Valid values:</div>
+<div class="line-block">
+<div class="line">i) enable</div>
+<div class="line">ii) disbale</div>
+<div class="line">iii) auto - The same as disable</div>
+<div class="line">iv) <code class="docutils literal notranslate"><span class="pre">vq_offset</span></code> =x, where x is in -63 - 63 range. If not specified, <code class="docutils literal notranslate"><span class="pre">vq_offset</span></code> =0.</div>
+</div>
+<div class="line">See <a class="reference internal" href="tuning_video_quality.html#cabr"><span class="std std-ref">CABR</span></a> for details.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-min_qp">
+<span class="sig-name descname"><span class="pre">-min_qp</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-min_qp" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Minimum QP value allowed for rate control</strong></div>
+<div class="line">Valid values for H264 and HEVC: 0 to 51</div>
+<div class="line">Valid values for AV1: 0 to 255</div>
+<div class="line">Default auto selection value is <code class="docutils literal notranslate"><span class="pre">-1</span></code>.</div>
+<div class="line">This option has no effect when <a class="reference internal" href="#cmdoption-control_rate"><code class="xref std std-option docutils literal notranslate"><span class="pre">-control_rate</span></code></a> is set to Constant QP (0).</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-max_qp">
+<span class="sig-name descname"><span class="pre">-max_qp</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-max_qp" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Maximum QP value allowed for rate control</strong></div>
+<div class="line">Valid values for H264 and HEVC: 0 to 51</div>
+<div class="line">Valid values for AV1: 0 to 255</div>
+<div class="line">Default auto selection value is <code class="docutils literal notranslate"><span class="pre">-1</span></code>.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-qp_i_offset">
+<span class="sig-name descname"><span class="pre">-qp_i_offset</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-qp_i_offset" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>QP Offset for I Frames</strong></div>
+<div class="line">Valid values: -51 to 51</div>
+<div class="line">Auto selection mode is <code class="docutils literal notranslate"><span class="pre">-1</span></code>.</div>
+<div class="line">Default 0.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-qp_b_offset">
+<span class="sig-name descname"><span class="pre">-qp_b_offset</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-qp_b_offset" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>QP Offset for B or P Frames</strong></div>
+<div class="line">Valid values: -51 to 51</div>
+<div class="line">Auto selection mode is <code class="docutils literal notranslate"><span class="pre">-1</span></code>.</div>
+<div class="line">Default 0.</div>
+<div class="line">This option has no effect when <a class="reference internal" href="#cmdoption-control_rate"><code class="xref std std-option docutils literal notranslate"><span class="pre">-control_rate</span></code></a> is set to Constant QP (0).</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-forced_idr">
+<span class="sig-name descname"><span class="pre">-forced_idr</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-forced_idr" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Force insertion of IDR frames</strong></div>
+<div class="line">Valid values: 0, 1 (default is 1)</div>
+<div class="line-block">
+<div class="line">(0) disable</div>
+<div class="line">(1) enable - default</div>
+</div>
+<div class="line">Encodes all the intra frames as IDR</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-slice">
+<span class="sig-name descname"><span class="pre">-slice</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-slice" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Select a slice to run an encode job</strong></div>
+<div class="line">Valid values if <a class="reference internal" href="card_management.html#xrmd"><span class="std std-ref">xrmd</span></a> is not used are: 0, 1 (default is 0). If xrmd is active and this option is not set, xrmd will make the slice selection.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-tune_metrics">
+<span class="sig-name descname"><span class="pre">-tune_metrics</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-tune_metrics" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Enable tuning video quality for the best objective metrics</strong></div>
+<div class="line">This option optimizes the encoder for the selected tuning metric. See <a class="reference internal" href="tuning_video_quality.html"><span class="doc">Tuning Video Quality</span></a> for details.</div>
+<div class="line">Valid values: 1 to 4 (default is 1)</div>
+<div class="line-block">
+<div class="line">(1) vq - default</div>
+<div class="line">(2) psnr</div>
+<div class="line">(3) ssim</div>
+<div class="line">(4) vmaf</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-type">
+<span class="sig-name descname"><span class="pre">-type</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-type" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Applicable to AV1 encoders only</strong></div>
+<div class="line">Valid values: 1 or 2.</div>
+<div class="line-block">
+<div class="line">i) 1 - default</div>
+<div class="line">ii) 2</div>
+</div>
+<div class="line">Default value is <code class="docutils literal notranslate"><span class="pre">1</span></code>.</div>
+<div class="line">Consult the <a class="reference internal" href="tuning_video_quality.html#av1-type-selection"><span class="std std-ref">AV1 Selection</span></a> section for more details on how to use this option.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-preset">
+<span class="sig-name descname"><span class="pre">-preset</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-preset" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Encoder VQ-Density preset</strong></div>
+<div class="line">Valid values: fast, medium or slow. (default is medium)</div>
+<div class="line-block">
+<div class="line">(fast) Allows for increase in total throughput from 4kp60 to 4kp75 , when 2 or more channels are used. Does not apply to AV1 <a class="reference internal" href="#cmdoption-type"><code class="xref std std-option docutils literal notranslate"><span class="pre">-type</span></code></a> 1 encoding. Not applicable under ULL setting. Note lower VQ than <code class="docutils literal notranslate"><span class="pre">medium</span></code> preset is to be expected.</div>
+<div class="line">(medium) Full density with medium VQ - default</div>
+<div class="line">(slow) High VQ at lower density. (For AV1 Type 1, improvements are observed in 10 bit contents only.)</div>
+</div>
+<div class="line">Note that presets have no impact on AV1 Type 2.</div>
+<div class="line">Consult the <a class="reference internal" href="tuning_video_quality.html#tuning-video-quality"><span class="std std-ref">Tuning Video Quality</span></a> section for more details on how to use this option.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-dynamic_gop">
+<span class="sig-name descname"><span class="pre">-dynamic_gop</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-dynamic_gop" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Enable dynamic change in the number of B frames</strong></div>
+<div class="line">Valid values: -1, 0 or 1.</div>
+<div class="line-block">
+<div class="line">(-1) auto</div>
+<div class="line">(0) disabled</div>
+<div class="line">(1) enable</div>
+</div>
+<div class="line">Default value <code class="docutils literal notranslate"><span class="pre">auto</span></code> is enabled.</div>
+<div class="line">When this option is enabled, the number of B frames is always less or equal to default or user-specified one. See <a class="reference internal" href="#cmdoption-bf"><code class="xref std std-option docutils literal notranslate"><span class="pre">-bf</span></code></a>.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-dynamic_params_file">
+<span class="sig-name descname"><span class="pre">-dynamic_params_file</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-dynamic_params_file" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Dynamic configuration file</strong></div>
+<div class="line">Path to dynamic file location (default is empty)</div>
+<div class="line">Consult the <a class="reference internal" href="tuning_video_quality.html#dyn-parameters"><span class="std std-ref">Dynamic Encoder Parameters</span></a> section for more details on how to use this option.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-cores">
+<span class="sig-name descname"><span class="pre">-cores</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-cores" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>AV1 Type 1 Cores</strong></div>
+<div class="line">Valid values: 1 or 2</div>
+<div class="line-block">
+<div class="line">i)  1 - default, with minimum resolution of 176x144 or 144x176, and aggregate rate of 4kp60</div>
+<div class="line">ii) 2 - minimum resolution of 720x720, with with aggregate rate of 4kp120</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-latency_ms">
+<span class="sig-name descname"><span class="pre">-latency_ms</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-latency_ms" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Look ahead depth in milliseconds</strong></div>
+<div class="line">Valid values: 0 to 60000</div>
+<div class="line">Default auto selection value, based on frame rate, is <code class="docutils literal notranslate"><span class="pre">-1</span></code>.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-no_bll">
+<span class="sig-name descname"><span class="pre">-no_bll</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-no_bll" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Disable low latency B frames</strong></div>
+<div class="line">Valid value: 1</div>
+<div class="line">Value <code class="docutils literal notranslate"><span class="pre">1</span></code>  ensures that the generated GOP has a homogeneous structure. See <a class="reference internal" href="tuning_video_quality.html#gop-composition"><span class="std std-ref">GOP Composition</span></a>.</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<p>The following table describes relevant parameters that are applicable to each RC mode</p>
+<span id="rc-mode"></span><table class="docutils align-default" id="id6">
+<caption><span class="caption-text">RC Mode Options</span><a class="headerlink" href="#id6" title="Link to this table">¶</a></caption>
+<colgroup>
+<col style="width: 35.8%" />
+<col style="width: 64.2%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>RC Mode</p></th>
+<th class="head"><p>Allowed Options</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>const_qp</p></td>
+<td><div class="line-block">
+<div class="line"><strong>Constant QP</strong></div>
+<div class="line-block">
+<div class="line">-qp &lt;QP&gt;</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>cbr</p></td>
+<td><div class="line-block">
+<div class="line"><strong>Constant Bit Rate</strong></div>
+<div class="line-block">
+<div class="line">-b:v &lt;Bit Rate&gt; [-bufsize X] (Averaged over span of IDRs)</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>vbr</p></td>
+<td><div class="line-block">
+<div class="line"><strong>Variable Bit Rate</strong></div>
+<div class="line-block">
+<div class="line">-b:v &lt;Bit Rate&gt;</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>cvbr</p></td>
+<td><div class="line-block">
+<div class="line"><strong>Capped Variable Bit Rate</strong></div>
+<div class="line-block">
+<div class="line">-b:v &lt;Bit Rate&gt; followed by any combination of [-min_qp &lt;QP&gt; | -max_qp &lt;QP&gt; | -max_bitrate &lt;max_bitrate&gt;]</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>crf</p></td>
+<td><div class="line-block">
+<div class="line"><strong>Constant Rate Factor</strong></div>
+<div class="line-block">
+<div class="line">-crf &lt;Value&gt; followed by any combination of [-max_qp &lt;QP&gt; | -max_bitrate &lt;max_bitrate&gt;]</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>auto</p></td>
+<td><div class="line-block">
+<div class="line"><strong>Auto Mode</strong></div>
+<div class="line-block">
+<div class="line">-qp &lt;QP&gt; implies <code class="docutils literal notranslate"><span class="pre">const_qp</span></code> mode.</div>
+<div class="line">-b:v &lt;Bit Rate&gt; followed by -bufsize &lt;value&gt; implies <code class="docutils literal notranslate"><span class="pre">cbr</span></code> mode.</div>
+<div class="line">-b:v &lt;Bit Rate&gt; implies <code class="docutils literal notranslate"><span class="pre">vbr</span></code> mode.</div>
+<div class="line">-b:v &lt;Bit Rate&gt; followed by any combination of [-min_qp &lt;QP&gt; | -max_bitrate &lt;max_bitrate&gt;] implies <code class="docutils literal notranslate"><span class="pre">cvbr</span></code> mode.</div>
+<div class="line">-crf &lt;Value&gt; followed by any combination of [-max_qp &lt;QP&gt; | -max_bitrate &lt;max_bitrate&gt;] implies <code class="docutils literal notranslate"><span class="pre">crf</span></code> mode.</div>
+</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<p>The table below describes all the options for the AMD AMA Video SDK encoder that are applicable to images only.</p>
+<span id="image-encoding"></span><table class="docutils align-default" id="id7">
+<caption><span class="caption-text">Image Encoding Options</span><a class="headerlink" href="#id7" title="Link to this table">¶</a></caption>
+<colgroup>
+<col style="width: 35.8%" />
+<col style="width: 64.2%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Options</p></th>
+<th class="head"><p>Descriptions</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>-slice</strong></p></td>
+<td><div class="line-block">
+<div class="line">See <a class="reference internal" href="#cmdoption-slice"><code class="xref std std-option docutils literal notranslate"><span class="pre">-slice</span></code></a></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-quality">
+<span class="sig-name descname"><span class="pre">-quality</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-quality" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Specify JPEG encoding quality</strong></div>
+<div class="line">Valid values: 1 to 100. Larger values indicate higher quality.</div>
+<div class="line">Default 80.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-still_picture">
+<span class="sig-name descname"><span class="pre">-still_picture</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-still_picture" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Specify AV1image format AVIF</strong></div>
+<div class="line">Valid value: 1</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</section>
+<section id="d-engines">
+<span id="d-processing"></span><h2><a class="toc-backref" href="#id16" role="doc-backlink">2D Engines</a><a class="headerlink" href="#d-engines" title="Link to this heading">¶</a></h2>
+<p>This section describes different hardware accelerated 2D processing engines that are available in AMA SDK. These processing engines are leveraged in FFmpeg by using the <a class="reference external" href="https://ffmpeg.org/ffmpeg-filters.html#Filtergraph-syntax-1">FFmpeg filter graph syntax</a>.</p>
+<p>In the following table, it is assumed:</p>
+<ol class="arabic simple">
+<li><p>0,0 coordinates refer to top-left.</p></li>
+<li><p>On each device, 2D engines, other than <code class="docutils literal notranslate"><span class="pre">scaler_ama</span></code>, can execute on either of core 0 or 1, which is specified through <code class="docutils literal notranslate"><span class="pre">core_id</span></code> [0|1] option, where default is 0. Note that to reach full density, load balancing between the 2 cores must happen, manually,</p></li>
+<li><p>Where applicable, output video rendition resolution can be specified by <code class="docutils literal notranslate"><span class="pre">w</span></code> and <code class="docutils literal notranslate"><span class="pre">h</span></code> parameters, which are in  0 to 7680 range. Exceptions are <code class="docutils literal notranslate"><span class="pre">scaler_ama</span></code>, where <code class="docutils literal notranslate"><span class="pre">w</span></code> and <code class="docutils literal notranslate"><span class="pre">h</span></code> are not applicable, and <code class="docutils literal notranslate"><span class="pre">drawbox_ama</span></code>, where <code class="docutils literal notranslate"><span class="pre">w</span></code> and <code class="docutils literal notranslate"><span class="pre">h</span></code> are as noted below.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[Video</span> <span class="pre">1]</span></code> ... <code class="docutils literal notranslate"><span class="pre">[Video</span> <span class="pre">N]</span></code> sequence refers to each one of the N video inputs, e.g., <code class="docutils literal notranslate"><span class="pre">[0:v]</span></code>.</p></li>
+</ol>
+<table class="docutils align-default" id="id8">
+<caption><span class="caption-text">2D Accelerator Engines</span><a class="headerlink" href="#id8" title="Link to this table">¶</a></caption>
+<colgroup>
+<col style="width: 10.7%" />
+<col style="width: 35.7%" />
+<col style="width: 53.6%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Engine Name</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Options</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-scaler_ama">
+<span class="sig-name descname"><span class="pre">scaler_ama</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-scaler_ama" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>ABR multiscaler</strong></div>
+<div class="line">Takes one input and generates up to 16 output streams.</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">outputs</span></code> specifies the number of scaler outputs.</div>
+<div class="line">Valid values are integers between 1 and desired number of outputs.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">out_res</span></code> specifies ABR ladder rungs &lt;1&gt;*&lt;16&gt;(WxH|Rate|Format).</div>
+<div class="line">List of up to 16 tuples of form (Resolution|Rate|Pixel Format). Note that no spaces are allowed before or after <code class="docutils literal notranslate"><span class="pre">|</span></code>.</div>
+<div class="line">Valid values for resolution: 176x144 to 3840x2160 - default 1920x1080</div>
+<div class="line">Valid values for frame rate: <code class="docutils literal notranslate"><span class="pre">half</span></code> and <code class="docutils literal notranslate"><span class="pre">full</span></code> - default <code class="docutils literal notranslate"><span class="pre">full</span></code>, where <code class="docutils literal notranslate"><span class="pre">full</span></code> refers to the incoming frame rate and <code class="docutils literal notranslate"><span class="pre">half</span></code> to the half of the incoming frame rate. Note that the first entry in this option must be full rate.</div>
+<div class="line">Valid global values for pixel format: <code class="docutils literal notranslate"><span class="pre">nv12</span></code>, <code class="docutils literal notranslate"><span class="pre">p010le</span></code>, <code class="docutils literal notranslate"><span class="pre">packed10</span></code>, <code class="docutils literal notranslate"><span class="pre">rgbp</span></code>, <code class="docutils literal notranslate"><span class="pre">yuv420p</span></code>, and <code class="docutils literal notranslate"><span class="pre">yuv420p10le</span></code></div>
+<div class="line">This plugin can be combined with other plugins, without any degradation in pixel throughput.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-crop_ama">
+<span class="sig-name descname"><span class="pre">crop_ama</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-crop_ama" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Video crop</strong></div>
+<div class="line">Takes size, coordinates and rendition resolution.</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">b_left</span></code> sets the crop box x min co-ordinates (from 0 to INT_MAX) (default 0)</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">b_top</span></code> sets the crop box y min co-ordinates (from 0 to INT_MAX) (default 0)</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">b_w</span></code> sets the crop box width (from 10 to INT_MAX) (default 10)</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">b_h</span></code> sets the crop box height (from 10 to INT_MAX) (default 10)</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-pad_ama">
+<span class="sig-name descname"><span class="pre">pad_ama</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-pad_ama" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Video pad</strong></div>
+<div class="line">Takes size, coordinates, rendition resolution and pad color.</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">p_left</span></code> sets the pad box x min co-ordinates (from 0 to INT_MAX) (default 0)</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">p_top</span></code> sets the pad box y min co-ordinates (from 0 to INT_MAX) (default 0)</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">p_w</span></code> sets the pad box width (from 10 to INT_MAX) (default 10)</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">p_h</span></code> sets the pad box height (from 10 to INT_MAX) (default 10)</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">color</span></code> sets the color of the box (default &quot;black&quot;)</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-drawbox_ama">
+<span class="sig-name descname"><span class="pre">drawbox_ama</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-drawbox_ama" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Draw box</strong></div>
+<div class="line">Takes size, coordinates, line thickness and color.</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">color</span></code> sets the color of the box (default &quot;black&quot;)</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">thickness</span></code> sets box thickness (from 2 to 16) (default 2)</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">x</span></code> sets box x min co-ordinates (from 0 to INT_MAX) (default 0)</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">y</span></code> sets box y min co-ordinates (from 0 to INT_MAX) (default 0)</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">w</span></code> sets box width (from 0 to INT_MAX) (default 10)</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">h</span></code> sets box height (from 0 to INT_MAX) (default 10)</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-rotate_ama">
+<span class="sig-name descname"><span class="pre">rotate_ama</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-rotate_ama" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Rotate frame</strong></div>
+<div class="line">Takes angle, and rendition resolution.</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">angle</span></code> one of 0, 90, 180 or 270</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-colorspace_ama">
+<span class="sig-name descname"><span class="pre">colorspace_ama</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-colorspace_ama" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Color space conversion</strong></div>
+<div class="line">Converts between RGB and YUV.</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">csc</span></code></div>
+<div class="line-block">
+<div class="line">i)  rgb2yuv converts all supported <a class="reference internal" href="specs_and_features.html#if-format"><span class="std std-ref">rgb</span></a> formats to yuv420p</div>
+<div class="line">ii) yuv2rgb converts from  yuv420p input to bgra format</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-subsample_ama">
+<span class="sig-name descname"><span class="pre">subsample_ama</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-subsample_ama" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Chroma subsampling</strong></div>
+<div class="line">Converts from 422 to 420</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line"><br /></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-overlay_ama">
+<span class="sig-name descname"><span class="pre">overlay_ama</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-overlay_ama" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Video overlay</strong></div>
+<div class="line">Overlays 1 picture over another</div>
+<div class="line">Inputs are specified as [Background][Overlay]<code class="docutils literal notranslate"><span class="pre">overlay_ama</span></code></div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">shortest</span></code> forces termination when the shortest input terminates (default false)</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">x</span></code> overlay's x_position (from 0 to INT_MAX) (default 0)</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">y</span></code> overlay's y_position (from 0 to INT_MAX) (default 0)</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">out_fmt</span></code> sets the YUV output format [optional] (default &quot;&quot;). See <a class="reference internal" href="#cmdoption-out_fmt"><code class="xref std std-option docutils literal notranslate"><span class="pre">-out_fmt</span></code></a>.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">src_alpha</span></code> sets src alpha value (from 0 to 1) (default 1)</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">dst_alpha</span></code> sets dst alpha value (from 0 to 1) (default 1)</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-tile_ama">
+<span class="sig-name descname"><span class="pre">tile_ama</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-tile_ama" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Video tile</strong></div>
+<div class="line">Maps input streams to specified layout</div>
+<div class="line">Inputs are specified as [Video 1]...[Video N]<code class="docutils literal notranslate"><span class="pre">tile_ama</span></code>, in raster order.</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">inputs</span></code> sets number of inputs (from 1 to 32) (default 2)</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">shortest</span></code> forces termination when the shortest input terminates (default false)</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">layout</span></code> sets grid size [Max 32 inputs] (default &quot;2x2&quot;)</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-compositor_ama">
+<span class="sig-name descname"><span class="pre">compositor_ama</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-compositor_ama" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Video compositions</strong></div>
+<div class="line">Composites inputs together</div>
+<div class="line">The compositor supports up to 64 inputs. Each input will be &quot;blit&quot; in a user defined z order on top of a solid background color with specified output width and height.</div>
+<div class="line">The compositor supports dynamic changes to any of the input properties, as well as allowing inputs to be enabled/disabled.</div>
+<div class="line">The dynamic behavior has been implemented in FFmpeg using the sendcmd option which allows passing in a file that can script the dynamic behavior.</div>
+<div class="line">For asynchronous property changes, commands can also be send through a message queue. See <a class="reference internal" href="examples/ffmpeg/tutorials.html#composition"><span class="std std-ref">Composition</span></a> for usage sample.</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">inputs_enabled</span></code> sets the inputs to enable / disable (mask) (from 0 to 1.84467e+19) (default 4895412794951729152)</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">inputs</span></code> sets number of inputs (from 1 to 64) (default 1)</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">input_params</span></code> sets input parameter initial values. Example: input_params=(res=1920x1080|ypos=1080|alpha=0.8)</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">input</span></code> sets current input to which parameters apply.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">in_x</span></code> input's x position</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">in_y</span></code> input's y position</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">out_res</span></code>  dsestination's resolution (such as 1920x1080)</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">out_x</span></code> destination's x position</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">out_y</span></code> destination's y position</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">alpha</span></code>  Alpha blend value</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">zorder</span></code>  zorder of the input</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">angle</span></code> one of 0, 90, 180, 270</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">flip</span></code> flip the input. Values: v, h (vertical, horizonal)</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">border_color</span></code> the color of the border in A8R8G8B8 format</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">border_inner_size</span></code> the inside border thickness in pixels</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">border_outer_size</span></code> the outside border thickness in pixels</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">eof_action</span></code> the action to take when an input encounters EOF (from 0 to 2) (default repeat)</div>
+<div class="line-block">
+<div class="line">(0) disable disables inputs that reach EOF. End once all input have reached EOF</div>
+<div class="line">(1) repeat  repeats the last frame of the input that reaches EOF</div>
+<div class="line">(2) endall ends the output stream once the first input reaches EOF</div>
+</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">out_res</span></code> sets the output resolution</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">format</span></code> color space conversion</div>
+<div class="line-block">
+<div class="line">i) rgb RGB format</div>
+<div class="line">ii) 420 YUV 420 format</div>
+<div class="line">iii) 420-tile YUV 420 tiled format</div>
+</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">enable_background</span></code> enables / disables the background (default false)</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">background</span></code> sets the background color (default &quot;black&quot;)</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For plugins that accept multiple video streams, i.e., compositor_ama, tile_ama, and overlay_ama, only a single audio track can be added the each output video stream. To select the desired audio, use the <code class="docutils literal notranslate"><span class="pre">-map</span> <span class="pre">x:a</span> <span class="pre">-c:a</span> <span class="pre">copy</span></code> syntax, where <code class="docutils literal notranslate"><span class="pre">x</span></code> refers to the selected audio stream number, e.g., <code class="docutils literal notranslate"><span class="pre">-map</span> <span class="pre">1:a</span> <span class="pre">-c:a</span> <span class="pre">copy</span></code>.</p>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</section>
+<section id="video-machine-learning">
+<span id="video-ml"></span><h2><a class="toc-backref" href="#id17" role="doc-backlink">Video Machine Learning</a><a class="headerlink" href="#video-machine-learning" title="Link to this heading">¶</a></h2>
+<p>This section describes various video ML complex filters of AMA SDK that are utilized using <a class="reference external" href="https://ffmpeg.org/ffmpeg-filters.html#Filtergraph-syntax-1">FFmpeg filter graph syntax</a>. Note that supported ROI models are 1080p in landscape mode, 720p in both landscape and portrait modes.</p>
+<section id="inference-engine">
+<h3>Inference Engine<a class="headerlink" href="#inference-engine" title="Link to this heading">¶</a></h3>
+<p>The AMD AMA Video SDK ML inference engine is leveraged in FFmpeg by using the <a class="reference internal" href="#cmdoption-arg-ml_ama"><code class="xref std std-option docutils literal notranslate"><span class="pre">ml_ama</span></code></a> complex filter.</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-ml_ama">
+<span class="sig-name descname"><span class="pre">ml_ama</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-ml_ama" title="Link to this definition">¶</a></dt>
+<dd><p>Filter implementing the AMD AMA Video SDK ML inference engine that executes against a supplied rgbp input and detects face or text classes. Its output is used by downstream components in the pipeline.</p>
+</dd></dl>
+
+<table class="docutils align-default" id="id9">
+<caption><span class="caption-text">Inference Engine Options</span><a class="headerlink" href="#id9" title="Link to this table">¶</a></caption>
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Options</p></th>
+<th class="head"><p>Descriptions</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-model">
+<span class="sig-name descname"><span class="pre">model</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-model" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Specify engine model</strong></div>
+<div class="line">Valid value <code class="docutils literal notranslate"><span class="pre">roi</span></code></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-model_args">
+<span class="sig-name descname"><span class="pre">model_args</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-model_args" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Model specific arguments</strong></div>
+<div class="line">Valid values for <code class="docutils literal notranslate"><span class="pre">roi</span></code>: type=face and type=text</div>
+<div class="line-block">
+<div class="line">i)  type=text - for text detection VQ improvements</div>
+<div class="line">ii) type=face - for face detection VQ improvements</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-core_id">
+<span class="sig-name descname"><span class="pre">core_id</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-core_id" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Specify engine number</strong></div>
+<div class="line">Valid values: range -1 to 3 or none</div>
+<div class="line">i)  If xrmd is enabled, this will be selected automatically</div>
+<div class="line">ii) If xrmd is disabled, and core_id is set to <code class="docutils literal notranslate"><span class="pre">-1</span></code>, then one of 0 to 3 cores will be selected</div>
+<div class="line">ii) Otherwise, value in 0-3 range will be selected</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-nb_inputs">
+<span class="sig-name descname"><span class="pre">nb_inputs</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-nb_inputs" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Specify number of inputs</strong></div>
+<div class="line">Valid value: 1</div>
+<div class="line">Default 1</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-inference_period">
+<span class="sig-name descname"><span class="pre">inference_period</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-inference_period" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Specify frame skip period</strong></div>
+<div class="line">Valid value: 1-64</div>
+<div class="line">Default 1</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="roi-scaler">
+<h3>ROI Scaler<a class="headerlink" href="#roi-scaler" title="Link to this heading">¶</a></h3>
+<p>The AMD AMA Video SDK ROI scaler is leveraged in FFmpeg by using software plugin <a class="reference internal" href="#cmdoption-arg-roi_scale_ama"><code class="xref std std-option docutils literal notranslate"><span class="pre">roi_scale_ama</span></code></a> complex filter.</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-roi_scale_ama">
+<span class="sig-name descname"><span class="pre">roi_scale_ama</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-roi_scale_ama" title="Link to this definition">¶</a></dt>
+<dd><p>Filter implementing the AMD AMA Video SDK ROI scaler engine that applies <a class="reference internal" href="#cmdoption-arg-ml_ama"><code class="xref std std-option docutils literal notranslate"><span class="pre">ml_ama</span></code></a> ROI map to the input video. This engine generates metadata used by downstream encoder within the pipeline.</p>
+</dd></dl>
+
+<table class="docutils align-default" id="id10">
+<caption><span class="caption-text">Scaler Options</span><a class="headerlink" href="#id10" title="Link to this table">¶</a></caption>
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Options</p></th>
+<th class="head"><p>Descriptions</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-cutoff">
+<span class="sig-name descname"><span class="pre">cutoff</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-cutoff" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Specify cutoff threshold</strong></div>
+<div class="line">Valid value range 0-100000</div>
+<div class="line">Default 5000</div>
+<div class="line">0-100% range is mapped to 0-100000, e.g., 5.67% is represented as 5670, and is used as shut off threshold for detected ROI regions. That is, if the percentages of detected ROI regions is above <code class="docutils literal notranslate"><span class="pre">cutoff</span></code>, then ROI directed encoding is disabled..</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-strength">
+<span class="sig-name descname"><span class="pre">strength</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-strength" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Specify probability-to-QP conversion gain factor</strong></div>
+<div class="line">Valid values are <code class="docutils literal notranslate"><span class="pre">low</span></code>, <code class="docutils literal notranslate"><span class="pre">normal</span></code>, and <code class="docutils literal notranslate"><span class="pre">high</span></code></div>
+<div class="line">Default is <code class="docutils literal notranslate"><span class="pre">normal</span></code></div>
+<div class="line">Providing <code class="docutils literal notranslate"><span class="pre">high</span></code> value generates higher QP modulation that signals to encoder to spend more bits on the associated block.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-0">
+<span class="sig-name descname"><span class="pre">nb_inputs</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-0" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Specify number of inputs</strong></div>
+<div class="line">Valid values: range 2 to 4</div>
+<div class="line">Default 2</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-roi_map_type">
+<span class="sig-name descname"><span class="pre">roi_map_type</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-roi_map_type" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Specify probability-to-QP mapping</strong></div>
+<div class="line">Valid values are <code class="docutils literal notranslate"><span class="pre">dqp</span></code>, <code class="docutils literal notranslate"><span class="pre">roi</span></code>, <code class="docutils literal notranslate"><span class="pre">dqp_and_roi</span></code></div>
+<div class="line">Default <code class="docutils literal notranslate"><span class="pre">dqp</span></code></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-static_map_file">
+<span class="sig-name descname"><span class="pre">static_map_file</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-static_map_file" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Specify static map file</strong></div>
+<div class="line">Valid value is the path to  rgbp map file.</div>
+<div class="line">The size of this file is ceil of width and height of incoming video divided by 16, in each dimension.</div>
+<div class="line">This file contains values in 0-255 range, for each channel, and servers as the lower boundary of probability-to-QP mapping, i.e., maximum of values in this file and <a class="reference internal" href="#cmdoption-arg-ml_ama"><code class="xref std std-option docutils literal notranslate"><span class="pre">ml_ama</span></code></a> is used for QP mapping</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="roi-overlay">
+<h3>ROI Overlay<a class="headerlink" href="#roi-overlay" title="Link to this heading">¶</a></h3>
+<p>The AMD AMA Video SDK ROI overlay is leveraged in FFmpeg by using software plugin <a class="reference internal" href="#cmdoption-arg-roi_overlay_ama"><code class="xref std std-option docutils literal notranslate"><span class="pre">roi_overlay_ama</span></code></a> complex filter.</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-roi_overlay_ama">
+<span class="sig-name descname"><span class="pre">roi_overlay_ama</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-roi_overlay_ama" title="Link to this definition">¶</a></dt>
+<dd><p>Filter implementing the AMD AMA Video SDK ROI overlay that overlays shaded probability rectangles on detected classes.</p>
+</dd></dl>
+
+<table class="docutils align-default" id="id11">
+<caption><span class="caption-text">Overlay Options</span><a class="headerlink" href="#id11" title="Link to this table">¶</a></caption>
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Options</p></th>
+<th class="head"><p>Descriptions</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-skip_frames">
+<span class="sig-name descname"><span class="pre">skip_frames</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-skip_frames" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Specify overlay period</strong></div>
+<div class="line">Valid value range 0-255</div>
+<div class="line">The value toggles overlay rectangles after the specified number of frames.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-highlight_threshold">
+<span class="sig-name descname"><span class="pre">highlight_threshold</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-highlight_threshold" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>Specify activation threshold</strong></div>
+<div class="line">Valid value range 0-255</div>
+<div class="line">Default 128</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<p>See <a class="reference internal" href="examples/ffmpeg/tutorials.html#roi-face"><span class="std std-ref">ML Based Face ROI</span></a> and <a class="reference internal" href="examples/ffmpeg/tutorials.html#roi-text"><span class="std std-ref">ML Based Text ROI</span></a> for sample usage.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</section>
+</section>
+<section id="other-ama-filters">
+<h2><a class="toc-backref" href="#id18" role="doc-backlink">Other AMA Filters</a><a class="headerlink" href="#other-ama-filters" title="Link to this heading">¶</a></h2>
+<table class="docutils align-default" id="id12">
+<caption><span class="caption-text">Other AMA Filters</span><a class="headerlink" href="#id12" title="Link to this table">¶</a></caption>
+<colgroup>
+<col style="width: 10.7%" />
+<col style="width: 35.7%" />
+<col style="width: 53.6%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Filter Name</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Options</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-hwupload_ama">
+<span class="sig-name descname"><span class="pre">hwupload_ama</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-hwupload_ama" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>AMA device upload</strong></div>
+<div class="line">Takes the target device number as an argument and upload data to it.</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">device</span></code> specifies the device number.</div>
+<div class="line">Valid values are integers between 0 and available number of devices minus 1.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-hwdownload_ama">
+<span class="sig-name descname"><span class="pre">hwdownload_ama</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-hwdownload_ama" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</td>
+<td><div class="line-block">
+<div class="line"><strong>AMA host download</strong></div>
+<div class="line">Takes a argument to enable or disable pipelining</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">pipeline</span></code> enables pipelining</div>
+<div class="line">Note that while enabling pipelining increases the throughput; however, it introduces 2 frames worth of latency.</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</section>
+<section id="rebuilding-ffmpeg">
+<span id="rebuild-ffmpeg"></span><h2><a class="toc-backref" href="#id19" role="doc-backlink">Rebuilding FFmpeg</a><a class="headerlink" href="#rebuilding-ffmpeg" title="Link to this heading">¶</a></h2>
+<p>Obtain the zipped version of SDK's FFmpeg source code, from <a class="reference external" href="https://www.xilinx.com/content/dam/xilinx/guest-resources/2024/sdk/ma35d_sdk_v1.2.1_ffmpeg.zip">ma35d_sdk_v1.2.1_ffmpeg.zip</a>. Unzip this file into <code class="file docutils literal notranslate"><span class="pre">ma35_ffmpeg</span></code> folder. This folder contains the entire source code for the FFmpeg executable, which is a fork of the main FFmpeg GitHub (release 6.1.1) with AMD plugins patches applied. Due to licensing restrictions, the FFmpeg executable included in the Video SDK is enabled with the AMD AMA Video SDK plugins only.</p>
+<p>You can rebuild the FFmpeg executable with optional plugins by following the instructions below. Additionally, comprehensive instructions for compiling FFmpeg can be found <a class="reference external" href="https://trac.ffmpeg.org/wiki/CompilationGuide">on the FFmpeg wiki page</a>.</p>
+<ol class="arabic">
+<li><p>Make sure <code class="docutils literal notranslate"><span class="pre">libhugetlbfs-dev</span></code>, <code class="docutils literal notranslate"><span class="pre">nasm</span></code> and <code class="docutils literal notranslate"><span class="pre">yasm</span></code> are installed on your machine.</p></li>
+<li><p>Unzip the downloaded zip file:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>unzip ma35d_sdk_v1.2.1_ffmpeg.zip
+</pre></div>
+</div>
+</li>
+</ol>
+<blockquote>
+<div><p>and navigate to root folder of the unzipped file.</p>
+</div></blockquote>
+<ol class="arabic">
+<li><p>Execute the following:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>./configure --disable-alsa --disable-libxcb --disable-libxcb-shm --disable-libxcb-xfixes --disable-libxcb-shape --disable-xlib --disable-libmfx --disable-vaapi --disable-vulkan --prefix=$PWD --disable-stripping --enable-shared --enable-vpe --enable-libxrm --extra-libs=&quot;-L/opt/amd/ama/ma35/lib -lvpi -lroi_scale -llog_ama -lxrm -lxrm_interface -lhugetlbfs -lpthread -lstdc++ -lm -ldl -lrt  /opt/amd/ama/ma35/lib/libxrm.so.1.6.0&quot; --extra-cflags=&quot;-I/usr/include -I$PWD -I/opt/amd/ama/ma35/include/xrm_interface/ -I/opt/amd/ama/ma35/include/xrm/ -DSUPPORT_OSAL&quot; --extra-ldflags=&quot;-Wl,-rpath=$PWD/libavutil:$PWD/libavfilter:$PWD/libavcodec:$PWD/libavformat:$PWD/libavdevice:$PWD/libswscale:$PWD/libswresample:$PWD:/opt/amd/ama/ma35/lib/&quot;
+</pre></div>
+</div>
+</li>
+<li><p>Add any other plugins such as libx264 to the above <code class="docutils literal notranslate"><span class="pre">configure</span></code> line. (See <a class="reference external" href="https://trac.ffmpeg.org/wiki/CompilationGuide">FFmpeg Compilation Guide</a> for details.) A list of configure options is printed by running <code class="docutils literal notranslate"><span class="pre">configure</span> <span class="pre">--help</span></code>.</p></li>
+<li><p>Type <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">-j</span></code> to build FFmpeg. GNU Make 3.81 or later is required.</p></li>
+<li><p>To build the example folder, type <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">examples</span></code>.</p></li>
+<li><p>Type <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">install</span></code> to install all binaries and libraries you built.</p></li>
+</ol>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          
+				  
+				  <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="package_feed.html" class="btn btn-neutral float-left" title="Distribution Package Feed" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="using_gstreamer.html" class="btn btn-neutral float-right" title="Using GStreamer" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022-2024, Advanced Micro Devices, Inc.
+      <span class="lastupdated">Last updated on October 24, 2024.
+      </span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div>
+										
+</br>
+
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="English" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+<!-- OneTrust Cookies Consent Notice start for amd.github.io -->
+<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="cb638ba1-8bc4-44a0-9338-632d4dc19be6" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script>
+<!-- OneTrust Cookies Consent Notice end for amd.github.io -->
+<!-- Google Tag Manager -->
+<script type="text/plain" class="optanon-category-C0002">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-5RHQV7');</script>
+<!-- End Google Tag Manager -->
+  <title>Managing Video Acceleration Compute Resources &mdash; AMD AMA 1.1.2 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css" type="text/css" />
+      <link rel="stylesheet" href="_static/_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=19f4d12b"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/design-tabs.js?v=36754332"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="C API Programming Guide" href="c_apis.html" />
+    <link rel="prev" title="Tuning Latency" href="tuning_pipeline_latency.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+<!-- Google Tag Manager -->
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5RHQV7" height="0" width="0" style="display:none;visibility:hidden" class="optanon-category-C0002"></iframe></noscript>
+<!-- End Google Tag Manager --> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+            <a href="index.html" class="icon icon-home"> AMD AMA
+          </a>
+              <div class="version">
+                1.1.2
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Get Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="release_notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started_on_prem.html">On Premises</a></li>
+<li class="toctree-l1"><a class="reference internal" href="virtualization.html">Virtualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Tutorials and Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="git_hub.html">AMA Repository</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference Guides</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="announcements.html">Announcements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="specs_and_features.html">Specs and Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="package_feed.html">Package Feed Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="using_ffmpeg.html">Using FFmpeg</a></li>
+<li class="toctree-l1"><a class="reference internal" href="using_gstreamer.html">Using Gstreamer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="unified_logging.html">Unified Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tuning_video_quality.html">Tuning Video Quality</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tuning_pipeline_latency.html">Tuning Latency of Transcode Pipeline</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Managing Compute Resources</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#assigning-jobs-to-specific-devices">Assigning Jobs to Specific Devices</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#examples-using-explicit-device-ids">Examples using Explicit Device IDs</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#manual-resource-management">Manual Resource Management</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#checking-system-load">Checking System Load</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#print-ma35-load">print_ma35_load</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#insufficient-resources">Insufficient Resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#job-resource-requirements">Job Resource Requirements</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#automated-resource-management">Automated Resource Management</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#video-transcode-job-descriptions">Video Transcode Job Descriptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-job-slot-reservation-tool">The Job Slot Reservation Tool</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#example-requiring-a-single-device-per-job">Example requiring a single device per job</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#automated-job-launching">Automated Job Launching</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#the-ffmpeg-launcher-example">The FFmpeg Launcher Example</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#xrm-reference-guide">XRM Reference Guide</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#command-line-interface">Command Line Interface</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#setup">Setup</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#generating-status-reports">Generating Status Reports</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#loading-unloading-software-plugins">Loading/Unloading Software Plugins</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#c-application-programming-interface">C Application Programming Interface</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="c_apis.html">C API Programming Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="card_management.html">Card Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="migration.html">Migration Path</a></li>
+<li class="toctree-l1"><a class="reference internal" href="encoder_comp_matrix.html">Encoding Compatibility Matrix</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Support</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://www.xilinx.com/support.html">File an issue</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://support.xilinx.com/s/topic/0TO2E000000YKY8WAO/video?language=en_US">Video Forum</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other AMA SDK Versions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://amd.github.io/ama-sdk/v1.1.1/index.html">   v1.1.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://amd.github.io/ama-sdk/latest/index.html">   Latest</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Video Products</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/video-sdk/v3.0/index.html">U30</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">AMD AMA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Managing Video Acceleration Compute Resources</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>This version of the SDK has been superseded by the <a class="reference external" href="https://amd.github.io/ama-sdk/latest/index.html">latest release</a> of the SDK.</p>
+</div>
+<section id="managing-video-acceleration-compute-resources">
+<h1>Managing Video Acceleration Compute Resources<a class="headerlink" href="#managing-video-acceleration-compute-resources" title="Link to this heading">¶</a></h1>
+<nav class="contents local" id="table-of-contents">
+<p class="topic-title">Table of Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#introduction" id="id2">Introduction</a></p></li>
+<li><p><a class="reference internal" href="#assigning-jobs-to-specific-devices" id="id3">Assigning Jobs to Specific Devices</a></p></li>
+<li><p><a class="reference internal" href="#manual-resource-management" id="id4">Manual Resource Management</a></p></li>
+<li><p><a class="reference internal" href="#automated-resource-management" id="id5">Automated Resource Management</a></p></li>
+<li><p><a class="reference internal" href="#xrm-reference-guide" id="id6">XRM Reference Guide</a></p></li>
+</ul>
+</nav>
+<section id="introduction">
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">Introduction</a><a class="headerlink" href="#introduction" title="Link to this heading">¶</a></h2>
+<p>The notion of compute units (CUs) and CU pool is central to resource management. A typical video transcode pipeline is made of multiple CUs such as decoder, scaler, lookahead, and encoder. These together form a CU pool. Based on the input resolution, framerate and type of transcode, the load of CUs within a CU pool varies. The number of required resources determines how many parallel jobs can run in real-time. CUs and CU pool are managed by the Xilinx® resource manager (XRM). XRM is a software layer responsible for managing the video hardware accelerators available in the host system. AMD AMA Video SDK compilable cards have a set processing capacity, e.g., an MA35 device is capable of an aggregate processing equivalent of 2 4kp60 H264/HEVC in parallel to 2 4kp60 AV1 streams. XRM allows for running and managing multiple heterogeneous job, in parallel, on all devices hosted in a chassis. It is noted that XRM strictly adheres to the total capacity of the hosted accelerators, i.e., it does not allow for over-subscription of resources.</p>
+<p>The rest of this guide explains how to:</p>
+<ol class="arabic simple">
+<li><p>Assign jobs to specific devices <a class="reference internal" href="#using-explicit-device-ids"><span class="std std-ref">using explicit device identifiers</span></a></p></li>
+<li><p>Measure device load and determine where to run jobs using either <a class="reference internal" href="#manual-resource-management"><span class="std std-ref">manual</span></a> or <a class="reference internal" href="#using-job-descriptions"><span class="std std-ref">automated</span></a> resource management techniques</p></li>
+</ol>
+</section>
+<section id="assigning-jobs-to-specific-devices">
+<span id="using-explicit-device-ids"></span><h2><a class="toc-backref" href="#id3" role="doc-backlink">Assigning Jobs to Specific Devices</a><a class="headerlink" href="#assigning-jobs-to-specific-devices" title="Link to this heading">¶</a></h2>
+<p>By default, a job is submitted to device 0 and slice handling/assignment by XRMD. When running multiple jobs in parallel, device 0 is bound to run out of resources rapidly and additional jobs will error out due to insufficient resources. By using explicit device identifiers, new jobs can be individually submitted to a specific device. This makes it easy and straightforward to leverage the entire video acceleration capacity of your system, based on the number of cards and devices.</p>
+<p>The FFmpeg <a class="reference internal" href="using_ffmpeg.html#cmdoption-hwaccel"><code class="xref std std-option docutils literal notranslate"><span class="pre">-hwaccel</span></code></a> option can be used to specify the device on which a specific job should be run. This makes it possible to assign multiple jobs across all available devices in the host.
+Determining on which device(s) to run a job can be done using either the <a class="reference internal" href="#manual-resource-management"><span class="std std-ref">manual</span></a> or <a class="reference internal" href="#using-job-descriptions"><span class="std std-ref">automated</span></a> methods described in the following sections.</p>
+<section id="examples-using-explicit-device-ids">
+<h3>Examples using Explicit Device IDs<a class="headerlink" href="#examples-using-explicit-device-ids" title="Link to this heading">¶</a></h3>
+<p class="rubric">FFmpeg example of two different jobs run on two different devices</p>
+<p>In this example, two different FFmpeg jobs are run in parallel. The <a class="reference internal" href="using_ffmpeg.html#cmdoption-hwaccel"><code class="xref std std-option docutils literal notranslate"><span class="pre">-hwaccel</span></code></a> option is used to submit each job to a different device:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ffmpeg</span> <span class="o">-</span><span class="n">hwaccel</span> <span class="n">ama</span> <span class="o">-</span><span class="n">hwaccel_device</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">ama_transcoder0</span>  <span class="o">-</span><span class="n">c</span><span class="p">:</span><span class="n">v</span> <span class="n">h264_ama</span> <span class="o">-</span><span class="n">i</span> <span class="n">INPUT1</span><span class="o">.</span><span class="n">h264</span> <span class="o">-</span><span class="n">f</span> <span class="n">mp4</span> <span class="o">-</span><span class="n">c</span><span class="p">:</span><span class="n">v</span> <span class="n">hevc_ama</span> <span class="o">-</span><span class="n">y</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span> <span class="o">&amp;</span>
+<span class="n">ffmpeg</span> <span class="o">-</span><span class="n">hwaccel</span> <span class="n">ama</span> <span class="o">-</span><span class="n">hwaccel_device</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">ama_transcoder1</span>  <span class="o">-</span><span class="n">c</span><span class="p">:</span><span class="n">v</span> <span class="n">h264_ama</span> <span class="o">-</span><span class="n">i</span> <span class="n">INPUT2</span><span class="o">.</span><span class="n">h264</span> <span class="o">-</span><span class="n">f</span> <span class="n">mp4</span> <span class="o">-</span><span class="n">c</span><span class="p">:</span><span class="n">v</span> <span class="n">hevc_ama</span> <span class="o">-</span><span class="n">y</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span> <span class="o">&amp;</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</section>
+</section>
+<section id="manual-resource-management">
+<span id="id1"></span><h2><a class="toc-backref" href="#id4" role="doc-backlink">Manual Resource Management</a><a class="headerlink" href="#manual-resource-management" title="Link to this heading">¶</a></h2>
+<p>The card management tools included in the AMD AMA Video SDK provide ways to query the status and utilization of the video accelerator devices. Using these tools the user can determine which resources are available and thereby determine on which device to submit a job (using <a class="reference internal" href="#using-explicit-device-ids"><span class="std std-ref">explicit device identifies</span></a>, as explained in the previous section).</p>
+<p>Given that each device has a set compute capacity, the user is responsible for only submitting jobs which will not exceed the capacity of the specified device. If a job is submitted on a device where there are not enough compute unit resources available to support the job, the job will error out with a message about resource allocation failure.</p>
+<p>The XRM and card management tools provide methods to estimate CU requirements and check current device load.</p>
+<section id="checking-system-load">
+<h3>Checking System Load<a class="headerlink" href="#checking-system-load" title="Link to this heading">¶</a></h3>
+<p>Configure the environment to use the AMD AMA Video SDK. This a mandatory step for all applications:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">source</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">amd</span><span class="o">/</span><span class="n">ama</span><span class="o">/</span><span class="n">ma35</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">setup</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+<p>Note that this command should be run only once per boot.</p>
+<p>To check the current loading of all the devices in your system, use the following command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">xrmadm</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">amd</span><span class="o">/</span><span class="n">ama</span><span class="o">/</span><span class="n">ma35</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">list_cmd</span><span class="o">.</span><span class="n">json</span>
+</pre></div>
+</div>
+<p>This will generate a report in JSON format containing the load information for all the compute unit (CU) resources. The report contains a section for each device in the system. The device sections contain sub-sections for each of the CUs (decoder, scaler, lookahead, encoder) in that device. For example, the load information for the encoder on device 0 may look as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;device_0&quot;</span><span class="p">:</span> <span class="p">{</span>
+  <span class="o">...</span>
+  <span class="s2">&quot;cu_2&quot;</span><span class="p">:</span> <span class="p">{</span>
+       <span class="s2">&quot;cuId         &quot;</span><span class="p">:</span> <span class="s2">&quot;2&quot;</span><span class="p">,</span>
+       <span class="s2">&quot;cuType       &quot;</span><span class="p">:</span> <span class="s2">&quot;IP Kernel&quot;</span><span class="p">,</span>
+       <span class="s2">&quot;kernelName   &quot;</span><span class="p">:</span> <span class="s2">&quot;encoder&quot;</span><span class="p">,</span>
+       <span class="s2">&quot;kernelAlias  &quot;</span><span class="p">:</span> <span class="s2">&quot;ENCODER_TYPE1_AMA&quot;</span><span class="p">,</span>
+       <span class="s2">&quot;instanceName &quot;</span><span class="p">:</span> <span class="s2">&quot;encoder_1&quot;</span><span class="p">,</span>
+       <span class="s2">&quot;cuName       &quot;</span><span class="p">:</span> <span class="s2">&quot;encoder:encoder_1&quot;</span><span class="p">,</span>
+       <span class="s2">&quot;kernelPlugin &quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+       <span class="s2">&quot;maxCapacity  &quot;</span><span class="p">:</span> <span class="s2">&quot;497664000&quot;</span><span class="p">,</span>
+       <span class="s2">&quot;numChanInuse &quot;</span><span class="p">:</span> <span class="s2">&quot;0&quot;</span><span class="p">,</span>
+       <span class="s2">&quot;usedLoad     &quot;</span><span class="p">:</span> <span class="s2">&quot;0 of 1000000&quot;</span><span class="p">,</span>
+       <span class="s2">&quot;reservedLoad &quot;</span><span class="p">:</span> <span class="s2">&quot;0 of 1000000&quot;</span><span class="p">,</span>
+       <span class="s2">&quot;resrvUsedLoad&quot;</span><span class="p">:</span> <span class="s2">&quot;0 of 1000000&quot;</span>
+   <span class="p">},</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">usedLoad</span></code> value indicates how much of that resource is currently being used. The value will range from 0 (nothing running) to 1000000 (fully loaded). The <code class="docutils literal notranslate"><span class="pre">reservedLoad</span></code> value indicates how much of that resource is being reserved using XRM. The <code class="docutils literal notranslate"><span class="pre">resrvUsedLoad</span></code> value indicates how much of the reserved load is actually being used.</p>
+</section>
+<section id="print-ma35-load">
+<h3>print_ma35_load<a class="headerlink" href="#print-ma35-load" title="Link to this heading">¶</a></h3>
+<p>This script provides a readable snapshot of resource utilization for AMA AMD compatible cards. For example, running a 1080p60 AV1 Type-1 encode, on single MA35D card, will result in the following output:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">===============================================================================================================</span>
+<span class="n">MA35</span> <span class="o">-</span> <span class="n">Device</span> <span class="n">Loads</span>
+<span class="o">===============================================================================================================</span>
+<span class="n">deviceID</span>   <span class="n">kernelAlias</span>          <span class="n">numChanInuse</span>    <span class="n">usedLoad</span>        <span class="n">reservedLoad</span>    <span class="n">resrvUsedLoad</span>   <span class="n">Utilization</span><span class="p">(</span><span class="o">%</span><span class="p">)</span>
+<span class="o">---------------------------------------------------------------------------------------------------------------</span>
+<span class="n">device_0</span>   <span class="n">SCALER_AMA</span>           <span class="mi">0</span>               <span class="mi">0</span>               <span class="mi">0</span>               <span class="mi">0</span>                  <span class="mf">0.0</span>
+<span class="n">device_0</span>   <span class="n">DECODER_AMA</span>          <span class="mi">0</span>               <span class="mi">0</span>               <span class="mi">0</span>               <span class="mi">0</span>                  <span class="mf">0.0</span>
+<span class="n">device_0</span>   <span class="n">ENCODER_TYPE1_AMA</span>    <span class="mi">1</span>               <span class="mi">250000</span>          <span class="mi">0</span>               <span class="mi">0</span>                 <span class="mf">25.0</span>
+<span class="n">device_0</span>   <span class="n">ENCODER_TYPE2_AMA</span>    <span class="mi">0</span>               <span class="mi">0</span>               <span class="mi">0</span>               <span class="mi">0</span>                  <span class="mf">0.0</span>
+<span class="n">device_0</span>   <span class="n">ENCODER_TYPE1_AMA</span>    <span class="mi">0</span>               <span class="mi">0</span>               <span class="mi">0</span>               <span class="mi">0</span>                  <span class="mf">0.0</span>
+<span class="n">device_0</span>   <span class="n">ENCODER_TYPE2_AMA</span>    <span class="mi">0</span>               <span class="mi">0</span>               <span class="mi">0</span>               <span class="mi">0</span>                  <span class="mf">0.0</span>
+<span class="n">device_0</span>   <span class="n">LOOKAHEAD_AMA</span>        <span class="mi">1</span>               <span class="mi">125000</span>          <span class="mi">0</span>               <span class="mi">0</span>                 <span class="mf">12.5</span>
+<span class="n">device_0</span>   <span class="n">LOOKAHEAD_AMA</span>        <span class="mi">0</span>               <span class="mi">0</span>               <span class="mi">0</span>               <span class="mi">0</span>                  <span class="mf">0.0</span>
+<span class="n">device_0</span>   <span class="n">ML_AMA</span>               <span class="mi">0</span>               <span class="mi">0</span>               <span class="mi">0</span>               <span class="mi">0</span>                  <span class="mf">0.0</span>
+<span class="n">device_0</span>   <span class="n">ML_AMA</span>               <span class="mi">0</span>               <span class="mi">0</span>               <span class="mi">0</span>               <span class="mi">0</span>                  <span class="mf">0.0</span>
+<span class="n">device_0</span>   <span class="n">ML_AMA</span>               <span class="mi">0</span>               <span class="mi">0</span>               <span class="mi">0</span>               <span class="mi">0</span>                  <span class="mf">0.0</span>
+<span class="n">device_0</span>   <span class="n">ML_AMA</span>               <span class="mi">0</span>               <span class="mi">0</span>               <span class="mi">0</span>               <span class="mi">0</span>                  <span class="mf">0.0</span>
+<span class="o">---------------------------------------------------------------------------------------------------------------</span>
+<span class="n">device_1</span>   <span class="n">Not</span> <span class="n">Used</span>
+<span class="o">---------------------------------------------------------------------------------------------------------------</span>
+</pre></div>
+</div>
+<p>Observe that quarter of encoder, <code class="docutils literal notranslate"><span class="pre">ENCODER_TYPE1_AMA</span></code>, and 8th of the look ahead resources are consumed.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Since xrmd does not track <code class="docutils literal notranslate"><span class="pre">2d_ama</span></code> resource utilization, 2D GPU usage is not reported by print_ma35_load utility.</p>
+</div>
+</section>
+<section id="insufficient-resources">
+<h3>Insufficient Resources<a class="headerlink" href="#insufficient-resources" title="Link to this heading">¶</a></h3>
+<p>If there are not enough compute unit resources available on the device to support a FFmpeg job, the job will error out with a message about resource allocation failure:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Insufficient</span> <span class="n">resources</span> <span class="n">available</span> <span class="k">for</span> <span class="n">allocation</span>
+</pre></div>
+</div>
+<p>In this case, you can check the system load (as described in the section below) and look for a device with enough free resources, or wait until another job finishes and releases enough resources to run the desired job.</p>
+</section>
+<section id="job-resource-requirements">
+<h3>Job Resource Requirements<a class="headerlink" href="#job-resource-requirements" title="Link to this heading">¶</a></h3>
+<p>The load of a given job can be estimated by taking the resolution of the job as a percentage of the total capacity of a device. For instance, on an MA35D device, a 1080p60 stream will require 12.5% of the resources available on the device. Resource loads are reported with a precision of 1/1000000.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</section>
+</section>
+<section id="automated-resource-management">
+<span id="using-job-descriptions"></span><h2><a class="toc-backref" href="#id5" role="doc-backlink">Automated Resource Management</a><a class="headerlink" href="#automated-resource-management" title="Link to this heading">¶</a></h2>
+<p>The AMD AMA Video SDK provides a mechanism to automatically determine how many instances of various jobs can be submitted to the system and on which device(s) to dispatch each job instance. This mechanism relies on Job Descriptions files and a Job Slot Reservation tool which calculates the resources required for each job, determines on which device each job should be run and reserves the resources accordingly. Note that there is no requirement for job descriptions to be homogeneous.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To observe the various job management log messages use <code class="docutils literal notranslate"><span class="pre">tail</span> <span class="pre">-F</span> <span class="pre">/var/log/syslog</span></code> command.</p>
+</div>
+<section id="video-transcode-job-descriptions">
+<span id="job-descriptions-files"></span><h3>Video Transcode Job Descriptions<a class="headerlink" href="#video-transcode-job-descriptions" title="Link to this heading">¶</a></h3>
+<p>A video transcode Job Description File (JDF) provides information to the resource manager about what resources are needed to run a particular job. With this information, the resource manager can calculate the CU load for the specified job as well as the maximum possible number of jobs that can be run real-time in parallel.</p>
+<p>A video transcode job description is specified through a JSON file and the key-value pairs specify the functions, formats, and resolutions needed.</p>
+<dl class="simple">
+<dt>function</dt><dd><p>Which HW resource to use (DECODER, SCALER, ENCODER)</p>
+</dd>
+<dt>format</dt><dd><p>Input/output format (H264, HEVC, AV1, yuv420p, yuv420p10le)</p>
+</dd>
+<dt>resolution</dt><dd><p>Input/output height, width, and frame-rate as a numerator / denominator fraction</p>
+</dd>
+<dt>type</dt><dd><p>Optional entry to select between Type 1 and Type 2 AV1 encoder. Valid values are 1 and 2, with default equal 1</p>
+</dd>
+<dt>load_factor</dt><dd><p>Optional entry that instructs XRM to allocate a multiple factor of required resources. The multiplication factor is either the default 1.0, i.e., no addition allocation or explicitly defined by this entry. A typical usage of this entry is in cases where there is a need for headroom, while allocating resources.</p>
+</dd>
+<dt>num_job_slots</dt><dd><p>Optional entry that explicitly specifies the number of resources or job slots for a particular job. The absence of this entry allows for a given job to reserve all available resources on a given device, instead of what is required to complete the job.</p>
+</dd>
+<dt>resources</dt><dd><p>All the resources listed in this section of the job description will be allocated on the same device. If the job requires a single device, this is the section in which resources should be specified.</p>
+</dd>
+<dt>cores</dt><dd><p>Optional entry to enable 2-core encoding in order to achieve higher throughput. Valid values are 1 and 2, for single core and double cores encodings, respectively. Default value is 1. See <code class="docutils literal notranslate"><span class="pre">/opt/amd/ama/ma35/scripts/describe_job/example_2_core_encode.json</span></code> for usage example.</p>
+</dd>
+<dt>preset</dt><dd><p>Optional entry to select one of <em>fast</em>, <em>medium</em> or <em>slow</em> encoding presets. Default value is <em>medium</em>. See <code class="docutils literal notranslate"><span class="pre">/opt/amd/ama/ma35/scripts/describe_job/example_fast_preset.json</span></code> for usage example.</p>
+</dd>
+</dl>
+<p>Several examples of JSON job slot descriptions can be found in the <code class="docutils literal notranslate"><span class="pre">/opt/amd/ama/ma35/scripts/describe_job</span></code> folder once the AMD AMA Video SDK has been installed.</p>
+<p>Below is the <code class="docutils literal notranslate"><span class="pre">/opt/amd/ama/ma35/scripts/describe_job/t10_transcode_multiscale</span></code> example. This JSON example describes an ABR transcode job which uses a decoder, scaler, and encoder to generate 12 output renditions.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{
+    &quot;request&quot;: {
+        &quot;name&quot;: &quot;t10_transcode_multiscale&quot;,
+        &quot;request_id&quot;: 1,
+        &quot;parameters&quot;: {
+            &quot;name&quot;: &quot;testjob&quot;,
+            &quot;resources&quot;: 
+            [
+                {
+                    &quot;function&quot;: &quot;DECODER&quot;,
+                    &quot;format&quot;:   &quot;H264&quot;,
+                    &quot;resolution&quot;: { &quot;input&quot;: { &quot;width&quot;: 3840, &quot;height&quot;: 2160, &quot;frame-rate&quot;: { &quot;num&quot;:60, &quot;den&quot;:1} } }
+                },
+                        {
+                    &quot;function&quot;: &quot;SCALER&quot;,
+                    &quot;format&quot;:   &quot;yuv420p&quot;,
+                    &quot;resolution&quot;:{                                                                                 
+                        &quot;input&quot;: { &quot;width&quot;: 3840, &quot;height&quot;: 2160, &quot;frame-rate&quot;: { &quot;num&quot;:60, &quot;den&quot;:1} },
+                        &quot;output&quot;:
+                        [        
+                            { &quot;width&quot;: 1920, &quot;height&quot;: 1080, &quot;frame-rate&quot;: { &quot;num&quot;:60, &quot;den&quot;:1}},
+                            { &quot;width&quot;: 1600, &quot;height&quot;: 900, &quot;frame-rate&quot;: { &quot;num&quot;:60, &quot;den&quot;:1}},
+                            { &quot;width&quot;: 1440, &quot;height&quot;: 900, &quot;frame-rate&quot;: { &quot;num&quot;:60, &quot;den&quot;:1}},
+                            { &quot;width&quot;: 1360, &quot;height&quot;: 768, &quot;frame-rate&quot;: { &quot;num&quot;:60, &quot;den&quot;:1}},
+                            { &quot;width&quot;: 1280, &quot;height&quot;: 720, &quot;frame-rate&quot;: { &quot;num&quot;:60, &quot;den&quot;:1}},
+                            { &quot;width&quot;: 1024, &quot;height&quot;: 768, &quot;frame-rate&quot;: { &quot;num&quot;:60, &quot;den&quot;:1}},
+                            { &quot;width&quot;: 960, &quot;height&quot;: 540, &quot;frame-rate&quot;: { &quot;num&quot;:60, &quot;den&quot;:1}},
+                            { &quot;width&quot;: 848, &quot;height&quot;: 480, &quot;frame-rate&quot;: { &quot;num&quot;:60, &quot;den&quot;:1}},
+                            { &quot;width&quot;: 640, &quot;height&quot;: 360, &quot;frame-rate&quot;: { &quot;num&quot;:60, &quot;den&quot;:1}},
+                            { &quot;width&quot;: 540, &quot;height&quot;: 480, &quot;frame-rate&quot;: { &quot;num&quot;:60, &quot;den&quot;:1}},
+                            { &quot;width&quot;: 352, &quot;height&quot;: 288, &quot;frame-rate&quot;: { &quot;num&quot;:60, &quot;den&quot;:1}},
+                            { &quot;width&quot;: 288, &quot;height&quot;: 160, &quot;frame-rate&quot;: { &quot;num&quot;:60, &quot;den&quot;:1}}
+                        ]
+                    }
+                },
+                {
+                    &quot;function&quot;: &quot;ENCODER&quot;,
+                    &quot;format&quot;:   &quot;HEVC&quot;,
+                    &quot;resolution&quot;: { &quot;input&quot;: { &quot;width&quot;: 1920, &quot;height&quot;: 1080, &quot;frame-rate&quot;: { &quot;num&quot;:60, &quot;den&quot;:1} } }
+                },
+                {
+                    &quot;function&quot;: &quot;ENCODER&quot;,
+                    &quot;format&quot;:   &quot;HEVC&quot;,
+                    &quot;resolution&quot;: { &quot;input&quot;: { &quot;width&quot;: 1600, &quot;height&quot;: 900, &quot;frame-rate&quot;: { &quot;num&quot;:60, &quot;den&quot;:1} } }
+                },
+                {
+                    &quot;function&quot;: &quot;ENCODER&quot;,
+                    &quot;format&quot;:   &quot;HEVC&quot;,
+                    &quot;resolution&quot;: { &quot;input&quot;: { &quot;width&quot;: 1440, &quot;height&quot;: 900, &quot;frame-rate&quot;: { &quot;num&quot;:60, &quot;den&quot;:1} } }
+                },
+                {
+                    &quot;function&quot;: &quot;ENCODER&quot;,
+                    &quot;format&quot;:   &quot;HEVC&quot;,
+                    &quot;resolution&quot;: { &quot;input&quot;: { &quot;width&quot;: 1360, &quot;height&quot;: 768, &quot;frame-rate&quot;: { &quot;num&quot;:60, &quot;den&quot;:1} } }
+                },
+                {
+                    &quot;function&quot;: &quot;ENCODER&quot;,
+                    &quot;format&quot;:   &quot;HEVC&quot;,
+                    &quot;resolution&quot;: { &quot;input&quot;: { &quot;width&quot;: 1280, &quot;height&quot;: 720, &quot;frame-rate&quot;: { &quot;num&quot;:60, &quot;den&quot;:1} } }
+                },
+                {
+                    &quot;function&quot;: &quot;ENCODER&quot;,
+                    &quot;format&quot;:   &quot;HEVC&quot;,
+                    &quot;resolution&quot;: { &quot;input&quot;: { &quot;width&quot;: 1024, &quot;height&quot;: 768, &quot;frame-rate&quot;: { &quot;num&quot;:60, &quot;den&quot;:1} } }
+                },
+                {
+                    &quot;function&quot;: &quot;ENCODER&quot;,
+                    &quot;format&quot;:   &quot;HEVC&quot;,
+                    &quot;resolution&quot;: { &quot;input&quot;: { &quot;width&quot;: 960, &quot;height&quot;: 540, &quot;frame-rate&quot;: { &quot;num&quot;:60, &quot;den&quot;:1} } } 
+                },
+                {
+                    &quot;function&quot;: &quot;ENCODER&quot;,
+                    &quot;format&quot;:   &quot;HEVC&quot;,
+                    &quot;resolution&quot;: { &quot;input&quot;: { &quot;width&quot;: 848, &quot;height&quot;: 480, &quot;frame-rate&quot;: { &quot;num&quot;:60, &quot;den&quot;:1} } } 
+                },
+                {
+                    &quot;function&quot;: &quot;ENCODER&quot;,
+                    &quot;format&quot;:   &quot;HEVC&quot;,
+                    &quot;resolution&quot;: { &quot;input&quot;: { &quot;width&quot;: 640, &quot;height&quot;: 360, &quot;frame-rate&quot;: { &quot;num&quot;:60, &quot;den&quot;:1} } }
+                },
+                {
+                    &quot;function&quot;: &quot;ENCODER&quot;,
+                    &quot;format&quot;:   &quot;HEVC&quot;,
+                    &quot;resolution&quot;: { &quot;input&quot;: { &quot;width&quot;: 540, &quot;height&quot;: 480, &quot;frame-rate&quot;: { &quot;num&quot;:60, &quot;den&quot;:1} } } 
+                },
+                {
+                    &quot;function&quot;: &quot;ENCODER&quot;,
+                    &quot;format&quot;:   &quot;HEVC&quot;,
+                    &quot;resolution&quot;: { &quot;input&quot;: { &quot;width&quot;: 352, &quot;height&quot;: 288, &quot;frame-rate&quot;: { &quot;num&quot;:60, &quot;den&quot;:1} } }
+                },
+                {
+                    &quot;function&quot;: &quot;ENCODER&quot;,
+                    &quot;format&quot;:   &quot;HEVC&quot;,
+                    &quot;resolution&quot;: { &quot;input&quot;: { &quot;width&quot;: 288, &quot;height&quot;: 160, &quot;frame-rate&quot;: { &quot;num&quot;:60, &quot;den&quot;:1} } } 
+                }
+            ]
+        }
+    }
+}
+</pre></div>
+</div>
+<p>The next sections document the two different ways of using job descriptions to run multiple jobs across one or more devices:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#using-job-slot-reservations"><span class="std std-ref">Using the job slot reservation tool</span></a></p></li>
+<li><p>Automated job launcher examples for <a class="reference internal" href="#using-ffmpeg-launcher"><span class="std std-ref">FFmpeg</span></a></p></li>
+</ul>
+</section>
+<section id="the-job-slot-reservation-tool">
+<span id="using-job-slot-reservations"></span><h3>The Job Slot Reservation Tool<a class="headerlink" href="#the-job-slot-reservation-tool" title="Link to this heading">¶</a></h3>
+<p>The job slot reservation application, <strong class="program">jobslot_reservation</strong>, takes as input multiple <a class="reference internal" href="#job-descriptions-files"><span class="std std-ref">JSON job description</span></a> files. Each JSON JDF provides information to the resource manager about what kind of transcode is intended to run on a card. With this information, the resource manager calculates the CU load for the specified job as well as the maximum possible number of jobs that can be run real-time in parallel.</p>
+<p>Once the maximum possible number of jobs is known, CUs and job slots are reserved, and corresponding reservation IDs are stored in a bash file at <code class="docutils literal notranslate"><span class="pre">/var/tmp/amd/ma35/xrm_jobReservation_TIMESTAMP_JDF.sh</span></code>, where TIMESTAMP refers to Linux epoch timestamp and JDF is the name of JSON JDF, without its extension. A reservation ID is a unique identifier which is valid while the job slot reservation application is running. After sourcing the respective <code class="docutils literal notranslate"><span class="pre">/var/tmp/amd/ma35/xrm_jobReservation_TIMESTAMP_JDF.sh</span></code> files, the reservation IDs are then passed to individual FFmpeg processes via the <span class="target" id="index-0"></span><code class="xref std std-envvar docutils literal notranslate"><span class="pre">XRM_RESERVE_ID</span></code> environment variable. The FFmpeg  processes then use this reservation ID to retrieve and use the corresponding CUs reserved by the job slot reservation tool.</p>
+<p>The reserved resources are released by ending the job reservation process. Reserved slots can be reused after an FFmpeg job finishes, as long as the job reservation process is still running.</p>
+<p>Optionally, <strong class="program">jobslot_reservation</strong> can take <code class="docutils literal notranslate"><span class="pre">--dry_run</span></code> argument to check how many job slots are possible for a given job, without actual reservation. Additionally, this application is process-safe.</p>
+<p class="rubric">Ill-formed JSON Job Descriptions</p>
+<p>If you run the <strong class="program">jobslot_reservation</strong> tool with a syntactically incorrect JSON description, you will see the following messages:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">decoder</span> <span class="n">plugin</span> <span class="n">function</span><span class="o">=</span><span class="mi">0</span> <span class="n">fail</span> <span class="n">to</span> <span class="n">run</span> <span class="n">the</span> <span class="n">function</span>
+<span class="n">scaler</span> <span class="n">plugin</span> <span class="n">function</span><span class="o">=</span><span class="mi">0</span> <span class="n">fail</span> <span class="n">to</span> <span class="n">run</span> <span class="n">the</span> <span class="n">function</span>
+<span class="n">encoder</span> <span class="n">plugin</span> <span class="n">function</span><span class="o">=</span><span class="mi">0</span> <span class="n">fail</span> <span class="n">to</span> <span class="n">run</span> <span class="n">the</span> <span class="n">function</span>
+</pre></div>
+</div>
+<p>This indicates that the job description is ill-formed and needs to be corrected.</p>
+<section id="example-requiring-a-single-device-per-job">
+<h4>Example requiring a single device per job<a class="headerlink" href="#example-requiring-a-single-device-per-job" title="Link to this heading">¶</a></h4>
+<p>This example uses the <code class="docutils literal notranslate"><span class="pre">/opt/amd/ama/ma35/scripts/describe_job/t10_transcode_multiscale.json</span></code> file describing a 1080p ABR ladder running on a single device.</p>
+<ol class="arabic">
+<li><p>Setup the environment:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">source</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">amd</span><span class="o">/</span><span class="n">ama</span><span class="o">/</span><span class="n">ma35</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">setup</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+</li>
+<li><p>Run the job slot reservation application with the desired JSON job description. For example</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>JobDescriptionFile: /opt/amd/ama/ma35/scripts/describe_job/t10_transcode_multiscale.json
+Requested Loads:
+scaler [0]: 523634
+
+decoder [0]: 250000
+
+...
+
+lookahead [0]: 6111
+
+encoder [0]: 5555
+
+lookahead [0]: 2777
+
+===============================================================
+Total Job Slots possible : 2
+Dry run: Disabled
+
+Job Type: /opt/amd/ama/ma35/scripts/describe_job/t10_transcode_multiscale.json
+Job Slots Alloted: 2
+XRM_RESERVE_ID file - &quot;/var/tmp/amd/xrm_jobReservation_79533431_t10_transcode_multiscale.sh&quot;
+================================================================
+
+---------------------------------------------------------------
+
+The Job-slot reservations are alive as long as this Application is alive!
+(press Enter to close this app)
+
+---------------------------------------------------------------
+</pre></div>
+</div>
+</li>
+</ol>
+<p>The job slot reservation application creates a <code class="docutils literal notranslate"><span class="pre">/var/tmp/amd/ma35/xrm_jobReservation_TIMESTAMP_JDF.sh</span></code> with <span class="target" id="index-1"></span><code class="xref std std-envvar docutils literal notranslate"><span class="pre">XRM_RESERVE_ID_{n}</span></code> set to unique IDs generated by XRM (with n ranging from 1 to the number of possible job slots for the given job). Here is an example of this generated file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">XRM_RESERVE_ID_0</span><span class="o">=</span><span class="mi">1</span>
+<span class="n">export</span> <span class="n">XRM_RESERVE_ID_1</span><span class="o">=</span><span class="mi">2</span>
+</pre></div>
+</div>
+<ol class="arabic">
+<li><p>Launch individual FFmpeg processes in distinct shells after sourcing the <code class="docutils literal notranslate"><span class="pre">/var/tmp/amd/ma35/xrm_jobReservation_TIMESTAMP_JDF.sh</span></code> file and setting <span class="target" id="index-2"></span><code class="xref std std-envvar docutils literal notranslate"><span class="pre">XRM_RESERVE_ID</span></code> environment to a unique <span class="target" id="index-3"></span><code class="xref std std-envvar docutils literal notranslate"><span class="pre">XRM_RESERVE_ID_{n}</span></code>.</p>
+<p>For job 1, within a new terminal:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>source /var/tmp/amd/ma35/xrm_jobReservation_TIMESTAMP_JDF.sh
+export XRM_RESERVE_ID=${XRM_RESERVE_ID_1}
+ffmpeg -c:v h264_ama ...
+</pre></div>
+</div>
+<p>For job 2, within a new terminal:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>source /var/tmp/amd/ma35/xrm_jobReservation_TIMESTAMP_JDF.sh
+export XRM_RESERVE_ID=${XRM_RESERVE_ID_2}
+ffmpeg -c:v h264_ama ...
+</pre></div>
+</div>
+<p>And so forth for the other jobs.</p>
+</li>
+<li><p>Press <strong>Enter</strong> in the job reservation app terminal to release the resources after the jobs are complete.</p></li>
+</ol>
+</section>
+</section>
+<section id="automated-job-launching">
+<span id="launcher-examples"></span><h3>Automated Job Launching<a class="headerlink" href="#automated-job-launching" title="Link to this heading">¶</a></h3>
+<p>The Job Slot Reservation tool automatically reserves job slots, but actual jobs still need to be manually launched using the generated reservations IDs. It is possible to create custom orchestration layers to automatically handle the reservation of job slots and the launching of jobs.</p>
+<p>The AMD AMA Video SDK includes an example launcher application for FFmpeg. Source code for the FFmpeg Launcher example and the Job Slot Reservation tool are included in the Github repository of AMD AMA Video SDK and can be used as a starting point for developing custom orchestration layers.</p>
+<section id="the-ffmpeg-launcher-example">
+<span id="using-ffmpeg-launcher"></span><h4>The FFmpeg Launcher Example<a class="headerlink" href="#the-ffmpeg-launcher-example" title="Link to this heading">¶</a></h4>
+<p>The FFmpeg launcher, <strong class="program">launcher</strong>, is an example application which automates the dispatching of FFmpeg jobs across multiple devices. It simplifies the process of manually setting up XRM reservation IDs and launching FFmpeg for many video streams. The FFmpeg launcher takes tuples of <em>source</em>, <em>Transcode Job Description</em> (TJD) files, where each line of <em>source</em> file is a full path to the location of an input file and <em>TJD</em> has the following format:</p>
+<dl class="simple">
+<dt>job_description = JDF_PATH</dt><dd><p>JDF_PATH value refers to the full path of a JDF</p>
+</dd>
+<dt>cmdline = FFMPEG_CMD</dt><dd><p>FFMPEG_CMD refers to a complete FFmpeg pipeline command, without input source file after <code class="docutils literal notranslate"><span class="pre">-i</span></code>.</p>
+</dd>
+</dl>
+<p>As an example, the source1.txt and job1.txt tuple describes a decode pipeline running on device 0:</p>
+<p>source1.txt:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="mi">4</span><span class="n">kp60</span><span class="o">.</span><span class="n">h264</span>
+</pre></div>
+</div>
+<p>job1.txt:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">job_description</span> <span class="o">=</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">JDF</span> <span class="n">file</span>
+
+<span class="n">cmdline</span> <span class="o">=</span> <span class="n">ffmpeg</span> <span class="o">-</span><span class="n">y</span> <span class="o">-</span><span class="n">hwaccel</span> <span class="n">ama</span> <span class="o">-</span><span class="n">c</span><span class="p">:</span><span class="n">v</span> <span class="n">h264_ama</span> <span class="o">-</span><span class="n">out_fmt</span> <span class="n">nv12</span> <span class="o">-</span><span class="n">i</span> <span class="o">-</span><span class="n">filter_hw_device</span> <span class="n">dev0</span> <span class="o">-</span><span class="n">filter_complex</span> <span class="s2">&quot;hwdownload,format=nv12[out]&quot;</span> <span class="o">-</span><span class="nb">map</span> <span class="s2">&quot;out]&quot;</span> <span class="o">-</span><span class="n">vframes</span> <span class="mi">300</span> <span class="o">-</span><span class="n">f</span> <span class="n">rawvideo</span> <span class="o">-</span><span class="n">pix_fmt</span> <span class="n">nv12</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The FFmpeg launcher is only an example application. It is provided as an illustration of how an orchestration layer can use Job Descriptions, but it is not an official feature of the AMD AMA Video SDK.</p>
+</div>
+<p>The following steps show how to use the FFmpeg launcher for an arbitrary number of jobs, assuming all are within the total compute capacity of the accelerator cards.</p>
+<ol class="arabic">
+<li><p>Environment setup</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">source</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">amd</span><span class="o">/</span><span class="n">ama</span><span class="o">/</span><span class="n">ma35</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">setup</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+</li>
+<li><p>To run the FFmpeg launcher, use the following command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">launcher</span> <span class="o">&lt;</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">TJD</span><span class="p">)</span><span class="o">&gt;</span> <span class="p">{(</span><span class="n">source</span><span class="p">,</span> <span class="n">TJD</span><span class="p">)}</span>
+</pre></div>
+</div>
+<p>Here is an example of the command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">launcher</span> <span class="n">source1</span><span class="o">.</span><span class="n">txt</span> <span class="n">job1</span><span class="o">.</span><span class="n">txt</span> <span class="n">source2</span><span class="o">.</span><span class="n">txt</span> <span class="n">job2</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</section>
+</section>
+</section>
+<section id="xrm-reference-guide">
+<span id="xrmadm-and-xrmd-commands"></span><span id="xrm-reference"></span><h2><a class="toc-backref" href="#id6" role="doc-backlink">XRM Reference Guide</a><a class="headerlink" href="#xrm-reference-guide" title="Link to this heading">¶</a></h2>
+<p>The Xilinx® resource manager (XRM) is the software which manages the hardware accelerators available in the system. XRM includes the following components:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">xrmd</span></code>: the XRM daemon, a background process supporting reservation, allocation, and release of hardware acceleration resources.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">xrmadm</span></code> the command line tool is used to interact with the XRM daemon (<code class="docutils literal notranslate"><span class="pre">xrmd</span></code>).</p></li>
+<li><p>a C Application Programming Interface (API)</p></li>
+</ul>
+<section id="command-line-interface">
+<h3>Command Line Interface<a class="headerlink" href="#command-line-interface" title="Link to this heading">¶</a></h3>
+<p>The XRM <code class="docutils literal notranslate"><span class="pre">xrmadm</span></code> command line tool is used to interact with the XRM daemon (<code class="docutils literal notranslate"><span class="pre">xrmd</span></code>). It provides the following capabilities and uses a JSON file as input for each action:</p>
+<ul class="simple">
+<li><p>Generate status reports for each device</p></li>
+<li><p>Load and unload the hardware accelerators</p></li>
+<li><p>Load and unload the software plugins</p></li>
+</ul>
+<p>The XRM related files are installed under <code class="docutils literal notranslate"><span class="pre">/opt/amd/ama/ma35/scripts/</span></code>.</p>
+<section id="setup">
+<h4>Setup<a class="headerlink" href="#setup" title="Link to this heading">¶</a></h4>
+<p>When sourced, the <code class="docutils literal notranslate"><span class="pre">/opt/amd/ama/ma35/scripts/setup.sh</span></code> script takes care of setting up the enviroment for the AMD AMA Video SDK, including its XRM components:</p>
+<ul class="simple">
+<li><p>The XRM daemon (<code class="docutils literal notranslate"><span class="pre">xrmd</span></code>) is started</p></li>
+<li><p>The hardware accelerators (xclbin) and software plugins are loaded on the Xilinx devices</p></li>
+</ul>
+</section>
+<section id="generating-status-reports">
+<h4>Generating Status Reports<a class="headerlink" href="#generating-status-reports" title="Link to this heading">¶</a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">xrmadm</span></code> can generate reports with the status of each device in the system. This capability is particularly useful to check the loading of each hardware accelerator.</p>
+<p>To generate a report for all the devices in the system:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">xrmadm</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">amd</span><span class="o">/</span><span class="n">ama</span><span class="o">/</span><span class="n">ma35</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">list_cmd</span><span class="o">.</span><span class="n">json</span>
+</pre></div>
+</div>
+<p>To generate a more detailed report for a single device, which is specified in the json file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">xrmadm</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">amd</span><span class="o">/</span><span class="n">ama</span><span class="o">/</span><span class="n">ma35</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">list_onedevice_cmd</span><span class="o">.</span><span class="n">json</span>
+</pre></div>
+</div>
+<p>A sample JSON file for generating a report for device 0 is shown below:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;request&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;list&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;requestId&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="s2">&quot;device&quot;</span><span class="p">:</span> <span class="mi">0</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="loading-unloading-software-plugins">
+<h4>Loading/Unloading Software Plugins<a class="headerlink" href="#loading-unloading-software-plugins" title="Link to this heading">¶</a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">xrmadm</span></code> can be used to load or unload the software plugins required to manage the compute resources. The software plugins perform resource management functions such as calculating CU load and CU max capacity. Once a plugin is loaded, it becomes usable by a host application through the XRM APIs. The XRM plugins need to be loaded before executing an application (such as FFmpeg/GStreamer) which relies on the plugins.</p>
+<p>To load the plugins:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">xrmadm</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">amd</span><span class="o">/</span><span class="n">ama</span><span class="o">/</span><span class="n">ma35</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">load_xrm_plugins_cmd</span><span class="o">.</span><span class="n">json</span>
+ <span class="p">{</span>
+     <span class="s2">&quot;response&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;loadXrmPlugins&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;requestId&quot;</span><span class="p">:</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;ok&quot;</span>
+     <span class="p">}</span>
+ <span class="p">}</span>
+</pre></div>
+</div>
+<p>To unload the plugins:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">xrmadm</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">amd</span><span class="o">/</span><span class="n">ama</span><span class="o">/</span><span class="n">ma35</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">unload_xrm_plugins_cmd</span><span class="o">.</span><span class="n">json</span>
+ <span class="p">{</span>
+     <span class="s2">&quot;response&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;unloadXrmPlugins&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;requestId&quot;</span><span class="p">:</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;ok&quot;</span>
+     <span class="p">}</span>
+ <span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="c-application-programming-interface">
+<h3>C Application Programming Interface<a class="headerlink" href="#c-application-programming-interface" title="Link to this heading">¶</a></h3>
+<p>XRM provides a C Application Programming Interface (API) to reserve, allocate and release CUs from within a custom application. For complete details about this programming interface, refer to the <a class="reference internal" href="c_apis.html#xrm-api-reference"><span class="std std-ref">XRM API Reference Guide</span></a> section of the documentation.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          
+				  
+				  <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="tuning_pipeline_latency.html" class="btn btn-neutral float-left" title="Tuning Latency" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="c_apis.html" class="btn btn-neutral float-right" title="C API Programming Guide" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022-2024, Advanced Micro Devices, Inc.
+      <span class="lastupdated">Last updated on September 23, 2024.
+      </span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div>
+										
+</br>
+
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

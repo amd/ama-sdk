@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="English" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+<!-- OneTrust Cookies Consent Notice start for amd.github.io -->
+<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="cb638ba1-8bc4-44a0-9338-632d4dc19be6" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script>
+<!-- OneTrust Cookies Consent Notice end for amd.github.io -->
+<!-- Google Tag Manager -->
+<script type="text/plain" class="optanon-category-C0002">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-5RHQV7');</script>
+<!-- End Google Tag Manager -->
+  <title>FFmpeg Examples using Software Filters &mdash; AMD AMA 1.2.1 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=e6179555"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/design-tabs.js?v=36754332"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="GStreamer Introductory Tutorials" href="../gstreamer/tutorials.html" />
+    <link rel="prev" title="Video Quality Examples" href="quality_analysis.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+<!-- Google Tag Manager -->
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5RHQV7" height="0" width="0" style="display:none;visibility:hidden" class="optanon-category-C0002"></iframe></noscript>
+<!-- End Google Tag Manager --> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+            <a href="../../index.html" class="icon icon-home"> AMD AMA
+          </a>
+              <div class="version">
+                1.2.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Get Started</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../release_notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started_on_prem.html">Hardware Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../virtualization.html">Virtualization</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../examples.html">Tutorials and Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="tutorials.html">FFmpeg Introductory Tutorials</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quality_analysis.html">FFmpeg Video Quality</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">FFmpeg Software Filters</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#environment-setup">Environment Setup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#video-rotation">Video Rotation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#logo-overlay">Logo Overlay</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#crop-and-shift">Crop and Shift</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#video-composition">Video Composition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#chroma-subsampling">Chroma Subsampling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#decoding-and-de-interlacing">Decoding and De-interlacing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#text-insertion">Text Insertion</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../gstreamer/tutorials.html">Gstreamer Introductory Tutorials</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../gstreamer/filters.html">Gstreamer Software Filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../gstreamer/xcompositor.html">Gstreamer Compositor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../gstreamer/xabrladder.html">Gstreamer ABR Ladder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../xma/xma_apps.html">XMA C-Based Applications</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../git_hub.html">AMA Repository</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../specs_and_features.html">Specs and Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../package_feed.html">Package Feed Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../using_ffmpeg.html">Using FFmpeg</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../using_gstreamer.html">Using Gstreamer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../unified_logging.html">Unified Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tuning_video_quality.html">Tuning Video Quality</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tuning_pipeline_latency.html">Tuning Latency of Transcode Pipeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../managing_compute_resources.html">Managing Compute Resources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../c_apis.html">C API Programming Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../card_management.html">Card Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../migration.html">Migration Path</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../encoder_comp_matrix.html">Encoding Compatibility Matrix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../preview.html">New Feature Preview</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Support</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://www.xilinx.com/support.html">File an issue</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://support.xilinx.com/s/topic/0TO2E000000YKY8WAO/video?language=en_US">Video Forum</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other AMA SDK Versions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://amd.github.io/ama-sdk/v1.2/index.html">   v1.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://amd.github.io/ama-sdk/v1.1.2/index.html">   v1.1.2</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Video Products</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/video-sdk/v3.0/index.html">U30</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">AMD AMA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../examples.html">Tutorials and Examples</a> &raquo;</li>
+      <li>FFmpeg Examples using Software Filters</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="ffmpeg-examples-using-software-filters">
+<span id="ffmpeg-sw-filters"></span><h1>FFmpeg Examples using Software Filters<a class="headerlink" href="#ffmpeg-examples-using-software-filters" title="Link to this heading">¶</a></h1>
+<nav class="contents local" id="table-of-contents">
+<p class="topic-title">Table of Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#environment-setup" id="id1">Environment Setup</a></p></li>
+<li><p><a class="reference internal" href="#video-rotation" id="id2">Video Rotation</a></p></li>
+<li><p><a class="reference internal" href="#logo-overlay" id="id3">Logo Overlay</a></p></li>
+<li><p><a class="reference internal" href="#crop-and-shift" id="id4">Crop and Shift</a></p></li>
+<li><p><a class="reference internal" href="#video-composition" id="id5">Video Composition</a></p></li>
+<li><p><a class="reference internal" href="#chroma-subsampling" id="id6">Chroma Subsampling</a></p></li>
+<li><p><a class="reference internal" href="#decoding-and-de-interlacing" id="id7">Decoding and De-interlacing</a></p></li>
+<li><p><a class="reference internal" href="#text-insertion" id="id8">Text Insertion</a></p></li>
+</ul>
+</nav>
+<p>Examples shown in this section describe how to use FFmpeg combining both AMD accelerated functions and software filters. In all these examples, an AMA compatible device, e.g., MA35D, is used to decode the input stream, the decoded frames are transfered back to the host using the <a class="reference internal" href="../../using_ffmpeg.html#cmdoption-arg-hwdownload_ama"><code class="xref std std-option docutils literal notranslate"><span class="pre">hwdownload_ama</span></code></a> filter, one or more software filters are applied to the decoded frames and the filtered frames are transfered back to the device using <a class="reference internal" href="../../using_ffmpeg.html#cmdoption-arg-hwupload_ama"><code class="xref std std-option docutils literal notranslate"><span class="pre">hwupload_ama</span></code></a> for encoding. It should be noted that, when possible, zero-copy filters such as <code class="docutils literal notranslate"><span class="pre">split</span></code> and <code class="docutils literal notranslate"><span class="pre">fps</span></code> should be used, to minimize the traffic between the host CPU and target device.</p>
+<p>In the following sections, description of command line options is done in an accumulative manner, i.e., previously described options are not explained further.</p>
+<section id="environment-setup">
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">Environment Setup</a><a class="headerlink" href="#environment-setup" title="Link to this heading">¶</a></h2>
+<ol class="arabic">
+<li><p>The AMD AMA Video SDK version of FFmpeg, Gstreamer and XMA applications can be found in the /opt/amd/ama/ma35/bin folder of your system. If this folder is not present, install the required packages:</p>
+<p>See <a class="reference internal" href="../../getting_started_on_prem.html"><span class="doc">On Premises</span></a></p>
+</li>
+<li><p>Configure the environment to use the AMD AMA Video SDK. This a mandatory step for all applications:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>source /opt/amd/ama/ma35/scripts/setup.sh
+</pre></div>
+</div>
+</li>
+</ol>
+<p>The setup script exports important environment variables and ensures proper execution environment for AMD AMA Video SDK.</p>
+<p>Sourcing the setup script should be performed each time you open a new terminal on your system. This is required for the environment to be correctly configured.</p>
+</section>
+<section id="video-rotation">
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">Video Rotation</a><a class="headerlink" href="#video-rotation" title="Link to this heading">¶</a></h2>
+<p>The following example demonstrates how to generate multiple flip-over operations on the host CPU and to encode the resultant stream on a target AMA device:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ffmpeg -hwaccel ama -hwaccel_device /dev/ama_transcoder0 -c:v h264_ama  -out_fmt yuv420p -i &lt;INPUT&gt; \
+ -filter_complex &quot;split=2[a][b]; \
+  [a]hwdownload_ama,transpose=dir=1:passthrough=none,hwupload_ama[a1]; \
+  [b]hwdownload_ama,transpose=dir=2:passthrough=none,hwupload_ama[b1]&quot; \
+ -map &quot;[a1]&quot; -c:v h264_ama  -f mp4 &lt;OUT DIR&gt;/90_flip.mp4 \
+ -map &quot;[b1]&quot; -c:v h264_ama  -f mp4 &lt;OUT DIR&gt;/270_flip.mp4
+</pre></div>
+</div>
+<p>, where <code class="docutils literal notranslate"><span class="pre">INPUT</span></code> is the path to the input AVC clip and <code class="docutils literal notranslate"><span class="pre">OUT</span> <span class="pre">DIR</span></code> is the name of the output directory. See FFmpeg's <a class="reference external" href="https://ffmpeg.org/ffmpeg-filters.html">filters</a> for details on <code class="docutils literal notranslate"><span class="pre">passthrough</span></code> and <code class="docutils literal notranslate"><span class="pre">split</span></code> filters.</p>
+</section>
+<section id="logo-overlay">
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">Logo Overlay</a><a class="headerlink" href="#logo-overlay" title="Link to this heading">¶</a></h2>
+<p>The following example demonstrates how to overlay a yuv420p image on a decoded video, through host CPU, and to encode the resultant stream on a target AMA device:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ffmpeg -i &lt;y4M LOGO&gt; -hwaccel ama -hwaccel_device /dev/ama_transcoder0 -c:v h264_ama  -out_fmt yuv420p -i &lt;INPUT&gt; \
+ -filter_complex &quot;[1]hwdownload_ama[vid],[vid][0]overlay=x=0:y=0[l],[l]format=yuv420p[lay],[lay]hwupload_ama&quot; \
+ -c:v h264_ama  -f mp4 &lt;OUT DIR&gt;/overlay.mp4
+</pre></div>
+</div>
+<p>Note that input to accelerated encoder, <code class="docutils literal notranslate"><span class="pre">h264_ama</span></code>, is in yuv420p format. See FFmpeg's <code class="docutils literal notranslate"><span class="pre">overlay</span></code> filter for detail usage.</p>
+</section>
+<section id="crop-and-shift">
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">Crop and Shift</a><a class="headerlink" href="#crop-and-shift" title="Link to this heading">¶</a></h2>
+<p>The following example demonstrates how to crop a decoded video, at a given x and y offsets, through host CPU, and to encode the resultant stream on a target AMA device:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ffmpeg -hwaccel ama -hwaccel_device /dev/ama_transcoder0 -c:v h264_ama  -out_fmt yuv420p -i &lt;INPUT&gt; \
+ -filter_complex &quot;hwdownload_ama,crop=640:480:(in_w-800):(in_h-out_h)/2,hwupload_ama&quot; \
+ -c:v h264_ama  -f mp4 &lt;OUT DIR&gt;/crop.mp4
+</pre></div>
+</div>
+</section>
+<section id="video-composition">
+<h2><a class="toc-backref" href="#id5" role="doc-backlink">Video Composition</a><a class="headerlink" href="#video-composition" title="Link to this heading">¶</a></h2>
+<p>The following example demonstrates how to compose a tiled video on the host CPU, and to encode the resultant stream on a target AMA device:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ffmpeg -hide_banner -hwaccel ama -c:v h264_ama -out_fmt yuv420p -i &lt;INPUT_1&gt; -c:v h264_ama -out_fmt yuv420p -i &lt;INPUT_2&gt; \
+ -c:v h264_ama -out_fmt yuv420p -i &lt;INPUT_3&gt; -c:v h264_ama -out_fmt yuv420p -i &lt;INPUT_4&gt; \
+ -filter_complex &quot;[0]scaler_ama=outputs=1:out_res=(1920x1080|yuv420p),hwdownload_ama[00];[1]scaler_ama=outputs=1:out_res=(1920x1080|yuv420p),hwdownload_ama[11];\
+  [2]scaler_ama=outputs=1:out_res=(1920x1080|yuv420p),hwdownload_ama[22];[3]scaler_ama=outputs=1:out_res=(1920x1080|yuv420p),hwdownload_ama[33]; [00][11]hstack[top];\
+  [22][33]hstack[bot]; [top][bot] vstack,hwupload_ama&quot; \
+ -c:v h264_ama -b:v 15M -vframes 600 -f mp4 &lt;OUT DIR&gt;/compose.mp4
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For 10-bit support, the following changes are required to the provided examples:</p>
+<ol class="arabic simple">
+<li><p>Replace <code class="docutils literal notranslate"><span class="pre">-out_fmt</span> <span class="pre">yuv420p</span></code> with <code class="docutils literal notranslate"><span class="pre">-out_fmt</span> <span class="pre">yuv420p10le</span></code></p></li>
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">format=yuv420p10le</span></code> to the filter graph.</p></li>
+</ol>
+<p>As an example, the following command shows 10-bit crop and shift:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ffmpeg -hwaccel ama -hwaccel_device /dev/ama_transcoder0 -c:v h264_ama  -out_fmt yuv420p10le -i &lt;INPUT&gt; \
+ -filter_complex &quot;hwdownload_ama,format=yuv420p10le,crop=640:480:(in_w-800):(in_h-out_h)/2,hwupload_ama&quot; \
+ -c:v h264_ama  -f mp4 &lt;OUT DIR&gt;/crop_10b.mp4
+</pre></div>
+</div>
+</div>
+</section>
+<section id="chroma-subsampling">
+<h2><a class="toc-backref" href="#id6" role="doc-backlink">Chroma Subsampling</a><a class="headerlink" href="#chroma-subsampling" title="Link to this heading">¶</a></h2>
+<p>The following example demonstrates how to perform 4:2:2 to 4:2:0 chroma subsampling on the host CPU, and to encode the resultant stream on a target AMA device:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ffmpeg -hwaccel ama -i &lt;INPUT&gt;  -vf &quot;format=yuv420p,hwupload_ama&quot; -c:v h264_ama -b:v 1M -f mp4 &lt;OUTPUT&gt;
+</pre></div>
+</div>
+<p>, where <code class="docutils literal notranslate"><span class="pre">&lt;INPUT&gt;</span></code> is path of the 442 input raw file and <code class="docutils literal notranslate"><span class="pre">&lt;OUTPUT&gt;</span></code> is the encoded video file.</p>
+</section>
+<section id="decoding-and-de-interlacing">
+<h2><a class="toc-backref" href="#id7" role="doc-backlink">Decoding and De-interlacing</a><a class="headerlink" href="#decoding-and-de-interlacing" title="Link to this heading">¶</a></h2>
+<p>Given that AMD AMA SDK neither accepts interlaced contents nor performs de-interlacing, such operations need to be performed on the host CPU. The following example demonstrates how to perform interlaced to progressive transcoding:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ffmpeg -hwaccel ama -i &lt;INPUT&gt;  -filter_complex  &quot;yadif=0,hwupload_ama&quot; -c:v h264_ama -f mp4 &lt;OUTPUT&gt;
+</pre></div>
+</div>
+<p>, where <code class="docutils literal notranslate"><span class="pre">&lt;INPUT&gt;</span></code> is path of the interlaced content and <code class="docutils literal notranslate"><span class="pre">&lt;OUTPUT&gt;</span></code> is the encoded video file.</p>
+</section>
+<section id="text-insertion">
+<h2><a class="toc-backref" href="#id8" role="doc-backlink">Text Insertion</a><a class="headerlink" href="#text-insertion" title="Link to this heading">¶</a></h2>
+<p>The following example demonstrates how to insert a text into encode stream:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ffmpeg -y -hwaccel ama -hwaccel_device /dev/ama_transcoder0 -re \
+-f lavfi -i testsrc=duration=60:size=1920x1080:rate=60,format=yuv420p -f rawvideo \
+-filter_complex &quot;drawtext=text=&#39;Hello:y=10:fontcolor=yellow:fontsize=36&#39;,format=yuv420p, hwupload_ama&quot; \
+-c:v h264_ama -f mp4 &lt;OUTPUT&gt;
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          
+				  
+				  <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="quality_analysis.html" class="btn btn-neutral float-left" title="Video Quality Examples" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../gstreamer/tutorials.html" class="btn btn-neutral float-right" title="GStreamer Introductory Tutorials" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022-2024, Advanced Micro Devices, Inc.
+      <span class="lastupdated">Last updated on October 24, 2024.
+      </span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div>
+										
+</br>
+
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>
