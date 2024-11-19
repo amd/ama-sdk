@@ -1,0 +1,51 @@
+Container File Notices
+
+NOTICE - BY USING THE SOFTWARE INSTALLED BY THE PACKAGE, YOU AGREE ON BEHALF OF YOURSELF AND YOUR EMPLOYER (IF APPLICABLE) TO BE BOUND TO THE LICENSE AGREEMENTS APPLICABLE TO THE PACKAGES IDENTIFIED BELOW. YOU UNDERSTAND THAT THE INSTALLATION OF THE PACKAGES LISTED BELOW MAY ALSO RESULT IN THE INSTALLATION ON YOUR SYSTEM OF ADDITIONAL PACKAGES NOT LISTED BELOW IN ORDER TO OPERATE (EACH, A DEPENDENCY). ADVANCED MICRO DEVICES, INC., ON BEHALF OF ITSELF AND ITS SUBSIDIARIES AND AFFILIATES, DOES NOT GRANT TO YOU ANY RIGHTS OR LICENSES TO ANY SUCH DEPENDENCY. THE SCRIPT ITSELF IS LICENSED TO YOU SUBJECT TO THE FOLLOWING TERMS:
+
+Copyright © 2024 Advanced Micro Devices, Inc. All Rights Reserved.
+
+
+This file pulls in the following packages subject to the licenses identified below:
+
+ | Package                      | Licenses                                     | URL                                              |
+ |------------------------------|----------------------------------------------|--------------------------------------------------|
+ | altgraph                     | MIT                                          | https://pypi.org                                 |
+ | blinker                      | MIT                                          | https://pypi.org                                 |
+ | Brotli                       | MIT                                          | https://pypi.org                                 |
+ | click                        | BSD-3-Clause                                 | https://pypi.org                                 |
+ | Flask                        | BSD-3-Clause                                 | https://pypi.org                                 |
+ | Flask-Compress               | MIT                                          | https://pypi.org                                 |
+ | Flask-Cors                   | MIT                                          | https://pypi.org                                 |
+ | gunicorn                     | MIT                                          | https://pypi.org                                 |
+ | itsdangerous                 | BSD-3-Clause                                 | https://pypi.org                                 |
+ | Jinja2                       | BSD-3-Clause                                 | https://pypi.org                                 |
+ | MarkupSafe                   | BSD-3-Clause                                 | https://pypi.org                                 |
+ | packaging                    | Apache 2.0                                   | https://pypi.org                                 |
+ | psutil                       | BSD-3-Clause                                 | https://pypi.org                                 |
+ | pyinstaller                  | GPL-2.0                                      | https://pypi.org                                 |
+ | pyinstaller-hooks-contrib    | GPL-2.0                                      | https://pypi.org                                 |
+ | setuptools                   | MIT                                          | https://pypi.org                                 |
+ | Werkzeug                     | BSD-3-Clause                                 | https://pypi.org                                 |
+ | zstandard                    | BSD                                          | https://pypi.org                                 |
+ | @babel/core                  | MIT                                          | https://www.npmjs.com                            |
+ | @babel/eslint-parser         | MIT                                          | https://www.npmjs.com                            |
+ | @babel/plugin-proposal-private-property-in-object | MIT                  | https://www.npmjs.com                            |
+ | @babel/plugin-transform-private-property-in-object | MIT                  | https://www.npmjs.com                            |
+ | @babel/preset-env            | MIT                                          | https://www.npmjs.com                            |
+ | @craco/craco                 | Apache 2.0                                   | https://www.npmjs.com                            |
+ | @svgr/webpack                | MIT                                          | https://www.npmjs.com                            |
+ | eslint-config-react-app      | MIT                                          | https://www.npmjs.com                            |
+ | file-loader                  | MIT                                          | https://www.npmjs.com                            |
+ | hls.js                       | Apache 2.0                                   | https://www.npmjs.com                            |
+ | i18next                      | MIT                                          | https://www.npmjs.com                            |
+ | react-dom                    | MIT                                          | https://www.npmjs.com                            |
+ | react-i18next                | MIT                                          | https://www.npmjs.com                            |
+ | react-query                  | MIT                                          | https://www.npmjs.com                            |
+ | react-router-dom             | MIT                                          | https://www.npmjs.com                            |
+ | react-scripts                | MIT                                          | https://www.npmjs.com                            |
+ | react-semantic-ui-range      | MIT                                          | https://www.npmjs.com                            |
+ | react                        | MIT                                          | https://www.npmjs.com                            |
+ | semantic-ui-css              | MIT                                          | https://www.npmjs.com                            |
+ | semantic-ui-react            | MIT                                          | https://www.npmjs.com                            |
+ | semver                       | ISC                                          | https://www.npmjs.com                            |
+ | web-vitals                   | Apache 2.0                                   | https://www.npmjs.com                            |
