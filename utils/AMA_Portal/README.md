@@ -2,6 +2,10 @@
 
 # AMA Portal
 
+## Download
+
+Download AMA Portal from https://www.amd.com/content/dam/amd/en/documents/products/adaptive-socs-and-fpgas/guest-resources/2024/sdk/ma35d_ama_portal_v1.0.0.zip
+
 ## Description
 
 AMA Portal is a web app for AMD users to install and test the capabilities of the Alveo MA35D card(s) on bare metal installations.
