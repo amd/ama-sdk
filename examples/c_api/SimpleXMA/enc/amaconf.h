@@ -62,7 +62,7 @@ XmaParameter gEncXmaParamConf[] ={
         {.name="tune_metrics", .type=XMA_INT32, .length=sizeof(uint32_t), .value=&gEncXmaParamValue[5]},
         {.name="qp_mode", .type=XMA_INT32, .length=sizeof(uint32_t), .value=&gEncXmaParamValue[6]},
         {.name="forced_idr", .type=XMA_INT32, .length=sizeof(uint32_t), .value=&gEncXmaParamValue[7]},
-        {.name="crf", .type=XMA_INT32, .length=sizeof(uint32_t), .value=&gEncXmaParamValue[8]},
+        {.name="cbr", .type=XMA_INT32, .length=sizeof(uint32_t), .value=&gEncXmaParamValue[8]},
         {.name="max_bitrate", .type=XMA_INT64, .length=sizeof(uint64_t), .value=&gEncXmaParamValue[9]},
         {.name="bf", .type=XMA_INT32, .length=sizeof(uint32_t), .value=&gEncXmaParamValue[10]},
         {.name="dynamic_gop", .type=XMA_INT32, .length=sizeof(uint32_t), .value=&gEncXmaParamValue[11]},

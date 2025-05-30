@@ -1,5 +1,5 @@
 #!/bin/bash
-
+set -x
 # Copyright 2024, Advanced Micro Device, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); 
@@ -16,15 +16,19 @@
 #
 
 IF_IP="10.0.0.1"
+GRPC_TAG="v1.62.1"
 YuvFile=$1
 EncFile=$2
 
 
 killall xmaif
+python3 -m venv $HOME/venv_gRPC_${GRPC_TAG} gRPC_${GRPC_TAG}
+source $HOME/venv_gRPC_${GRPC_TAG}/bin/activate
 pip install grpcio; pip install grpcio-tools pydevd
 (cd ./tunnel && ./tap.sh ${IF_IP})
 build/bindings/cpp_server/xmaif ${IF_IP} &
 sleep 5
 (killall -9 decoder_xmaif_client.py; cd bindings/python_client && time ./decoder_xmaif_client.py ${IF_IP} ${EncFile} ${YuvFile%/*}/GRPC_${YuvFile##*/})
 (killall -9 encoder_xmaif_client.py; cd bindings/python_client && time ./encoder_xmaif_client.py ${IF_IP} ${YuvFile} ${EncFile%/*}/GRPC_${EncFile##*/})
+deactivate
 killall xmaif

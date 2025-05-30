@@ -21,9 +21,11 @@ MODE=$2
 NAME="ama_sdk_grpc"
 VER=1.0
 
+Distro="ubuntu:24.04"
 GrpcTag="v1.62.1"
 SdkVer="1.1.2"
 SdkVer="1.2.0"
+SdkVer="1.2.1"
 
 TAG="$NAME:$VER"
 Uid=$(id $USER -u)
@@ -32,11 +34,12 @@ Gid=$(id $USER -g)
 
 if [ "$MODE" == "b" ]; then
     DOCKER_BUILDKIT=1 docker build \
-        --build-arg USER=$USER --build-arg UID=$Uid --build-arg GID=$Gid --build-arg GRPC_TAG=$GrpcTag --build-arg SDK_VER=$SdkVer \
+        --build-arg DISTRO=$Distro --build-arg USER=$USER --build-arg UID=$Uid --build-arg GID=$Gid --build-arg GRPC_TAG=$GrpcTag --build-arg SDK_VER=$SdkVer \
         --tag=${TAG}\
         --rm \
         .
 fi
+
 docker system prune --force
 docker ps -a | awk -v NAME=${NAME} '$0~NAME{system("docker stop "NAME" && docker wait "$1"; docker rm "$1)}'
 docker run -dit --name ${NAME} \

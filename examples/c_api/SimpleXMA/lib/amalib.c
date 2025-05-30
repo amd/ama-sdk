@@ -56,7 +56,7 @@ uint8_t initCard(uint32_t device, DevConf *devConf) {
     xma_init_param.device        = device;
 
     XmaParameter params[1];
-    uint32_t api_version = XMA_API_VERSION_1_1;
+    uint32_t api_version = XMA_API_VERSION_1_2_1;
 
     params[0].name = (char*)XMA_API_VERSION;
     params[0].type = XMA_UINT32;
@@ -120,6 +120,7 @@ uint8_t initDec(XmaHandle handle, XmaFormatType sw_format, int width, int height
     decConf->xma_props.handle = handle;
     decConf->xma_props.param_cnt = decXmaParamConfCnt;
     decConf->xma_props.params = decXmaParamConf;
+    decConf->out_frame = NULL;
     decConf->session = xma_dec_session_create(&decConf->xma_props);
 
     if(!decConf->session) {
@@ -170,6 +171,7 @@ uint8_t initDownload(XmaHandle handle, XmaFormatType format, XmaFormatType sw_fo
     downloadConf->xma_props.output.height                = downloadConf->frame_props.height;
     downloadConf->xma_props.output.framerate.numerator   = downloadConf->xma_props.input.framerate.numerator;
     downloadConf->xma_props.output.framerate.denominator = downloadConf->xma_props.input.framerate.denominator;
+    downloadConf->out_frame = NULL;
     downloadConf->session = xma_filter_session_create(&downloadConf->xma_props);
     if(!downloadConf->session) {
         fprintf(stderr, "Failed to create upload session\n");
@@ -219,6 +221,7 @@ uint8_t initUpload(XmaHandle handle, XmaFormatType format, XmaFormatType sw_form
     uploadConf->xma_props.output.height                = uploadConf->frame_props.height;
     uploadConf->xma_props.output.framerate.numerator   = uploadConf->xma_props.input.framerate.numerator;
     uploadConf->xma_props.output.framerate.denominator = uploadConf->xma_props.input.framerate.denominator;
+    uploadConf->out_frame = NULL;
     uploadConf->session = xma_filter_session_create(&uploadConf->xma_props);
     if(!uploadConf->session) {
         fprintf(stderr, "Failed to create upload session\n");
@@ -260,6 +263,7 @@ uint8_t initScaler(XmaHandle handle, XmaFormatType sw_format, int32_t width, int
         scalerConf->xrm_props[i].height = scalerOutputConf[i].height;
         scalerConf->xrm_props[i].fps_num = scalerOutputConf[i].framerate.numerator;
         scalerConf->xrm_props[i].fps_den = scalerOutputConf[i].framerate.denominator;
+        scalerConf->out_frame[i] = NULL;
     }
 
     scalerConf->dev_index = scalerDev;
@@ -334,6 +338,8 @@ uint8_t initEnc(XmaHandle handle, XmaFormatType sw_format, uint32_t encOutputCnt
                                  = encConf->xma_props[i].minQP = encConf->xma_props[i].maxQP = encConf->xma_props[i].rc_mode
                                  = encConf->xma_props[i].profile = -1;
         encConf->xma_props[i].temp_aq_gain = encConf->xma_props[i].spat_aq_gain = 255;
+
+        encConf->xma_buffer[i] = NULL;
 
         ret = xrm_enc_reserve(&encConf->xrm_ctx[i], encConf->dev_index[i], encConf->slice[i], encConf->is_xav1[i], encConf->is_ull_enabled[i], &encConf->xrm_props[i]);
         if (ret == XRM_ERROR) {

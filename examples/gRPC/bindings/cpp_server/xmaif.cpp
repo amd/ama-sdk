@@ -255,6 +255,9 @@ class UploadImpl final : public Upload::Service {
   UploadConf uploadConf;
   XmaFrame *in_frame;
   XmaFrameData data;
+  std::shared_ptr<uint8_t[]> s0 = nullptr;
+  std::shared_ptr<uint8_t[]> s1 = nullptr;
+  std::shared_ptr<uint8_t[]> s2 = nullptr;
 
   explicit UploadImpl(): in_frame(NULL) {}
 
@@ -268,10 +271,22 @@ class UploadImpl final : public Upload::Service {
      upload_linesize->set_p0(uploadConf.frame_props.linesize[0]);
      upload_linesize->set_p1(uploadConf.frame_props.linesize[1]);
      upload_linesize->set_p2(uploadConf.frame_props.linesize[2]);
+     if ( upload_arg->alloc_p() ) {
+         s0.reset(new uint8_t[uploadConf.frame_props.linesize[0]*upload_arg->height()]);
+         s1.reset(new uint8_t[uploadConf.frame_props.linesize[1]*upload_arg->height()>>1]);
+         s2.reset(new uint8_t[uploadConf.frame_props.linesize[2]*upload_arg->height()>>1]);
+         data.data[0] = s0.get();
+         data.data[1] = s1.get();
+         data.data[2] = s2.get();
 
-     data.data[0] = (uint8_t *)calloc(uploadConf.frame_props.linesize[0]*upload_arg->height(),1);
-     data.data[1] = (uint8_t *)calloc(uploadConf.frame_props.linesize[1]*upload_arg->height()>>1,1);
-     data.data[2] = (uint8_t *)calloc(uploadConf.frame_props.linesize[2]*upload_arg->height()>>1,1);
+         upload_linesize->set_ptr_out_frame_host_p0(std::string_view(reinterpret_cast<const char*>(data.data[0]),
+                                                                     uploadConf.frame_props.linesize[0]*upload_arg->height()));
+         upload_linesize->set_ptr_out_frame_host_p1(std::string_view(reinterpret_cast<const char*>(data.data[1]),
+                                                                     uploadConf.frame_props.linesize[1]*upload_arg->height()>>1));
+         upload_linesize->set_ptr_out_frame_host_p2(std::string_view(reinterpret_cast<const char*>(data.data[2]),
+                                                                     uploadConf.frame_props.linesize[2]*upload_arg->height()>>1));
+
+     }
 
      return Status::OK;
   };
@@ -280,7 +295,6 @@ class UploadImpl final : public Upload::Service {
   Status Proc(ServerContext* context, const UploadIn *upload_in, UploadOut *upload_out) override {
       XmaFrame *out_frame;
       uint8_t ret;
-      uint8_t *d0, *d1, *d2;
 
       if ( upload_in->flush() ) {
           in_frame = NULL;
@@ -289,19 +303,12 @@ class UploadImpl final : public Upload::Service {
               xma_frame_free(in_frame);
           }
 
-          d0 = reinterpret_cast<uint8_t *>(const_cast<UploadIn *>(upload_in)->mutable_ptr_out_frame_host_p0()->data());
-          d1 = reinterpret_cast<uint8_t *>(const_cast<UploadIn *>(upload_in)->mutable_ptr_out_frame_host_p1()->data());
-          d2 = reinterpret_cast<uint8_t *>(const_cast<UploadIn *>(upload_in)->mutable_ptr_out_frame_host_p2()->data());
+          data.data[0] = reinterpret_cast<uint8_t*>(const_cast<UploadIn *>(upload_in)->mutable_ptr_out_frame_host_p0()->data());
+          data.data[1] = reinterpret_cast<uint8_t*>(const_cast<UploadIn *>(upload_in)->mutable_ptr_out_frame_host_p1()->data());
+          data.data[2] = reinterpret_cast<uint8_t*>(const_cast<UploadIn *>(upload_in)->mutable_ptr_out_frame_host_p2()->data());
 
-          /*data.data[0] = d0;
-          data.data[1] = d1;
-          data.data[2] = d2;*/
-          memcpy(data.data[0], d0, upload_in->ptr_out_frame_host_p0().size());
-          memcpy(data.data[1], d1, upload_in->ptr_out_frame_host_p1().size());
-          memcpy(data.data[2], d2, upload_in->ptr_out_frame_host_p2().size());
+          in_frame = xma_frame_from_buffers_clone(uploadConf.xma_props.handle, &uploadConf.frame_props, &data, NULL, NULL);
 
-           in_frame = xma_frame_from_buffers_clone(uploadConf.xma_props.handle, &uploadConf.frame_props, &data, NULL, NULL);
-           xma_frame_inc_ref(in_frame);
       }
 
       upload_out->set_cont(false);
@@ -320,14 +327,6 @@ class UploadImpl final : public Upload::Service {
   };
 
   Status Close(ServerContext* context, const NoArgs* no_args, MA35DStatus *status) override {
-      if (data.data[0]) {
-          free(data.data[0]);
-          data.data[0] = NULL;
-          free(data.data[1]);
-          data.data[1] = NULL;
-          free(data.data[2]);
-          data.data[2] = NULL;
-      }
       xma_frame_free(uploadConf.out_frame);
       xma_filter_session_destroy(uploadConf.session);
       status->set_status(XMA_SUCCESS);

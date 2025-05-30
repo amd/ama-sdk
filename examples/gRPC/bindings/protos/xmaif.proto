@@ -124,12 +124,16 @@ message UploadArg {
     int32 bits_per_pixel = 4;
     int32 fps_num = 5;
     int32 fps_den = 6;
+    bool alloc_p = 7;
 }
 
 message UploadLineSize {
     uint64 p0 = 1;
     uint64 p1 = 2;
     uint64 p2 = 3;
+    bytes ptr_out_frame_host_p0 = 4;
+    bytes ptr_out_frame_host_p1 = 5;
+    bytes ptr_out_frame_host_p2 = 6;
 }
 
 message UploadIn {

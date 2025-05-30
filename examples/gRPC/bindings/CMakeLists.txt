@@ -14,6 +14,7 @@
 
 cmake_minimum_required(VERSION 3.16)
 
+set(GRPC_TAG "v1.62.1")
 set(XMA_APPS_VER  "0.0.0")
 set(XMAIF_LIB_DIR "../../../c_api/SimpleXMA/build/lib/")
 set(XMAIF_LIB "xma-lib-simple_${XMA_APPS_VER}")
@@ -26,7 +27,3 @@ list( APPEND CMAKE_INSTALL_RPATH "../${CMAKE_CURRENT_BINARY_DIR}/${XMAIF_LIB_DIR
 
 add_subdirectory (cpp_server)
 add_subdirectory (python_client)
-
-
-
-

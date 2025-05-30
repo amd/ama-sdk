@@ -20,7 +20,7 @@ message("Source files: ${PROTO_PY}   ")
 # compile dpe.proto
 add_custom_command (
     OUTPUT ${PROTO_PY}
-    COMMAND python3 -m grpc_tools.protoc -I${CMAKE_CURRENT_LIST_DIR}/../protos --pyi_out=${CMAKE_CURRENT_LIST_DIR} --grpc_python_out=${CMAKE_CURRENT_LIST_DIR} --python_out=${CMAKE_CURRENT_LIST_DIR} ${CMAKE_CURRENT_LIST_DIR}/../protos/xmaif.proto
+    COMMAND . /opt/venv_gRPC_${GRPC_TAG}/bin/activate && python3 -m grpc_tools.protoc -I${CMAKE_CURRENT_LIST_DIR}/../protos --pyi_out=${CMAKE_CURRENT_LIST_DIR} --grpc_python_out=${CMAKE_CURRENT_LIST_DIR} --python_out=${CMAKE_CURRENT_LIST_DIR} ${CMAKE_CURRENT_LIST_DIR}/../protos/xmaif.proto && deactivate
     DEPENDS "${CMAKE_CURRENT_LIST_DIR}/../protos/xmaif.proto"
     VERBATIM
 )

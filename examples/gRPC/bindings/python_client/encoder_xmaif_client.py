@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/python3 -Xfrozen_modules=off
 
 # Copyright 2024, Advanced Micro Device, Inc.
 #
@@ -19,7 +19,6 @@
 
 from __future__ import print_function
 import pydevd
-
 import logging
 import time
 import os
@@ -47,7 +46,7 @@ encArg.enc_xma_param_conf.add(name='tune_metrics', value=4)
 encArg.enc_xma_param_conf.add(name='forced_idr', value=1)
 encIn = EncIn(**{'flush':False, 'ptr_out_frames':{0}})
 uplArg = UploadArg(**{'ptr_dev_conf':0, 'width':1920, 'height':1080,
-                   'fps_num':60, 'fps_den':1, 'bits_per_pixel':8})
+                   'fps_num':60, 'fps_den':1, 'bits_per_pixel':8, 'alloc_p':True})
 uplIn = UploadIn(**{'flush':False})
 noArg = NoArgs()
 
@@ -105,9 +104,9 @@ def run(IF_IP):
 
         inFile = os.open(InFile, os.O_RDONLY)
         outFile = os.open(OutFile, os.O_RDWR | os.O_CREAT)
-        p0_buf = bytearray()
-        p1_buf=  bytearray()
-        p2_buf = bytearray()
+        p0_buf = bytearray(lineSize.ptr_out_frame_host_p0)
+        p1_buf=  bytearray(lineSize.ptr_out_frame_host_p1)
+        p2_buf = bytearray(lineSize.ptr_out_frame_host_p2)
         inFileSize = os.stat(InFile).st_size
         dataread = 0
         while True:
@@ -157,7 +156,7 @@ def run(IF_IP):
         stubDev.Close(noArg)
 
 if __name__ == '__main__':
-#   pydevd.settrace(sys.argv[4], port=5678, stdoutToServer=True, stderrToServer=True)
+    #pydevd.settrace(sys.argv[4], port=5678, stdoutToServer=True, stderrToServer=True)
     IF_IP = sys.argv[1]
     InFile = sys.argv[2]
     OutFile = sys.argv[3]
