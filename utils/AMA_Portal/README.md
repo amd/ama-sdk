@@ -4,7 +4,7 @@
 
 ## Download
 
-Download AMA Portal from https://www.amd.com/content/dam/amd/en/documents/products/adaptive-socs-and-fpgas/guest-resources/2026/sdk/ma35d_ama_portal_1.4.0.zip
+Download AMA Portal from https://www.amd.com/content/dam/account/en/licenses/download/ma35d_ama_portal_1.5.0.zip
 
 ## Description
 
@@ -26,18 +26,17 @@ It has the following sections:
 
 - ### Demos:
 
-  This section allows you to run the `parallel transcoding` and `pip`(AMA SDK < 1.3.0) FFmpeg demos while checking the metrics section.
-  More demos will be available soon!
+  This section allows you to run FFmpeg demos such as parallel transcoding while checking the metrics section.
 
 ## Supported Kernels and distributions
 
 - Ubuntu 22.04 with generic kernel 5.15.0, 6.8.0
-- Ubuntu 24.04 with generic kernel 6.8.0, 6.14.0
-- Debian 12 with generic kernel 6.1+
+- Ubuntu 24.04 with generic kernel 6.8.0, 6.17.0
+- Ubuntu 26.04 with generic kernel 7.x
 
 ## Supported AMD AMA Video SDK 
 
-AMA Portal supports up to AMA Video SDK version 1.2.0+
+AMA Portal supports up to AMA Video SDK version 1.2.1+
 
 ## Requirements & Privileges
 
@@ -91,7 +90,7 @@ The package creates and configures a systemd service named `ama_portal.service` 
 AMA Portal is configured to run with Nginx:
 
 - Port 50000: serves static files from `/var/www/ama_portal`
-- Port 50001: proxies request to the ama_portal service via a Unix socket (`/run/gunicron.sock`)
+- Port 50001: proxies request to the ama_portal service via a Unix socket (`/run/gunicorn.sock`)
 
 ### Installation path
 
