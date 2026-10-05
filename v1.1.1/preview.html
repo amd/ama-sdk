@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="English" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+<!-- OneTrust Cookies Consent Notice start for amd.github.io -->
+<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="cb638ba1-8bc4-44a0-9338-632d4dc19be6" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script>
+<!-- OneTrust Cookies Consent Notice end for amd.github.io -->
+<!-- Google Tag Manager -->
+<script type="text/plain" class="optanon-category-C0002">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-5RHQV7');</script>
+<!-- End Google Tag Manager -->
+  <title>New Feature Preview &mdash; AMD AMA 1.1.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=63426ac4"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="AMD Advanced Media Acceleration (AMA) Troubleshooting" href="troubleshooting.html" />
+    <link rel="prev" title="Encoding Compatibility Matrix" href="encoder_comp_matrix.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+<!-- Google Tag Manager -->
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5RHQV7" height="0" width="0" style="display:none;visibility:hidden" class="optanon-category-C0002"></iframe></noscript>
+<!-- End Google Tag Manager --> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+            <a href="index.html" class="icon icon-home"> AMD AMA
+          </a>
+              <div class="version">
+                1.1.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Get Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="release_notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started_on_prem.html">On Premises</a></li>
+<li class="toctree-l1"><a class="reference internal" href="virtualization.html">Virtualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Tutorials and Examples</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference Guides</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="specs_and_features.html">Specs and Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="package_feed.html">Package Feed Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="using_ffmpeg.html">Using FFmpeg</a></li>
+<li class="toctree-l1"><a class="reference internal" href="using_gstreamer.html">Using Gstreamer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="unified_logging.html">Unified Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tuning_video_quality.html">Tuning Video Quality</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tuning_pipeline_latency.html">Tuning Latency of Transcode Pipeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="managing_compute_resources.html">Managing Compute Resources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="c_apis.html">C API Programming Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="card_management.html">Card Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="migration.html">Migration Path</a></li>
+<li class="toctree-l1"><a class="reference internal" href="encoder_comp_matrix.html">Encoding Compatibility Matrix</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">New Feature Preview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#video-rotation">Video Rotation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#color-space-conversion">Color Space Conversion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#chroma-subsampling">Chroma Subsampling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#picture-in-picture-pip">Picture In Picture (PIP)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tiling">Tiling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ml-region-of-interest-roi">ML Region Of Interest (ROI)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#ml-based-face-roi">ML Based Face ROI</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#roi-face-detection">ROI Face Detection</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ml-based-text-roi">ML Based Text ROI</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Support</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://www.xilinx.com/support.html">File an issue</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://support.xilinx.com/s/topic/0TO2E000000YKY8WAO/video?language=en_US">Video Forum</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other AMA SDK Versions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://amd.github.io/ama-sdk/v1.0/index.html">v1.0</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://amd.github.io/ama-sdk/">Latest Version</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Video Products</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/video-sdk/v3.0/index.html">U30</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">AMD AMA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>New Feature Preview</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>This version of the SDK has been superseded by the <a class="reference external" href="https://amd.github.io/ama-sdk/latest/index.html">latest release</a> of the SDK.</p>
+</div>
+<section id="new-feature-preview">
+<h1>New Feature Preview<a class="headerlink" href="#new-feature-preview" title="Link to this heading">¶</a></h1>
+<nav class="contents local" id="table-of-contents">
+<p class="topic-title">Table of Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#overview" id="id6">Overview</a></p>
+<ul>
+<li><p><a class="reference internal" href="#video-rotation" id="id7">Video Rotation</a></p></li>
+<li><p><a class="reference internal" href="#color-space-conversion" id="id8">Color Space Conversion</a></p></li>
+<li><p><a class="reference internal" href="#chroma-subsampling" id="id9">Chroma Subsampling</a></p></li>
+<li><p><a class="reference internal" href="#picture-in-picture-pip" id="id10">Picture In Picture (PIP)</a></p></li>
+<li><p><a class="reference internal" href="#tiling" id="id11">Tiling</a></p></li>
+<li><p><a class="reference internal" href="#ml-region-of-interest-roi" id="id12">ML Region Of Interest (ROI)</a></p>
+<ul>
+<li><p><a class="reference internal" href="#ml-based-face-roi" id="id13">ML Based Face ROI</a></p></li>
+<li><p><a class="reference internal" href="#roi-face-detection" id="id14">ROI Face Detection</a></p></li>
+<li><p><a class="reference internal" href="#ml-based-text-roi" id="id15">ML Based Text ROI</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+<section id="overview">
+<h2><a class="toc-backref" href="#id6" role="doc-backlink">Overview</a><a class="headerlink" href="#overview" title="Link to this heading">¶</a></h2>
+<p>This section describes new enhanced features, which are meant for demonstrative proposes and are only supported in FFmpeg. Note that although these features are not meant to be used in production environments; however, as they mature, they will become fully qualified as production ready. The following table delineates the list of available options:</p>
+<table class="docutils align-default" id="id5">
+<caption><span class="caption-text">Video Processing Accelerators</span><a class="headerlink" href="#id5" title="Link to this table">¶</a></caption>
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 33.3%" />
+<col style="width: 33.3%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Accelerator Core</p></th>
+<th class="head"><p>Functions/Supported Models</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>2D Processor</p></td>
+<td><p><a class="reference internal" href="#video-rotation"><span class="std std-ref">Video Rotation</span></a>, <a class="reference internal" href="#color-space-conversion"><span class="std std-ref">Color Space Conversion</span></a>, <a class="reference internal" href="#chroma-subsampling"><span class="std std-ref">Chroma Subsampling</span></a>, <a class="reference internal" href="#pip"><span class="std std-ref">Picture In Picture</span></a> and <a class="reference internal" href="#tiling"><span class="std std-ref">Tiling</span></a>.</p></td>
+<td><div class="line-block">
+<div class="line"><a class="reference internal" href="#pip"><span class="std std-ref">Picture In Picture</span></a> and <a class="reference internal" href="#tiling"><span class="std std-ref">Tiling</span></a> require the same frame rate on all inputs to the <code class="docutils literal notranslate"><span class="pre">2d_ama</span></code> plugin.</div>
+<div class="line">To cascade multiple 2D processor cores, pixel format <code class="docutils literal notranslate"><span class="pre">yuv420p</span></code> must be set, explicitly.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>Machine Learning</p></td>
+<td><p><a class="reference internal" href="#roi-face"><span class="std std-ref">ML Based Face ROI</span></a> and <a class="reference internal" href="#roi-text"><span class="std std-ref">ML Based Text ROI</span></a> models</p></td>
+<td><div class="line-block">
+<div class="line">Supported ROI models are 1080p in landscape mode, 720p in both landscape and portrait modes.</div>
+<div class="line">Maximum supported instances of ml_ama plugin (ROI model) per device is limited to 4.</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<p>In the following sections, description of command line options is done in an accumulative manner, i.e., previously described options are not explained further.</p>
+<section id="video-rotation">
+<span id="id1"></span><h3><a class="toc-backref" href="#id7" role="doc-backlink">Video Rotation</a><a class="headerlink" href="#video-rotation" title="Link to this heading">¶</a></h3>
+<p>The following example demonstrates how to transcode a flip-over operation on an AMA AMD compatible card:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ffmpeg -y -hide_banner -hwaccel ama -hwaccel_device /dev/ama_transcoder0 \
+-c:v h264_ama -out_fmt yuv420p  -i &lt;INPUT&gt; \
+-filter_complex &quot;[0:v]2d_ama=inputs=1:processor=rotate:rotation=180[c]&quot; \
+-map &quot;[c]&quot; -c:v hevc_ama -f mp4 &lt;OUTPUT&gt;
+</pre></div>
+</div>
+<p>, where <code class="docutils literal notranslate"><span class="pre">2d_ama</span></code> is graphic processor's plugin, set for rotation operation; <code class="docutils literal notranslate"><span class="pre">INPUT</span></code> and <code class="docutils literal notranslate"><span class="pre">OUTPUT</span></code> are any one of supported encoded files. Note that only rotations which are multiples of 90 degrees are supported.</p>
+</section>
+<section id="color-space-conversion">
+<span id="id2"></span><h3><a class="toc-backref" href="#id8" role="doc-backlink">Color Space Conversion</a><a class="headerlink" href="#color-space-conversion" title="Link to this heading">¶</a></h3>
+<p>The following example demonstrates how to convert from RGB to YUV on an AMA AMD compatible card:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ffmpeg -y -hide_banner -hwaccel ama -hwaccel_device /dev/ama_transcoder0 -s 1920x1080 \
+-pix_fmt bgra -i &lt;INPUT&gt; \
+-filter_complex &quot;[0:v]hwupload[a];[a]2d_ama=inputs=1:processor=csc:csc=rgb2yuv[c];[c]hwdownload&quot; \
+-pix_fmt yuv420p -f rawvideo &lt;OUTPUT&gt;
+</pre></div>
+</div>
+<p>, where graphic processor is set for color conversion operation.</p>
+<p>The following example demonstrates how to encode a RGBA video file on an AMA AMD compatible card:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ffmpeg -y -hide_banner -hwaccel ama -hwaccel_device /dev/ama_transcoder0 -f rawvideo -s 1920x1080 \
+-pix_fmt bgra -i &lt;INPUT&gt; \
+-filter_complex &quot;[0:v]hwupload[a];[a]2d_ama=inputs=1:processor=csc:csc=rgb2yuv[c]&quot; \
+-map &quot;[c]&quot; -c:v hevc_ama -f mp4 &lt;OUTPUT&gt;
+</pre></div>
+</div>
+<p>Similarly, the following example demonstrates YUV to planar RGB conversion:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ffmpeg -y  -hide_banner -hwaccel ama -hwaccel_device /dev/ama_transcoder0 \
+-c:v h264_ama -i &lt;INPUT&gt; \
+-filter_complex &quot;scaler_ama=outputs=1:out_res=(1920x1080|rgbp)[a];[a]hwdownload,format=rgbp[a1]&quot; \
+-map &#39;[a1]&#39; -f rawvideo -y &lt;RGBP OUTPUT&gt;
+</pre></div>
+</div>
+</section>
+<section id="chroma-subsampling">
+<span id="id3"></span><h3><a class="toc-backref" href="#id9" role="doc-backlink">Chroma Subsampling</a><a class="headerlink" href="#chroma-subsampling" title="Link to this heading">¶</a></h3>
+<p>The following example demonstrates how to convert from 4:2:2 pixel format to 4:2:0 on an AMA AMD compatible card:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ffmpeg -y -hide_banner -hwaccel ama -hwaccel_device /dev/ama_transcoder0 -s 1920x1080 \
+-pix_fmt yuv422p -i &lt;INPUT&gt; \
+-filter_complex &quot;[0:v]hwupload[a];[a]2d_ama=inputs=1:processor=subsample[c];[c]hwdownload&quot; \
+-pix_fmt yuv420p -f rawvideo &lt;OUTPUT&gt;
+</pre></div>
+</div>
+<p>, where graphic processor is set for pixel subsampling operation.</p>
+<p>The following example demonstrates how to transcode a 4:2:2 pixel format video to 4:2:0 using both the host, for decoding, and an AMA AMD compatible card, for subsampling and encoding:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ffmpeg -y -hide_banner -hwaccel ama -hwaccel_device /dev/ama_transcoder0 \
+-i &lt;INPUT&gt; \
+-filter_complex &quot;[0:v]hwupload[a];[a]2d_ama=inputs=1:processor=subsample[c]&quot; \
+-map [c] -c:v h264_ama -b:v 5M -f mp4 &lt;OUTPUT&gt;
+</pre></div>
+</div>
+<p>, where graphic processor is set for pixel subsampling operation.</p>
+</section>
+<section id="picture-in-picture-pip">
+<span id="pip"></span><h3><a class="toc-backref" href="#id10" role="doc-backlink">Picture In Picture (PIP)</a><a class="headerlink" href="#picture-in-picture-pip" title="Link to this heading">¶</a></h3>
+<p>The following example demonstrates how to create a PIP video on an AMA AMD compatible card:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ffmpeg -y -hide_banner  -hwaccel ama -hwaccel_device /dev/ama_transcoder0  \
+-c:v h264_ama -out_fmt yuv420p -i &lt;INPUT 1&gt; \
+-c:v h264_ama -out_fmt yuv420p -i &lt;INPUT 2&gt; \
+-filter_complex &quot;[1:v]scaler_ama=outputs=1:out_res=(720x480|yuv420p)[p];[0:v][p]2d_ama=inputs=2:processor=overlay:core_id=0:x=0:y=0[x]&quot; \
+-map &quot;[x]&quot; -c:v h264_ama -frames 1000 -b:v 15M -f mp4 -y &lt;OUTPUT&gt;
+</pre></div>
+</div>
+<p>, where graphic processor is set for scaling and overlay operations, with <code class="docutils literal notranslate"><span class="pre">INPUT</span> <span class="pre">1</span></code> set as the background.</p>
+</section>
+<section id="tiling">
+<span id="id4"></span><h3><a class="toc-backref" href="#id11" role="doc-backlink">Tiling</a><a class="headerlink" href="#tiling" title="Link to this heading">¶</a></h3>
+<p>The following example demonstrates how to create a tiling video on an AMA AMD compatible card:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ffmpeg -y -hide_banner -hwaccel ama -hwaccel_device /dev/ama_transcoder0 \
+-c:v h264_ama -out_fmt yuv420p -i &lt;INPUT 1&gt; \
+-c:v h264_ama -out_fmt yuv420p -i &lt;INPUT 2&gt; \
+-c:v h264_ama -out_fmt yuv420p -i &lt;INPUT 3&gt; \
+-c:v h264_ama -out_fmt yuv420p -i &lt;INPUT 4&gt; \
+-filter_complex &quot;[0:v]scaler_ama=outputs=1:out_res=(1280x720|yuv420p)[0];[1:v]scaler_ama=outputs=1:out_res=(1280x720|yuv420p)[1];[2:v]scaler_ama=outputs=1:out_res=(1280x720|yuv420p)[2];[3:v]scaler_ama=outputs=1:out_res=(1280x720|yuv420p)[3];[0][1][2][3]2d_ama=layout=2x2:inputs=4:processor=tile[c];  [c]scaler_ama=outputs=1:out_res=(1920x1080|yuv420p)[r]&quot; \
+-map &quot;[r]&quot; -c:v h264_ama -b:v 15M -f mp4 -y &lt;OUTPUT&gt;
+</pre></div>
+</div>
+<p>, where graphic processor's is set for scaling and tiling operations, with <code class="docutils literal notranslate"><span class="pre">INPUT</span> <span class="pre">1</span></code> ... <code class="docutils literal notranslate"><span class="pre">INPUT</span> <span class="pre">4</span></code> set as tiles.</p>
+</section>
+<section id="ml-region-of-interest-roi">
+<h3><a class="toc-backref" href="#id12" role="doc-backlink">ML Region Of Interest (ROI)</a><a class="headerlink" href="#ml-region-of-interest-roi" title="Link to this heading">¶</a></h3>
+<p>The following sub-sections describe the current capabilities of the ML based ROI engine. This engine is capable of processing 4 independent 720p30 video streams in parallel for face and text detections.</p>
+<section id="ml-based-face-roi">
+<span id="roi-face"></span><h4><a class="toc-backref" href="#id13" role="doc-backlink">ML Based Face ROI</a><a class="headerlink" href="#ml-based-face-roi" title="Link to this heading">¶</a></h4>
+<p>The following example demonstrates how to perform ROI face encoding on an AMA AMD compatible card:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ffmpeg -y -hwaccel ama -hwaccel_device /dev/ama_transcoder0 -c:v h264_ama -i &lt;INPUT&gt; \
+-filter_complex &quot;scaler_ama=outputs=3:out_res=(1280x720|yuv420p)(1280x720|yuv420p)(1280x720|rgbp)[def][ori][a];[a]ml_ama=model=roi:model_args=type=face[mlop];[ori][mlop]roi_scale_ama[res1]&quot; \
+-map [res1] -c:v hevc_ama -b:v 300K -f mp4 &lt;OUTPUT 1&gt; \
+-map [def] -c:v hevc_ama -b:v 300K -f mp4 &lt;OUTPUT 2&gt;
+</pre></div>
+</div>
+<p>, where ML engine is set for face ROI enhancement, and the resulting enhanced image, <code class="docutils literal notranslate"><span class="pre">res1</span></code>, is encoded.</p>
+</section>
+<section id="roi-face-detection">
+<h4><a class="toc-backref" href="#id14" role="doc-backlink">ROI Face Detection</a><a class="headerlink" href="#roi-face-detection" title="Link to this heading">¶</a></h4>
+<p>The following example demonstrates inference engine's ability to detect faces:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ffmpeg -y -hwaccel ama -hwaccel_device /dev/ama_transcoder0 -c:v h264_ama  -i &lt;INPUT&gt; \
+-filter_complex &quot;scaler_ama=outputs=2:out_res=(1280x720|yuv420p)(1280x720|rgbp)[ori][mlip];[mlip]ml_ama=model=roi:model_args=type=face[mlop]; [ori][mlop]roi_scale_ama=roi_map_type=roi[rso]; [rso]hwdownload, roi_overlay_ama[res1]&quot; \
+-map [res1] -f rawvideo -pix_fmt yuv420p -f rawvideo &lt;OUTPUT&gt;
+</pre></div>
+</div>
+<p>, where software plugin <code class="docutils literal notranslate"><span class="pre">roi_overlay_ama</span></code> overlays transparent rectangular boxes around all detected faces.</p>
+</section>
+<section id="ml-based-text-roi">
+<span id="roi-text"></span><h4><a class="toc-backref" href="#id15" role="doc-backlink">ML Based Text ROI</a><a class="headerlink" href="#ml-based-text-roi" title="Link to this heading">¶</a></h4>
+<p>The following example demonstrates how to perform ROI text encoding on an AMA AMD compatible card:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ffmpeg -y -hwaccel ama -hwaccel_device /dev/ama_transcoder0 -c:v h264_ama  -i &lt;INPUT&gt; \
+-filter_complex &quot;scaler_ama=outputs=3:out_res=(1280x720|yuv420p)(1280x720|yuv420p)(1280x720|rgbp)[def][ori][a];[a]ml_ama=model=roi:model_args=type=text[mlop];[ori][mlop]roi_scale_ama[res1]&quot; \
+-map [res1] -c:v hevc_ama -b:v 200K -f mp4  &lt;OUTPUT 1&gt; \
+-map [def] -c:v hevc_ama -b:v 200K -f mp4  &lt;OUTPUT 2&gt;
+</pre></div>
+</div>
+<p>, where ML engine is set for text ROI enhancement, and the resulting enhanced image, <code class="docutils literal notranslate"><span class="pre">res1</span></code>, is encoded.</p>
+</section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          
+				  
+				  <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="encoder_comp_matrix.html" class="btn btn-neutral float-left" title="Encoding Compatibility Matrix" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="troubleshooting.html" class="btn btn-neutral float-right" title="AMD Advanced Media Acceleration (AMA) Troubleshooting" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022-2024, Advanced Micro Devices, Inc.
+      <span class="lastupdated">Last updated on September 23, 2024.
+      </span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div>
+										
+</br>
+
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>
