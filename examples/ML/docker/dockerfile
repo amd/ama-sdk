@@ -1,0 +1,62 @@
+# Copyright 2026, Advanced Micro Device, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License"); 
+# you may not use this file except in compliance with the License. 
+# You may obtain a copy of the License at
+#
+#   http://www.apache.org/licenses/LICENSE-2.0
+# 
+# Unless required by applicable law or agreed to in writing, software 
+# distributed under the License is distributed on an "AS IS" BASIS, 
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+# See the License for the specific language governing permissions and 
+# limitations under the License.
+#
+# syntax=docker/dockerfile:1
+
+FROM rocm/vllm-dev:rocm7.14.0_rdna_ubuntu24.04_py3.14_pytorch_2.11.0_vllm_0.26.0 AS base
+
+ENV DEBIAN_FRONTEND="noninteractive"
+SHELL ["/bin/bash", "-c"]
+
+ARG SDK_VER
+ARG SDK_ZIP
+ARG GRPC_FILES
+ARG GRPC_TAG
+ARG PIP_PACKAGES
+ARG USER
+ARG UID
+ARG GID
+
+RUN apt -y update && apt -y upgrade && apt -y install wget gpg lsb-release apt-utils \
+    && wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - > /etc/apt/trusted.gpg.d/kitware.gpg \
+    && echo "deb https://apt.kitware.com/ubuntu/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/cmake.list
+
+RUN apt -y update \
+     && apt install -y build-essential autoconf libtool pkg-config curl iproute2 \
+      gdb gdbserver cmake golang libssl-dev uuid-dev \
+      dkms pciutils libhugetlbfs0 libboost-all-dev pciutils udev vim unzip wcstools psmisc git
+
+RUN git clone https://github.com/gdraheim/docker-systemctl-replacement.git /usr/local/share/docker-systemctl-replacement \
+    && echo "alias systemctl='python3 /usr/local/share/docker-systemctl-replacement/files/docker/systemctl3.py'" >> /root/.bashrc \
+    && rm -f /usr/bin/systemctl \
+    && ln -s /usr/local/share/docker-systemctl-replacement/files/docker/systemctl3.py /usr/bin/systemctl
+
+ADD ${SDK_ZIP} /tmp
+RUN cd /tmp && unzip $(filename ${SDK_ZIP}) && cd ${SDK_VER} && apt install -y ./amd-ama-core*.deb ./amd-ama-ffmpeg_*.deb ./amd-ama-xma*.deb
+
+ENV PYTHONPATH="/opt/python/lib/python3.14/site-packages"
+ADD ${GRPC_FILES} /tmp/
+RUN apt -y install python3-venv \
+    && python3 -m venv --system-site-packages /opt/venv_gRPC_${GRPC_TAG} gRPC_${GRPC_TAG} \
+    && source /opt/venv_gRPC_${GRPC_TAG}/bin/activate \
+    && python3 -m pip install --upgrade pip \
+    && pip install ${PIP_PACKAGES} \
+    && cd /tmp && unzip ${GRPC_FILES} && python3 setup.py install \
+    && mkdir -p /tmp/.miopen && chmod 777 /tmp/.miopen
+
+RUN userdel -r ubuntu || true #Annoying...
+RUN groupadd -f -g ${GID} dev
+RUN useradd -u ${UID} -g ${GID} -ms /bin/bash ${USER}
+USER ${UID}:${GID}
+WORKDIR /home/$USER
