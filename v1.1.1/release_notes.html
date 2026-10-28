@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="English" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+<!-- OneTrust Cookies Consent Notice start for amd.github.io -->
+<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="cb638ba1-8bc4-44a0-9338-632d4dc19be6" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script>
+<!-- OneTrust Cookies Consent Notice end for amd.github.io -->
+<!-- Google Tag Manager -->
+<script type="text/plain" class="optanon-category-C0002">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-5RHQV7');</script>
+<!-- End Google Tag Manager -->
+  <title>AMD Advanced Media Acceleration (AMA) Release Notes &mdash; AMD AMA 1.1.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=63426ac4"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Getting Started with AMD AMA Video SDK Cards on Premises" href="getting_started_on_prem.html" />
+    <link rel="prev" title="AMD Advanced Media Acceleration (AMA)" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+<!-- Google Tag Manager -->
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5RHQV7" height="0" width="0" style="display:none;visibility:hidden" class="optanon-category-C0002"></iframe></noscript>
+<!-- End Google Tag Manager --> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+            <a href="index.html" class="icon icon-home"> AMD AMA
+          </a>
+              <div class="version">
+                1.1.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Get Started</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#release-requirements">Release Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#features-in-this-release">Features in This Release</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#preview-features">Preview Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#supported-kernels-and-distributions">Supported Kernels and Distributions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#known-limitations">Known Limitations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#known-issues">Known Issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#upgrading-from-previous-versions">Upgrading from Previous Versions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started_on_prem.html">On Premises</a></li>
+<li class="toctree-l1"><a class="reference internal" href="virtualization.html">Virtualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Tutorials and Examples</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="specs_and_features.html">Specs and Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="package_feed.html">Package Feed Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="using_ffmpeg.html">Using FFmpeg</a></li>
+<li class="toctree-l1"><a class="reference internal" href="using_gstreamer.html">Using Gstreamer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="unified_logging.html">Unified Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tuning_video_quality.html">Tuning Video Quality</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tuning_pipeline_latency.html">Tuning Latency of Transcode Pipeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="managing_compute_resources.html">Managing Compute Resources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="c_apis.html">C API Programming Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="card_management.html">Card Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="migration.html">Migration Path</a></li>
+<li class="toctree-l1"><a class="reference internal" href="encoder_comp_matrix.html">Encoding Compatibility Matrix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preview.html">New Feature Preview</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Support</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://www.xilinx.com/support.html">File an issue</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://support.xilinx.com/s/topic/0TO2E000000YKY8WAO/video?language=en_US">Video Forum</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other AMA SDK Versions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://amd.github.io/ama-sdk/v1.0/index.html">v1.0</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://amd.github.io/ama-sdk/">Latest Version</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Video Products</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/video-sdk/v3.0/index.html">U30</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">AMD AMA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>AMD Advanced Media Acceleration (AMA) Release Notes</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>This version of the SDK has been superseded by the <a class="reference external" href="https://amd.github.io/ama-sdk/latest/index.html">latest release</a> of the SDK.</p>
+</div>
+<section id="amd-advanced-media-acceleration-ama-release-notes">
+<h1>AMD Advanced Media Acceleration (AMA) Release Notes<a class="headerlink" href="#amd-advanced-media-acceleration-ama-release-notes" title="Link to this heading">¶</a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Version: 1.1.1</p>
+</div>
+<nav class="contents local" id="table-of-contents">
+<p class="topic-title">Table of Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#overview" id="id2">Overview</a></p></li>
+<li><p><a class="reference internal" href="#release-requirements" id="id3">Release Requirements</a></p></li>
+<li><p><a class="reference internal" href="#features-in-this-release" id="id4">Features in This Release</a></p></li>
+<li><p><a class="reference internal" href="#preview-features" id="id5">Preview Features</a></p></li>
+<li><p><a class="reference internal" href="#supported-kernels-and-distributions" id="id6">Supported Kernels and Distributions</a></p></li>
+<li><p><a class="reference internal" href="#known-limitations" id="id7">Known Limitations</a></p></li>
+<li><p><a class="reference internal" href="#known-issues" id="id8">Known Issues</a></p></li>
+<li><p><a class="reference internal" href="#upgrading-from-previous-versions" id="id9">Upgrading from Previous Versions</a></p></li>
+</ul>
+</nav>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<section id="overview">
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">Overview</a><a class="headerlink" href="#overview" title="Link to this heading">¶</a></h2>
+<p>This section describes various requirements, limitations, known issues and their respective workarounds that are applicable to AMD AMA Video SDK.</p>
+</section>
+<section id="release-requirements">
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">Release Requirements</a><a class="headerlink" href="#release-requirements" title="Link to this heading">¶</a></h2>
+<ol class="arabic">
+<li><p>The following firmware versions are required:</p>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ZSP Version = 2.0.4
+SC Version = 9.7.35
+eSecure Version = 1.0.0
+PCIe FW Version = 2.1.0
+PCIe CTRL Patch Version = 1.0.3
+PCIe PHY Patch A Version = 1.0.0
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>This documentation is applicable to 1.1.1 release.</p></li>
+<li><p>Ensure that chassis's BIOS is set to <em>performance</em> mode, e.g., sleep states, clock throttling, Active State Power Management (ASPM), etc. are disabled.</p></li>
+</ol>
+</section>
+<section id="features-in-this-release">
+<span id="id1"></span><h2><a class="toc-backref" href="#id4" role="doc-backlink">Features in This Release</a><a class="headerlink" href="#features-in-this-release" title="Link to this heading">¶</a></h2>
+<ol class="arabic simple">
+<li><p>Support for video transcode using either our supplied FFmpeg (n5.1.2), Gstreamer (v1.22), or custom Xilinx Media Acceleration (XMA) applications.</p></li>
+<li><p>Support for up to 4 x 4Kp60 8-bit or 10-bit video decode AV1, AVC or HEVC per device.</p></li>
+<li><p>Support for up to 160 Mbps encode throughput per device.</p></li>
+<li><p>Support for up to 2 x 4Kp60 8-bit or 10-bit video transcode of AVC or HEVC per device.</p></li>
+<li><p>Support for up to 4 x 4Kp60 8-bit or 10-bit video transcode of AV1 per device.</p></li>
+<li><p>Support for integration with software-based video image filters using our hardware DMA support to/from device memory (FFmpeg or Gstreamer).</p></li>
+<li><p>Optional use of our supplied resource management daemon (xrmd) for automated accelerator selection and load balancing.</p></li>
+<li><p>Resource utilization reporting when using our supplied resource management daemon (xrmd).</p></li>
+<li><p>Utility applications enabling collection of power, voltage, temperature and memory for each device as well as aggregate values for the MA35D accelerator card.</p></li>
+<li><p>Support for virtualization using either Ubuntu 20.04 or 22.04 in KVM mode with a guest OS also running either Ubuntu 20.04 or 22.04.</p></li>
+<li><p>Dual core of AV1 encoding enabling &gt;100 fps.</p></li>
+<li><p>Low latency encoding support (lookahead depths of approximately 1-11 frames).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fast</span></code> preset for AVC, HEVC and AV1 (type 2) encoding for enhanced throughput and/or density.</p></li>
+<li><p>HDR10, HDR10+ and/or HLG metadata pass through transcode support.</p></li>
+<li><p>New Content Adaptive Bit Rate (<code class="docutils literal notranslate"><span class="pre">cabr</span></code>) rate control mode for enhanced visual quality and bitrate efficiency.</p></li>
+<li><p>Support for encoder levels &gt;= 6.</p></li>
+<li><p>Support for new encoder features in our resource management toolchain.</p></li>
+<li><p>New <code class="docutils literal notranslate"><span class="pre">latency_ms</span></code> command-line parameter to, optionally, specify the encoder <code class="docutils literal notranslate"><span class="pre">lookahead_depth</span></code> in units of time instead of frames.</p></li>
+</ol>
+</section>
+<section id="preview-features">
+<h2><a class="toc-backref" href="#id5" role="doc-backlink">Preview Features</a><a class="headerlink" href="#preview-features" title="Link to this heading">¶</a></h2>
+<ol class="arabic simple">
+<li><p>Support for color space conversion, input rotation, and color subsampling using the 2D graphics engine of the card, via FFmpeg plugin</p></li>
+<li><p>Face and text-based Machine Learning (ML) models for enhanced low resolution video encoding for fine text and faces using the ML engine of the card, via FFmpeg plugin</p></li>
+</ol>
+</section>
+<section id="supported-kernels-and-distributions">
+<h2><a class="toc-backref" href="#id6" role="doc-backlink">Supported Kernels and Distributions</a><a class="headerlink" href="#supported-kernels-and-distributions" title="Link to this heading">¶</a></h2>
+<p>This release of AMD AMA Video SDK supports Ubuntu 22.04 and 20.04, with generic kernel 5.15.0, 5.19.0 and 6.2.0. However, kernels 5.15.0 and 6.2.0 are preferred.</p>
+</section>
+<section id="known-limitations">
+<h2><a class="toc-backref" href="#id7" role="doc-backlink">Known Limitations</a><a class="headerlink" href="#known-limitations" title="Link to this heading">¶</a></h2>
+<ol class="arabic simple">
+<li><p>PF and VF must support PCIe memory regions BAR0 of 8 MB, BAR2 of 64 MB and BAR4 of 512 MB sizes.</p></li>
+<li><p>PF and VF release versions must match.</p></li>
+<li><p>A device that has been assigned to a VM cannot share its resources with its host.</p></li>
+<li><p>Only a single VF may be assigned to a VM.</p></li>
+<li><p>For maximum server scalability, ensure that a single VF is assigned to a VM.</p></li>
+<li><p>Ensure that both the host and VMs are running the same SDK version.</p></li>
+<li><p>MA35D only supports progressive content, i.e., interlaced contents are not supported in either the decoder or encoder.</p></li>
+<li><p>For encoding, only resolutions that are divisible by 4 are supported, i.e., both height and width.</p></li>
+<li><p>For decoding, only resolutions that are divisible by 2 are supported, i.e., both height and width.</p></li>
+<li><p>This version of the SDK does not support splitting a video acceleration use case across multiple MA35D devices.</p></li>
+<li><p>With the current version of FFmpeg, n5.1.2, it is not recommended to transport AV1 over MPEG TS.</p></li>
+<li><p>XMA sample applications are not meant to be run at maximum density.</p></li>
+<li><p>Encode rates up to maximum of 400 Mbps are supported.</p></li>
+<li><p>4Kp120 is only supported for AV1 (type 1) encoder, under ultra low latency mode, using both cores.</p></li>
+<li><p>VBR and CVBR rate control modes are not supported for lookahead depth between 0 and 4.</p></li>
+<li><p>Using an encoder lookahead_depth value of &lt;11 may limit the number of b-frames or other encoder features such as rate control modes, aq modes and so forth. See <a class="reference internal" href="encoder_comp_matrix.html"><span class="doc">Encoding Compatibility Matrix</span></a> for details.</p></li>
+<li><p>When using the encoder <code class="docutils literal notranslate"><span class="pre">fast</span></code> preset, lookahead_depth must be &gt; 0.</p></li>
+<li><p>Mixing 2-slice AV1 Type 1 encoding and 1-slice encoding is not supported on a single device</p></li>
+<li><p>Encoder does not support dynamic QP maps in either AV1 Type 2 encoding or with lookahead_depth = 0.</p></li>
+<li><p>AV1 decoder does not support 8k resolution in portrait mode.</p></li>
+</ol>
+</section>
+<section id="known-issues">
+<h2><a class="toc-backref" href="#id8" role="doc-backlink">Known Issues</a><a class="headerlink" href="#known-issues" title="Link to this heading">¶</a></h2>
+<ol class="arabic simple">
+<li><p>A secondary bus reset (SBR) will cause the server to hang. A cold boot of the server will restore function. After installation of our driver package, our setup.sh script should be run prior to utilizing any of the features of the SDK. The setup.sh will disable secondary bus reset.</p></li>
+<li><p>AV1 decoding using the included ama_av1dec Gstreamer plugin requires the use of an IVF packaged AV1 raw video stream and a corresponding ivfparse plugin to be utilized to demux the AV1 video stream.</p></li>
+<li><p>If the kernel driver is not loaded, tools such as mautil may crash when invoked.</p></li>
+<li><p>An AV1 HLS stream may playback at slower than real time speeds. Recommend explicitly setting of fps playback frame rate when using ffplay or use ffplay from ffmpeg 5.1.2 or 6.0</p></li>
+<li><p>Recommend playback of raw video using more recent versions of ffplay (n5.1.2n6.0 or later) or more recent versions of media players such as VLC v3.0.17.4. Alternatively, muxing the raw video into an IVF container format is also permitted.</p></li>
+<li><p>Using Gstreamer, 1080p30 transcodes and or lower resolutions cannot run at full density with default lookahead depth.</p></li>
+<li><p>A strict HDR10+ compliance checker may report some warnings in encoded HDR10+ bitstreams generated by this release.</p></li>
+<li><p>Firmware downgrade to GA1.0 may not work on some desktop machines or low end servers. Warm boot the server to get to working state.</p></li>
+<li><p>AV1 decoder accepts streams up to 40 Mbps.</p></li>
+<li><p>Attempts to flash before the 10-minute mark, of card uptime, with 9.7.35 satellite controller firmware will fail.</p></li>
+</ol>
+</section>
+<section id="upgrading-from-previous-versions">
+<h2><a class="toc-backref" href="#id9" role="doc-backlink">Upgrading from Previous Versions</a><a class="headerlink" href="#upgrading-from-previous-versions" title="Link to this heading">¶</a></h2>
+<ol class="arabic simple">
+<li><p>Remove any <code class="docutils literal notranslate"><span class="pre">ma35</span></code> and <code class="docutils literal notranslate"><span class="pre">amd-ama</span></code> packages as per <a class="reference internal" href="getting_started_on_prem.html#install-sdk"><span class="std std-ref">installation instructions</span></a>.</p></li>
+<li><p>Remove any manually created Boost library soft links that may have been created, previously.</p></li>
+<li><p>Remove all entries from <code class="docutils literal notranslate"><span class="pre">/etc/apt/sources.list.d/xilinx.list</span></code> if this file exists.</p></li>
+</ol>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          
+				  
+				  <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="AMD Advanced Media Acceleration (AMA)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="getting_started_on_prem.html" class="btn btn-neutral float-right" title="Getting Started with AMD AMA Video SDK Cards on Premises" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022-2024, Advanced Micro Devices, Inc.
+      <span class="lastupdated">Last updated on September 23, 2024.
+      </span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div>
+										
+</br>
+
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>
